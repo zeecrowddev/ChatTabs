@@ -1,0 +1,43 @@
+<RCC>
+    <qresource prefix="/ChatTabs">
+        <file>Resources/addCaptureCamera.png</file>
+        <file>Resources/addDocument.png</file>
+        <file>Resources/addImage.png</file>
+        <file>Resources/addPicture.png</file>
+        <file>Resources/addResource.png</file>
+        <file>Resources/addThread.png</file>
+        <file>Resources/addUrl.png</file>
+        <file>Resources/aDocument.png</file>
+        <file>Resources/back.png</file>
+        <file>Resources/bell.png</file>
+        <file>Resources/cancel.png</file>
+        <file>Resources/ChatTabsMode.png</file>
+        <file>Resources/click.png</file>
+        <file>Resources/clipboard.png</file>
+        <file>Resources/close.png</file>
+        <file>Resources/copy.png</file>
+        <file>Resources/dislike.png</file>
+        <file>Resources/editmode.png</file>
+        <file>Resources/like.png</file>
+        <file>Resources/next.png</file>
+        <file>Resources/ok.png</file>
+        <file>Views/AddNewThreadDialogBox.qml</file>
+        <file>Views/ChatTabsButton.qml</file>
+        <file>Views/ChatTabsDelegate.qml</file>
+        <file>Views/ChatTabsListFilter.qml</file>
+        <file>Views/ChatTabsTextFieldStyle.qml</file>
+        <file>Views/ChatTabsView.qml</file>
+        <file>Views/InputMessageWidget.qml</file>
+        <file>Views/main.qml</file>
+        <file>Views/mainPresenter.js</file>
+        <file>Views/Tools.js</file>
+        <file>Views/ResourceViews/AddFromLocalDrive.qml</file>
+        <file>Views/ResourceViews/AddWebView.qml</file>
+        <file>Views/ResourceViews/CameraView.qml</file>
+        <file>Views/ResourceViews/ChoiceResource.qml</file>
+        <file>Views/ResourceViews/ResourcesView.qml</file>
+        <file>Views/ResourceViews/ResourceViewer/ChatTabsWebView.qml</file>
+        <file>Views/ResourceViews/ResourceViewer/ResourceViewer.qml</file>
+        <file>Packages/ChatTabs.cfg</file>
+    </qresource>
+</RCC>

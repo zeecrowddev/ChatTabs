@@ -1,4 +1,4 @@
 ChatTabs
 ========
 
-Multi users chat , Multi thread with shared resources
+Multi Users Chat with Multi thread ans shared resources

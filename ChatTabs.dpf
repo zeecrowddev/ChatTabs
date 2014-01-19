@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project Template="QtResourceProject">
+  <Configurations>
+    <Configuration name="Debug">
+      <Properties>
+        <OutputDirectory value="..\Client\bin\Debug\packages\ChatTabs" />
+        <ShortNodeName />
+        <IntermediateFilesDirectory value=".\IntermediateFiles\Debug" />
+        <CommandLineArguments value="" />
+        <Executable value="" />
+        <WorkingDirectory value="..\..\..\Foundation\Build\Debug\" />
+      </Properties>
+    </Configuration>
+    <Configuration name="Release">
+      <Properties />
+    </Configuration>
+  </Configurations>
+  <Properties>
+    <ItemsDirectoryRelativePath value="" />
+    <Defines value="" />
+    <EntryPoint value="" />
+    <IncludeDirectories value="" />
+    <TestFramework value="" />
+    <CompressionLevel value="Default" />
+    <CompressionThreshold value="70" />
+    <OutputFileName value="ChatTabs" />
+    <ResourceName value="" />
+    <RootPrefix value="ChatTabs" />
+  </Properties>
+  <Items>
+    <Item Template="QtResourceProjectFolder">
+      <QtResourceProjectFolder Name="Packages">
+        <Properties />
+        <Items>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabs.cfg">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Alias value="" />
+                <CopyToOutputDirectory value="Never" />
+                <CustomTool value="" />
+                <Locale value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+        </Items>
+      </QtResourceProjectFolder>
+    </Item>
+    <Item Template="QtResourceProjectFolder">
+      <QtResourceProjectFolder Name="Resources">
+        <Properties />
+        <Items>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="addCaptureCamera.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="addDocument.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="addImage.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="addPicture.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="addResource.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="addThread.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="addUrl.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="aDocument.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="back.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="bell.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="cancel.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="click.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="close.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="copy.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="dislike.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="editmode.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="like.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabsMode.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="next.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ok.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="clipboard.png">
+              <Properties>
+                <BuildAction value="Compile" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+        </Items>
+      </QtResourceProjectFolder>
+    </Item>
+    <Item Template="QtResourceProjectFolder">
+      <QtResourceProjectFolder Name="Views">
+        <Properties />
+        <Items>
+          <Item Template="QtResourceProjectFolder">
+            <QtResourceProjectFolder Name="ResourceViews">
+              <Properties />
+              <Items>
+                <Item Template="QtResourceProjectFolder">
+                  <QtResourceProjectFolder Name="ResourceViewer">
+                    <Properties />
+                    <Items>
+                      <Item Template="QtResourceFile">
+                        <QtResourceFile FileName="ChatTabsWebView.qml">
+                          <Properties>
+                            <BuildAction value="Compile" />
+                            <Locale value="" />
+                            <Alias value="" />
+                          </Properties>
+                          <Items />
+                        </QtResourceFile>
+                      </Item>
+                      <Item Template="QtResourceFile">
+                        <QtResourceFile FileName="ResourceViewer.qml">
+                          <Properties>
+                            <BuildAction value="Compile" />
+                            <Locale value="" />
+                            <Alias value="" />
+                          </Properties>
+                          <Items />
+                        </QtResourceFile>
+                      </Item>
+                    </Items>
+                  </QtResourceProjectFolder>
+                </Item>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="AddFromLocalDrive.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="AddWebView.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="CameraView.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="ChoiceResource.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="ResourcesView.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+              </Items>
+            </QtResourceProjectFolder>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="AddNewThreadDialogBox.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="InputMessageWidget.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="main.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Alias value="" />
+                <CopyToOutputDirectory value="Never" />
+                <CustomTool value="" />
+                <Locale value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="mainPresenter.js">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabsDelegate.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabsView.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="Tools.js">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabsButton.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabsListFilter.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabsTextFieldStyle.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+        </Items>
+      </QtResourceProjectFolder>
+    </Item>
+    <Item Template="QtResourceFile">
+      <QtResourceFile FileName="ChatTabs.cfg">
+        <Properties>
+          <BuildAction value="Content" />
+          <Alias value="" />
+          <CopyToOutputDirectory value="OnlyIfNewer" />
+          <CustomTool value="" />
+          <Locale value="" />
+          <CopyAs value="" />
+        </Properties>
+        <Items />
+      </QtResourceFile>
+    </Item>
+    <Item Template="QtResourceFile">
+      <QtResourceFile FileName="ChatTabs.zeeapmanifest">
+        <Properties>
+          <BuildAction value="Compile" />
+          <CustomTool value="" />
+          <Locale value="" />
+          <Alias value="" />
+        </Properties>
+        <Items />
+      </QtResourceFile>
+    </Item>
+  </Items>
+</Project>

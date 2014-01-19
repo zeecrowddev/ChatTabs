@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="addPicture.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="10.36"
+     inkscape:cx="178.32677"
+     inkscape:cy="826.42857"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-32000"
+     inkscape:window-y="-32000"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#964646;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3806"
+       width="50"
+       height="50"
+       x="156.27412"
+       y="199.27338"
+       inkscape:export-filename="D:\dev\ZC\Crowd\Source\ZcMuc\Resources\addPicture.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       id="g3801"
+       transform="matrix(0.78493566,0.00836727,-0.00913051,0.76232364,43.215666,52.706746)"
+       inkscape:export-filename="D:\dev\ZC\Crowd\Source\ZcMuc\Resources\addPicture.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\dev\ZC\Crowd\Source\ZcMuc\Resources\addPicture.png"
+         y="200.93361"
+         x="157.14285"
+         height="50"
+         width="50"
+         id="rect2985"
+         style="fill:#007b93;fill-opacity:1;stroke:none" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\dev\ZC\Crowd\Source\ZcMuc\Resources\addPicture.png"
+         inkscape:connector-curvature="0"
+         id="path3785"
+         d="m 157.80606,229.25961 19.48731,-13.58705 9.32003,11.78178 6.68405,-5.8909 13.17982,10.45159 0,18.24275 -48.76535,0.57009 z"
+         style="fill:#007b3a;fill-opacity:1;stroke:#007b3a;stroke-width:0.97981757px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\dev\ZC\Crowd\Source\ZcMuc\Resources\addPicture.png"
+         transform="translate(-1.7374517,-2.2200772)"
+         d="m 203.28185,211.96643 c 0,1.78586 -1.44772,3.23359 -3.23359,3.23359 -1.78586,0 -3.23359,-1.44773 -3.23359,-3.23359 0,-1.78586 1.44773,-3.23359 3.23359,-3.23359 1.78587,0 3.23359,1.44773 3.23359,3.23359 z"
+         sodipodi:ry="3.2335908"
+         sodipodi:rx="3.2335908"
+         sodipodi:cy="211.96643"
+         sodipodi:cx="200.04826"
+         id="path3795"
+         style="fill:#007b3a;fill-opacity:1;stroke:#f8fa59;stroke-width:6;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+         sodipodi:type="arc" />
+    </g>
+    <g
+       id="g3781"
+       transform="matrix(0.88430913,0,0,0.88760277,17.258441,20.441916)"
+       style="fill:#e9afaf;fill-opacity:1;stroke:#964646;stroke-opacity:1"
+       inkscape:export-filename="D:\dev\ZC\Crowd\Source\ZcMuc\Resources\addPicture.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path2987"
+         d="m 172.68471,207.90975 -0.19596,18.34503"
+         style="fill:#e9afaf;fill-opacity:1;stroke:#964646;stroke-width:7.40258694;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path2987-1"
+         d="m 182.19601,216.76264 -19.31478,-0.18612"
+         style="fill:#e9afaf;fill-opacity:1;stroke:#964646;stroke-width:7.40324926;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+  </g>
+</svg>
