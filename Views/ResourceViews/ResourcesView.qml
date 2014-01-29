@@ -22,7 +22,9 @@ import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
 import QtWebKit 3.0
-import ZcClient 1.0
+
+import ZcClient 1.0 as Zc
+
 import "../"
 import "./ResourceViewer"
 
@@ -405,7 +407,7 @@ Item
     Component
     {
         id : zcResourceDescriptorId
-        ZcResourceDescriptor
+        Zc.ResourceDescriptor
         {
         }
     }

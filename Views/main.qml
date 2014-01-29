@@ -23,14 +23,14 @@ import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
 import QtQuick.Layouts 1.0
 
-import ZcClient 1.0
+import ZcClient 1.0 as Zc
 
 import"./ResourceViews"
 
 import "mainPresenter.js" as Presenter
 
 
-ZcAppView
+Zc.AppView
 {
     id : mainView
 
@@ -161,7 +161,7 @@ ZcAppView
 
     signal notify(string subject);
 
-    ZcAppNotification
+    Zc.AppNotification
     {
         id : appNotification
     }
@@ -216,7 +216,7 @@ ZcAppView
     {
         id : zcStorageQueryStatusComponentId
 
-        ZcStorageQueryStatus
+        Zc.StorageQueryStatus
         {
 
         }
@@ -262,12 +262,12 @@ ZcAppView
         }
     }
 
-    ZcCrowdActivity
+    Zc.CrowdActivity
     {
         id : activity
 
 
-        ZcCrowdSharedResource
+        Zc.CrowdSharedResource
         {
             id   : documentFolder
             name : "ChatTabsFolder"
@@ -279,13 +279,13 @@ ZcAppView
             threadItems.loadItems(threadItemsQueryStatus);
         }
 
-        ZcChatMessageSender
+        Zc.ChatMessageSender
         {
             id      : senderChat
             subject : "Main"
         }
 
-        ZcChatMessageListener
+        Zc.ChatMessageListener
         {
             id      : listenerChat
             subject : "*"
@@ -313,9 +313,9 @@ ZcAppView
             }
         }
 
-        ZcCrowdActivityItems
+        Zc.CrowdActivityItems
         {
-            ZcQueryStatus
+            Zc.QueryStatus
             {
                 id : threadItemsQueryStatus
 
@@ -357,14 +357,14 @@ ZcAppView
     {
         id : newListenerId
 
-        ZcChatMessageListView
+        Zc.ChatMessageListView
         {
 
         }
 
     }
 
-    ZcResourceDescriptor
+    Zc.ResourceDescriptor
     {
         id : zcResourceDescriptorId
     }

@@ -20,7 +20,8 @@
 
 import QtQuick 2.0
 import QtQuick.Controls 1.0
-import ZcClient 1.0
+
+import ZcClient 1.0 as Zc
 
 import  "Tools.js" as Tools
 
@@ -64,7 +65,7 @@ Rectangle
     Component
     {
         id : resourceDescriptorCompoennt
-        ZcResourceDescriptor
+        Zc.ResourceDescriptor
         {
             id : resourceDescriptor
         }
@@ -317,7 +318,7 @@ Rectangle
             {
                 id : zcStorageQueryStatusComponentId
 
-                ZcStorageQueryStatus
+                Zc.StorageQueryStatus
                 {
 
                 }

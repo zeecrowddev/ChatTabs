@@ -3,7 +3,7 @@
   <Configurations>
     <Configuration name="Debug">
       <Properties>
-        <OutputDirectory value="..\Client\bin\Debug\packages\ChatTabs" />
+        <OutputDirectory value="..\..\dev\ZC\Crowd\Source\Client\bin\Debug\packages\ChatTabs" />
         <ShortNodeName />
         <IntermediateFilesDirectory value=".\IntermediateFiles\Debug" />
         <CommandLineArguments value="" />
@@ -162,7 +162,27 @@
             </QtResourceFile>
           </Item>
           <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabsMode.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
             <QtResourceFile FileName="click.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="clipboard.png">
               <Properties>
                 <BuildAction value="Compile" />
                 <Locale value="" />
@@ -222,16 +242,6 @@
             </QtResourceFile>
           </Item>
           <Item Template="QtResourceFile">
-            <QtResourceFile FileName="ChatTabsMode.png">
-              <Properties>
-                <BuildAction value="Compile" />
-                <Locale value="" />
-                <Alias value="" />
-              </Properties>
-              <Items />
-            </QtResourceFile>
-          </Item>
-          <Item Template="QtResourceFile">
             <QtResourceFile FileName="next.png">
               <Properties>
                 <BuildAction value="Compile" />
@@ -247,14 +257,6 @@
                 <BuildAction value="Compile" />
                 <Locale value="" />
                 <Alias value="" />
-              </Properties>
-              <Items />
-            </QtResourceFile>
-          </Item>
-          <Item Template="QtResourceFile">
-            <QtResourceFile FileName="clipboard.png">
-              <Properties>
-                <BuildAction value="Compile" />
               </Properties>
               <Items />
             </QtResourceFile>
@@ -361,6 +363,56 @@
             </QtResourceFile>
           </Item>
           <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabsButton.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabsDelegate.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabsListFilter.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabsTextFieldStyle.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatTabsView.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
             <QtResourceFile FileName="InputMessageWidget.qml">
               <Properties>
                 <BuildAction value="Compile" />
@@ -393,57 +445,7 @@
             </QtResourceFile>
           </Item>
           <Item Template="QtResourceFile">
-            <QtResourceFile FileName="ChatTabsDelegate.qml">
-              <Properties>
-                <BuildAction value="Compile" />
-                <Locale value="" />
-                <Alias value="" />
-              </Properties>
-              <Items />
-            </QtResourceFile>
-          </Item>
-          <Item Template="QtResourceFile">
-            <QtResourceFile FileName="ChatTabsView.qml">
-              <Properties>
-                <BuildAction value="Compile" />
-                <Locale value="" />
-                <Alias value="" />
-              </Properties>
-              <Items />
-            </QtResourceFile>
-          </Item>
-          <Item Template="QtResourceFile">
             <QtResourceFile FileName="Tools.js">
-              <Properties>
-                <BuildAction value="Compile" />
-                <Locale value="" />
-                <Alias value="" />
-              </Properties>
-              <Items />
-            </QtResourceFile>
-          </Item>
-          <Item Template="QtResourceFile">
-            <QtResourceFile FileName="ChatTabsButton.qml">
-              <Properties>
-                <BuildAction value="Compile" />
-                <Locale value="" />
-                <Alias value="" />
-              </Properties>
-              <Items />
-            </QtResourceFile>
-          </Item>
-          <Item Template="QtResourceFile">
-            <QtResourceFile FileName="ChatTabsListFilter.qml">
-              <Properties>
-                <BuildAction value="Compile" />
-                <Locale value="" />
-                <Alias value="" />
-              </Properties>
-              <Items />
-            </QtResourceFile>
-          </Item>
-          <Item Template="QtResourceFile">
-            <QtResourceFile FileName="ChatTabsTextFieldStyle.qml">
               <Properties>
                 <BuildAction value="Compile" />
                 <Locale value="" />
@@ -464,17 +466,6 @@
           <CustomTool value="" />
           <Locale value="" />
           <CopyAs value="" />
-        </Properties>
-        <Items />
-      </QtResourceFile>
-    </Item>
-    <Item Template="QtResourceFile">
-      <QtResourceFile FileName="ChatTabs.zeeapmanifest">
-        <Properties>
-          <BuildAction value="Compile" />
-          <CustomTool value="" />
-          <Locale value="" />
-          <Alias value="" />
         </Properties>
         <Items />
       </QtResourceFile>
