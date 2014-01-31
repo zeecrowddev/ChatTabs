@@ -352,7 +352,7 @@ Item
         maximumValue    : 100;
     }
 
-    QClipboard
+    Zc.QClipboard
     {
         id: clipboard
     }

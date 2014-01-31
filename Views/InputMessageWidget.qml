@@ -18,14 +18,14 @@
 ** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.0
+import QtQuick 2.2
+import QtQuick.Controls 1.1
 
 
 FocusScope
 {
     id : input
-    height : 25
+    height : 75
 
     property QtObject _documentFolder : null
 
@@ -39,73 +39,124 @@ FocusScope
     }
 
 
+    Rectangle
+    {
+        id : background
+        anchors
+        {
+            top : parent.top
+            bottom : parent.bottom
+            left : parent.left
+            right : parent.right
+            rightMargin : 5
+            leftMargin : 5
+        }
+        color : input.focus ?  Qt.lighter("#ff6600") : "white"
+    }
 
     states :
         [
-            State
-            {
-                name   : "chat"
-                StateChangeScript {
-                       script:
-                       {
-                            input.visible = true;
-                            input.enabled = true;
-                            textField.readOnly = false;
-                            textField.visible = true
-                       }
+        State
+        {
+            name   : "chat"
+            StateChangeScript {
+                script:
+                {
+                    input.visible = true;
+                    input.enabled = true;
+                    textField.readOnly = false;
+                    textField.visible = true
                 }
-            } 
-            ,
-            State
-            {
-                name   : "unvisible"
-                StateChangeScript {
-                       script:
-                         {
-                           input.visible = false;
-                           input.enabled = false;
-                           textField.visible = false
-                           textField.readOnly = true;
+            }
+        }
+        ,
+        State
+        {
+            name   : "unvisible"
+            StateChangeScript {
+                script:
+                {
+                    input.visible = false;
+                    input.enabled = false;
+                    textField.visible = false
+                    textField.readOnly = true;
 
-                       }
+                }
+            }
+        }
+
+
+    ]
+
+    ScrollView
+    {
+        anchors.top: background.top
+        anchors.topMargin: 2
+        anchors.bottom: background.bottom
+        anchors.left: background.left
+        anchors.leftMargin: 5
+        anchors.right: background.right
+        anchors.rightMargin: 5
+
+
+        TextEdit
+        {
+            id : textField
+
+            width : background.width - 50
+            height : background.height - 2  > lineCount * 19 ? background.height - 2 : lineCount * 19
+
+            font.pixelSize: 16
+
+            textFormat: TextEdit.AutoText
+
+            wrapMode: TextEdit.WrapAnywhere
+
+            Keys.onPressed:
+            {
+
+                if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return)
+                {
+                    event.accepted = true
+                    if (!(event.modifiers & Qt.AltModifier))
+                    {
+                        var result = "TXT|" + text
+                        input.accepted(result);
+                        text = "";
+                    }
+                    else
+                    {
+                        textField.append("")
+                    }
                 }
             }
 
+            //        Keys.onEnterPressed:
+            //        {
+            //            if (event.modifiers & Qt.AltModifier)
+            //            {
+            //                text = text + "<br>"
+            //            }
+            //            else
+            //            {
+            //                var textResolved = text.replace("<","&lt;")
+            //                textResolved = textResolved.replace(">","&gt");
+            //                textResolved = textResolved.replace("\n","<br>");
 
-        ]
+            //                var result = "TXT|" + textResolved
+            //                input.accepted(result);
+            //                text = "";
+            //            }
+            //        }
 
-    TextField
-    {
-        id : textField
 
-        anchors.top: parent.top
-        anchors.topMargin: 2
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.leftMargin: 5
-        anchors.right: parent.right
-        anchors.rightMargin: 5
-        font.pixelSize: 16
 
-        onAccepted :
-        {
-            var textResolved = text.replace("<","&lt;")
-            textResolved = textResolved.replace(">","&gt");
-            textResolved = textResolved.replace("\n","<br>");
 
-            var result = "TXT|" + textResolved
-            input.accepted(result);
-            text = "";
+            //        style: ChatTabsTextFieldStyle {
+
+            //               focused : textField.focus
+
+            //           }
         }
-
-        style: ChatTabsTextFieldStyle {
-
-               focused : textField.focus
-
-           }
     }
-
-
-
-
 }

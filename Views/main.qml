@@ -247,7 +247,9 @@ Zc.AppView
         if ( Presenter.instance["listener" + thread] === null ||
                 Presenter.instance["listener" + thread] === undefined )
         {
+            console.log(">>>>> 11")
             var tab = tabView.addTab(thread,chatTabsViewComponent)
+            console.log(">>>>> 12")
             var listener = newListenerId.createObject(tab);
             listener.filterSubject = thread;
             listener.model = listenerChat.messages
@@ -376,15 +378,30 @@ Zc.AppView
         ChatTabsView
         {
             id                   : chatTabsView
+            crowdActivity        : activity
+
             anchors
             {
                 top         : parent.top
                 topMargin   : 10
-                bottom      : parent.bottom
+//                bottom      : inputMessageWidget.top
+//                bottomMargin   : 100
                 left        : parent.left
                 right       : parent.right
             }
 
+            clip  : true
+
+            Component.onCompleted:
+            {
+                console.log(">>>>>>>>>>>>>>>< scrollview size is " + height)
+            }
+
+            onHeightChanged:
+            {
+                console.log(">>>>>>>>>>>>>>>>>>>>>> scrollview size is now  " + height)
+
+            }
 
             onResourceClicked:
             {
@@ -410,7 +427,7 @@ Zc.AppView
         }
     }
 
-    QClipboard
+    Zc.QClipboard
     {
         id: clipboard
     }
@@ -478,7 +495,11 @@ Zc.AppView
         orientation: Qt.Horizontal
 
         handleDelegate:
-            Item{ width : 5 }
+            Rectangle
+            {
+                width : 10
+                color :  styleData.hovered ? "grey" :  "lightgrey"
+            }
 
         Item
         {
@@ -496,7 +517,7 @@ Zc.AppView
                 anchors.left         : parent.left
                 anchors.right        : parent.right
                 anchors.bottom       : inputMessageWidget.top
-                anchors.bottomMargin : 5
+                anchors.bottomMargin : 15
 
 
                 onCurrentIndexChanged :

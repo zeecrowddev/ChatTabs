@@ -31,6 +31,7 @@ ScrollView
     signal resourceClicked(string resourceDescriptor)
 
     property QtObject messages : null
+    property QtObject crowdActivity : null
 
     onMessagesChanged:
     {
@@ -44,13 +45,21 @@ ScrollView
 
     function goToEnd()
     {
+
         var cy = chatTabs.flickableItem.contentY > 0 ? chatTabs.flickableItem.contentY : 0
         var delta = chatTabs.flickableItem.contentHeight - (cy + chatTabs.flickableItem.height);
+
+//        console.log(">> chatTabs.flickableItem.contentY " + chatTabs.flickableItem.contentY)
+//        console.log(">> chatTabs.flickableItem.contentHeight  " + chatTabs.flickableItem.contentHeight)
+//        console.log(">> chatTabs.flickableItem.height  " + chatTabs.flickableItem.height)
+//        console.log(">> cy "  +cy)
+        console.log(">> delta " + delta)
 
         if (delta <= 30)
         {
             chatTabs.flickableItem.contentY = Math.round(column.height - chatTabs.flickableItem.height);
         }
+
     }
 
     Column
@@ -72,8 +81,10 @@ ScrollView
 
 //            model : chatTabs.messages
             ChatTabsDelegate
-            {
+            {           
                 onResourceClicked: chatTabs.resourceClicked(resourceDescriptor)
+
+                contactImageSource : crowdActivity.getParticipantImageUrl(from)
             }
 
         }
