@@ -21,6 +21,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 
+import "Tools.js" as Tools
 
 FocusScope
 {
@@ -30,6 +31,9 @@ FocusScope
     property QtObject _documentFolder : null
 
     signal accepted(string message);
+
+
+
 
 
     function setFocus()
@@ -108,19 +112,22 @@ FocusScope
 
             font.pixelSize: 16
 
-            textFormat: TextEdit.AutoText
+//            textFormat: TextEdit.AutoText
 
             wrapMode: TextEdit.WrapAnywhere
 
             Keys.onPressed:
             {
 
+             //   console.log(">> keypressed " + event.key)
+
                 if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return)
                 {
                     event.accepted = true
                     if (!(event.modifiers & Qt.AltModifier))
                     {
-                        var result = "TXT|" + text
+                        var result = "TXT|" + Tools.decodeUrl(Tools.decodeLessMore(text))
+
                         input.accepted(result);
                         text = "";
                     }
@@ -130,33 +137,6 @@ FocusScope
                     }
                 }
             }
-
-            //        Keys.onEnterPressed:
-            //        {
-            //            if (event.modifiers & Qt.AltModifier)
-            //            {
-            //                text = text + "<br>"
-            //            }
-            //            else
-            //            {
-            //                var textResolved = text.replace("<","&lt;")
-            //                textResolved = textResolved.replace(">","&gt");
-            //                textResolved = textResolved.replace("\n","<br>");
-
-            //                var result = "TXT|" + textResolved
-            //                input.accepted(result);
-            //                text = "";
-            //            }
-            //        }
-
-
-
-
-            //        style: ChatTabsTextFieldStyle {
-
-            //               focused : textField.focus
-
-            //           }
         }
     }
 }

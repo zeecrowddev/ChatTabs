@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<a:ZeeapManifest xmlns:a="clr-namespace:Djed.Qt;assembly=Djed.Qt">
+  <a:ZeeapManifest.Metadata>
+    <a:ZeeapManifestMetaData>
+      <a:ZeeapManifestMetaData.AppName>ChatTabs</a:ZeeapManifestMetaData.AppName>
+      <a:ZeeapManifestMetaData.Version>124</a:ZeeapManifestMetaData.Version>
+      <a:ZeeapManifestMetaData.AppConfig>ChatTabs.cfg</a:ZeeapManifestMetaData.AppConfig>
+    </a:ZeeapManifestMetaData>
+  </a:ZeeapManifest.Metadata>
+</a:ZeeapManifest>

@@ -18,66 +18,18 @@
 ** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-.pragma library
+import QtQuick 2.0
 
-function forEachInObjectList(objectList, delegate)
+Image
 {
-    for (var i=0;i<objectList.count;i++)
+    id : image
+    anchors.fill: parent
+
+    fillMode : Image.PreserveAspectFit
+
+    function show(resource)
     {
-        delegate(objectList.at(i));
+        var res = JSON.parse(resource)
+        image.source = res.path
     }
 }
-
-function findInListModel(listModel, findDelegate)
-{
-    for (var i=0;i<listModel.count;i++)
-    {
-        if ( findDelegate(listModel.get(i)) )
-            return listModel.get(i);
-    }
-
-    return null;
-}
-
-function forEachInArray(array, delegate)
-{
-    for (var i=0;i<array.length;i++)
-    {
-        delegate(array[i]);
-    }
-}
-
-function decodeLessMore(text)
-{
-    console.log(">> before " + text)
-    var tmpLess = text.replace(/</g,"&lt;")
-    console.log(">> after " + tmpLess)
-    var tmpGreater = tmpLess.replace(/>/g,"&gt;")
-
-    return tmpGreater;
-}
-
-function decodeUrl(text)
-{
-    var list = text.split(' ')
-
-    var result = "";
-
-    forEachInArray( list,function (x) {
-        if (x.indexOf("www.") === 0)
-        {
-            result += "<a href=\"http://" + x + "\">" +  x + "</a>";
-        } else if (x.indexOf("http://") === 0 || x.indexOf("https://") === 0)
-        {
-            result += "<a href=\"" + x + "\">" +  x + "</a>";
-        }
-        else
-        {
-            result += x;
-        }
-        result += " "
-    })
-
-    return result.substr(0,result.length);
-}
-

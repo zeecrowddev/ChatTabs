@@ -16,7 +16,12 @@ OTHER_FILES += \
     Views/ResourceViews/AddWebView.qml \
     Views/ResourceViews/ResourceViewer/ResourceViewer.qml \
     Views/ResourceViews/ResourceViewer/ChatTabsWebView.qml \
-    Views/ResourceViews/AddFromLocalDrive.qml
+    Views/ResourceViews/AddFromLocalDrive.qml \
+    Views/ChatAddsButtons.qml \
+    Views/ResourceViewer2/ResourceViewer2.qml \
+    Views/ResourceViewer2/ImageViewer.qml \
+    Views/ResourceViewer2/WebViewer.qml \
+    Views/ResourceViewer2/CameraView.qml
   
 
 RESOURCES += \

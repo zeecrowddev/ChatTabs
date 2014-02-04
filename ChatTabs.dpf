@@ -232,6 +232,16 @@
             </QtResourceFile>
           </Item>
           <Item Template="QtResourceFile">
+            <QtResourceFile FileName="folder.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
             <QtResourceFile FileName="like.png">
               <Properties>
                 <BuildAction value="Compile" />
@@ -257,6 +267,42 @@
                 <BuildAction value="Compile" />
                 <Locale value="" />
                 <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="camera.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="paste.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="cancel2.png">
+              <Properties>
+                <BuildAction value="Compile" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ok2.png">
+              <Properties>
+                <BuildAction value="Compile" />
               </Properties>
               <Items />
             </QtResourceFile>
@@ -454,6 +500,63 @@
               <Items />
             </QtResourceFile>
           </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatAddsButtons.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceProjectFolder">
+            <QtResourceProjectFolder Name="ResourceViewer2">
+              <Properties />
+              <Items>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="ResourceViewer2.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="ImageViewer.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="WebViewer.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="CameraView.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+              </Items>
+            </QtResourceProjectFolder>
+          </Item>
         </Items>
       </QtResourceProjectFolder>
     </Item>
@@ -466,6 +569,17 @@
           <CustomTool value="" />
           <Locale value="" />
           <CopyAs value="" />
+        </Properties>
+        <Items />
+      </QtResourceFile>
+    </Item>
+    <Item Template="QtResourceFile">
+      <QtResourceFile FileName="ChatTabs.zeeapmanifest">
+        <Properties>
+          <BuildAction value="Compile" />
+          <CustomTool value="" />
+          <Locale value="" />
+          <Alias value="" />
         </Properties>
         <Items />
       </QtResourceFile>

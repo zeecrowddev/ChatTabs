@@ -19,6 +19,7 @@
 */
 
 import QtQuick 2.0
+import QtQuick.Dialogs 1.0
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
 import QtQuick.Layouts 1.0
@@ -26,6 +27,7 @@ import QtQuick.Layouts 1.0
 import ZcClient 1.0 as Zc
 
 import"./ResourceViews"
+import"./ResourceViewer2"
 
 import "mainPresenter.js" as Presenter
 
@@ -43,14 +45,6 @@ Zc.AppView
         right  : parent.right
     }
 
-
-    function closeTask()
-    {
-        mainView.close();
-    }
-
-    state : "chat"
-
     toolBarActions :
         [
         Action {
@@ -60,7 +54,7 @@ Zc.AppView
             tooltip : "Close Application"
             onTriggered:
             {
-                mainView.closeTask();
+                mainView.close();
             }
         }
         ,
@@ -98,6 +92,10 @@ Zc.AppView
                 addNewThreadDialogBox.setFocus();
             }
         }
+
+        /*
+        ** To be destroyed
+        */
         ,
         Action {
             id: viewRightPanel
@@ -109,6 +107,9 @@ Zc.AppView
             }
         }
     ]
+
+    state : "chat"
+
 
     states :
         [
@@ -159,12 +160,23 @@ Zc.AppView
     ]
 
 
+    /*
+    ** This signal notify that a message arrive on a tab "subject"
+    ** Each Chat Tab listen this signal to increment if necessary
+    ** his count message unread
+    */
+
     signal notify(string subject);
 
     Zc.AppNotification
     {
         id : appNotification
     }
+
+    /*
+    ** Clean all external notifications
+    ** Set the focus
+    */
 
     onIsCurrentViewChanged :
     {
@@ -175,7 +187,6 @@ Zc.AppView
         }
     }
 
-    property QtObject fileDescriptor : null;
 
     function onResourceProgress(query,value)
     {
@@ -277,8 +288,18 @@ Zc.AppView
 
         onStarted :
         {
+            // Now we know how i am i and set this static value to the ChatAddsButtons
+            // need it to genrat file information
+            buttons.nickname =  mainView.context.nickname
             resourceViewer.localPath = documentFolder.localPath;
+            resourceViewer2.localPath = documentFolder.localPath;
             threadItems.loadItems(threadItemsQueryStatus);
+        }
+
+        onContextChanged :
+        {
+            console.log(">>>> onContextChanged ")
+            buttons.setContext(activity.context);
         }
 
         Zc.ChatMessageSender
@@ -371,6 +392,8 @@ Zc.AppView
         id : zcResourceDescriptorId
     }
 
+    property string currentTabViewTitle : "Main"
+
     Component
     {
         id : chatTabsViewComponent
@@ -384,8 +407,8 @@ Zc.AppView
             {
                 top         : parent.top
                 topMargin   : 10
-//                bottom      : inputMessageWidget.top
-//                bottomMargin   : 100
+                //                bottom      : inputMessageWidget.top
+                //                bottomMargin   : 100
                 left        : parent.left
                 right       : parent.right
             }
@@ -411,13 +434,13 @@ Zc.AppView
 
                 if (resourceViewer.isKnownResourceDescriptor())
                 {
-                    if (resourceViewer.width <  20)
-                    {
-                        resourceViewer.state = "resourceViewer"
-                        resourceViewer.width = mainView.width / 2
-                    }
+//                    if (resourceViewer.width <  20)
+//                    {
+//                        resourceViewer.state = "resourceViewer"
+//                        resourceViewer.width = mainView.width / 2
+//                    }
 
-                    resourceViewer.showResourceDescriptor();
+                    resourceViewer2.showResource(resourceDescriptor);
                 }
                 else
                 {
@@ -494,12 +517,17 @@ Zc.AppView
         anchors.fill: parent
         orientation: Qt.Horizontal
 
-        handleDelegate:
+        Component
+        {
+            id : handleDelegateDelegate
             Rectangle
             {
                 width : 10
                 color :  styleData.hovered ? "grey" :  "lightgrey"
             }
+        }
+
+        handleDelegate : handleDelegateDelegate
 
         Item
         {
@@ -507,7 +535,6 @@ Zc.AppView
             anchors.rightMargin: 5
 
             Layout.fillWidth : true
-
 
 
             TabView
@@ -522,7 +549,10 @@ Zc.AppView
 
                 onCurrentIndexChanged :
                 {
-                    var title = tabView.getTab(currentIndex).title;
+
+                    mainView.currentTabViewTitle = tabView.getTab(currentIndex).title
+
+                    var title = mainView.currentTabViewTitle;
 
                     if (tabView.getTab(currentIndex).item.messages === null ||
                             tabView.getTab(currentIndex).item.messages === undefined)
@@ -538,9 +568,9 @@ Zc.AppView
                     notify(title)
                 }
 
-                style: TabViewStyle
-                {
-                tab: Rectangle {
+
+                style: TabViewStyle {
+                 tab: Rectangle {
                     color: styleData.selected ? "steelblue" :"lightsteelblue"
                     border.color:  "steelblue"
                     implicitWidth: Math.max(text.width + 4, 80)
@@ -696,50 +726,104 @@ Zc.AppView
                 senderChat.sendMessage(message);
             }
         }
-
-
-
     }
 
 
-    ResourcesView
+    Item
     {
-        id : resourceViewer
-        width : 0
-        clip : true
+        width : 300
 
-        //zcSharedFolder:   documentFolder
 
-        onAddUrl:
+        ResourcesView
         {
-            tabView.getTab(tabView.currentIndex).item.state = "chat";
+            id : resourceViewer
+            width : parent.width
+            clip : true
 
-            var result = "###|" +  resourceViewer.resourceDescriptor.toJSON();
-            var title = tabView.getTab(tabView.currentIndex).title;
-            senderChat.subject = title;
-            senderChat.sendMessage(result);
+            anchors.top    : parent.top
+            anchors.bottom : buttons.top
 
-            width = 0;
-            resourceViewer.state = "none"
-            mainView.state = "chat"
-            inputMessageWidget.state    = "chat";
-        }
+            //zcSharedFolder:   documentFolder
 
-        onUpload :
-        {
-            tabView.getTab(tabView.currentIndex).item.state = "chat";
-
-            if (!importFile(resourceViewer.resourceDescriptor))
+            onAddUrl:
             {
-                resourceViewer.showError("Upload Failed")
+                tabView.getTab(tabView.currentIndex).item.state = "chat";
+
+                var result = "###|" +  resourceViewer.resourceDescriptor.toJSON();
+                var title = tabView.getTab(tabView.currentIndex).title;
+                senderChat.subject = title;
+                senderChat.sendMessage(result);
+
+                width = 0;
+                resourceViewer.state = "none"
+                mainView.state = "chat"
+                inputMessageWidget.state    = "chat";
+            }
+
+            onUpload :
+            {
+                tabView.getTab(tabView.currentIndex).item.state = "chat";
+
+                if (!importFile(resourceViewer.resourceDescriptor))
+                {
+                    resourceViewer.showError("Upload Failed")
+                }
+            }
+
+            onCancel:
+            {
+                width = 0;
+                resourceViewer.state = "none"
+                mainView.state = "chat"
             }
         }
 
-        onCancel:
+
+        /*
+        ** View Resources from the ChatList delegate
+        */
+
+        ResourceViewer2
         {
-            width = 0;
-            resourceViewer.state = "none"
-            mainView.state = "chat"
+            id : resourceViewer2
+
+            anchors
+            {
+                top : parent.top;topMargin : 5
+                bottom: buttons.top;bottomMargin: 5
+                left : parent.left;leftMargin : 5
+            }
+
+            width : parent.width - 10
+
+            onUploadFile:
+            {
+                 buttons.uploadFile(fileName)
+            }
+        }
+
+        /*
+        ** Buttons to addFiles to the chat
+        ** Progressbar show the upload or download status
+        */
+
+        ChatAddsButtons
+        {
+            id : buttons
+
+            currentTabViewTitle : mainView.currentTabViewTitle
+
+            onSendMessage:
+            {
+                console.log(">>>>>>>>> send message to " + title)
+                senderChat.subject = title;
+                senderChat.sendMessage(message);
+            }
+
+            onShowCamera:
+            {
+                resourceViewer2.showCamera()
+            }
         }
     }
 }

@@ -18,66 +18,61 @@
 ** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-.pragma library
+import QtQuick 2.0
+import QtWebKit 3.0
+import QtQuick.Controls 1.1
 
-function forEachInObjectList(objectList, delegate)
+Item
 {
-    for (var i=0;i<objectList.count;i++)
-    {
-        delegate(objectList.at(i));
-    }
-}
+    anchors.fill: parent
 
-function findInListModel(listModel, findDelegate)
-{
-    for (var i=0;i<listModel.count;i++)
+    function show(resource)
     {
-        if ( findDelegate(listModel.get(i)) )
-            return listModel.get(i);
+        var res = JSON.parse(resource)
+        webView.url = res.path
     }
 
-    return null;
-}
-
-function forEachInArray(array, delegate)
-{
-    for (var i=0;i<array.length;i++)
+    Rectangle
     {
-        delegate(array[i]);
-    }
-}
+        id          : progressBarContainerId
 
-function decodeLessMore(text)
-{
-    console.log(">> before " + text)
-    var tmpLess = text.replace(/</g,"&lt;")
-    console.log(">> after " + tmpLess)
-    var tmpGreater = tmpLess.replace(/>/g,"&gt;")
-
-    return tmpGreater;
-}
-
-function decodeUrl(text)
-{
-    var list = text.split(' ')
-
-    var result = "";
-
-    forEachInArray( list,function (x) {
-        if (x.indexOf("www.") === 0)
+        color : "black"
+        anchors
         {
-            result += "<a href=\"http://" + x + "\">" +  x + "</a>";
-        } else if (x.indexOf("http://") === 0 || x.indexOf("https://") === 0)
-        {
-            result += "<a href=\"" + x + "\">" +  x + "</a>";
+            top     : parent.top
+            right   : parent.right
+            left    : parent.left
         }
-        else
+
+        height  : 3
+
+
+        Rectangle
         {
-            result += x;
+            id          : progressBarId
+
+
+            width : parent.width * webView.loadProgress / 100
+
+            color       : "red"
+            anchors
+            {
+                top     : parent.top
+                left    : parent.left
+            }
+
+            height  : 3
         }
-        result += " "
-    })
+    }
 
-    return result.substr(0,result.length);
+    WebView
+    {
+        id : webView
+
+        anchors.top         : parent.top
+        anchors.topMargin   : 4
+        anchors.bottom      : parent.bottom
+        anchors.left        : parent.left
+        anchors.right       : parent.right
+    }
 }
-

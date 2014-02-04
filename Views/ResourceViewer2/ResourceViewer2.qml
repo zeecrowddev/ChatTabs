@@ -18,66 +18,66 @@
 ** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-.pragma library
+import QtQuick 2.0
+//import QtQuick.Dialogs 1.0
+import QtQuick.Controls 1.1
+import QtQuick.Controls.Styles 1.1
+//import QtQuick.Layouts 1.0
 
-function forEachInObjectList(objectList, delegate)
+//import ZcClient 1.0 as Zc
+
+Rectangle
 {
-    for (var i=0;i<objectList.count;i++)
+    id : resourceViewer
+    height: 100
+    width : 100
+
+    color : "white"
+
+    property string localPath: ""
+
+    signal uploadFile(string fileName)
+
+    function showCamera()
     {
-        delegate(objectList.at(i));
-    }
-}
-
-function findInListModel(listModel, findDelegate)
-{
-    for (var i=0;i<listModel.count;i++)
-    {
-        if ( findDelegate(listModel.get(i)) )
-            return listModel.get(i);
-    }
-
-    return null;
-}
-
-function forEachInArray(array, delegate)
-{
-    for (var i=0;i<array.length;i++)
-    {
-        delegate(array[i]);
-    }
-}
-
-function decodeLessMore(text)
-{
-    console.log(">> before " + text)
-    var tmpLess = text.replace(/</g,"&lt;")
-    console.log(">> after " + tmpLess)
-    var tmpGreater = tmpLess.replace(/>/g,"&gt;")
-
-    return tmpGreater;
-}
-
-function decodeUrl(text)
-{
-    var list = text.split(' ')
-
-    var result = "";
-
-    forEachInArray( list,function (x) {
-        if (x.indexOf("www.") === 0)
+        loader.source = "CameraView.qml"
+        loader.item.localPath = resourceViewer.localPath
+        loader.item.sendCameraPicture.connect(function (x)
         {
-            result += "<a href=\"http://" + x + "\">" +  x + "</a>";
-        } else if (x.indexOf("http://") === 0 || x.indexOf("https://") === 0)
+            if (x !== "")
+            {
+               resourceViewer.uploadFile(x)
+               loader.source = ""
+            }
+        } );
+        loader.item.close.connect( function (x) {loader.source = ""})
+    }
+
+    function showResource(resource)
+    {
+        console.log(">> showRessource " + resource)
+
+        var res = JSON.parse(resource)
+
+        /*
+        ** Show an image
+        */
+        if (res.mimeType.indexOf("image") === 0 )
         {
-            result += "<a href=\"" + x + "\">" +  x + "</a>";
+            loader.source = "ImageViewer.qml"
+            loader.item.show(resource)
         }
-        else
+        else if (res.mimeType.indexOf("http") === 0 )
         {
-            result += x;
+            loader.source = "WebViewer.qml"
+            loader.item.show(resource)
         }
-        result += " "
-    })
+    }
 
-    return result.substr(0,result.length);
+
+    Loader
+    {
+        id : loader
+        anchors.fill: parent
+    }
 }
-

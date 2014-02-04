@@ -41,18 +41,24 @@ Rectangle
 
     color : "white"
 
-
+    /*
+    ** Contact Image
+    ** default contact image set
+    */
     Image
     {
         id : contactImage
 
-        width : 50
+        width  : 50
         height : width
 
-        anchors.top : parent.top
-        anchors.topMargin : 2
-        anchors.left : parent.left
-        anchors.leftMargin : 2
+        anchors
+        {
+            top        : parent.top
+            topMargin  : 2
+            left       : parent.left
+            leftMargin : 2
+        }
 
         onStatusChanged:
         {
@@ -139,50 +145,27 @@ Rectangle
                     }
                     else
                     {
-                        var zrd = resourceDescriptorCompoennt.createObject(chatTabsDelegate);
-                        zrd.fromJSON(theContent);
+                        var contentObject = JSON.parse(theContent)
 
-                        if (zrd.isImage())
+                        console.log(">> conetntObject " + theContent)
+
+                        if (contentObject.mimeType.indexOf("image") === 0)
                         {
+                            // verify doesn't already exist
                             if (Tools.findInListModel(listRessource, function (x) {return x.content === theContent} ) === null)
                             {
-                                listRessource.append({ imageSource : zrd.path, content : theContent, needDownload : false , textImage : "" });
+                                listRessource.append({ imageSource : contentObject.path, content : theContent, needDownload : false , textImage : contentObject.displayName});
                             }
-                        }
-                        else if (zrd.isHttp())
-                        {
-
-                            result += "<a href=\"" + zrd.path + "\">" +  zrd.path.replace("http://","") + "</a>";
-                            result += "<br>";
                         }
                         else
                         {
+                            // verify doesn't already exist
                             if (Tools.findInListModel(listRessource, function (x) {return x.content === theContent} ) === null)
                             {
-                                listRessource.append({ imageSource : "qrc:/ChatTabs/Resources/aDocument.png", content : theContent, needDownload : true, textImage : zrd.suffix });
+                                listRessource.append({ imageSource : "image://icons/" + contentObject.name, content : theContent, needDownload : true, textImage : contentObject.displayName});
                             }
                         }
                     }
-
-                    //                else if (type === "IMG")
-                    //                {
-                    //                    if (Tools.findInListModel(listRessource, function (x) {return x.content === theContent} ) === null)
-                    //                    {
-                    //                        listRessource.append({ type : 'IMG',content : theContent, needDownload : false });
-                    //                    }
-                    //                }
-                    //                else if (type === "DOC")
-                    //                {
-                    //                    if (Tools.findInListModel(listRessource, function (x) {return x.content === theContent}) === null)
-                    //                    {
-                    //                        listRessource.append({ type : 'DOC',content : theContent, needDownload : true });
-                    //                    }
-                    //                }
-                    //                else if (type === "WWW")
-                    //                {
-                    //                    result += "<a href=\"" + theContent + "\">" +  theContent.replace("http://","") + "</a>";
-                    //                    result += "<br>";
-                    //                }
                 }
                 catch(e)
                 {
@@ -199,7 +182,7 @@ Rectangle
             textEdit.text = result;
 
             var ligneHeight =  textEdit.lineCount * 17
-            var resourcesHeight = (100 + 5) * listRessource.count ;
+            var resourcesHeight = (120 + 5) * listRessource.count ;
 
             var finalHeight = 60;
 
@@ -217,10 +200,6 @@ Rectangle
 
             textZone.height = finalHeight;
             chatTabsDelegate.height = finalHeight;
-
-
-            console.log(">> heigh =  + " + textZone.height)
-
         }
 
         function bodyChanged()
@@ -384,63 +363,53 @@ Rectangle
 
                     model : listRessource
 
-                    Image
+
+
+                    /*
+                    ** Each added resource is visualized likz an image
+                    */
+
+
+                    Item
                     {
-                        id : imageId
                         width : 100
-                        height: width
-                        fillMode: Image.PreserveAspectFit
+                        height: 120
 
-                        onStatusChanged:
+                        Image
                         {
-                            if (status != Image.Error )
+                            id : imageId
+                            width : 100
+                            height: width
+                            fillMode: Image.PreserveAspectFit
+
+                            onStatusChanged:
                             {
-                                message = Math.round(imageId.progress * 100)
+                                if (status != Image.Error )
+                                {
+                                    messageId.visible = false
+                                    message = "";
+                                }
+                                else
+                                {
+                                    messageId.visible = false
+                                    message = "Error"
+                                }
+
                             }
-                            else
+
+                            onProgressChanged:
                             {
-                                message = "Error"
+                                if ( status === Image.Loading)
+                                {
+                                    message = Math.round(imageId.progress * 100)
+                                    messageId.visible = true
+                                }
                             }
-                        }
 
-                        onProgressChanged:
-                        {
-                            if (imageId.progress != 1)
+                            Component.onCompleted:
                             {
-                                messageId.visible = true
+                                source = imageSource
                             }
-                            else
-                            {
-                                messageId.visible = false
-                            }
-                        }
-
-                        Component.onCompleted:
-                        {
-                            source = imageSource
-                        }
-
-                        property alias message : messageTextId.text
-
-
-                        Text
-                        {
-                            anchors.centerIn : parent
-                            color : "black"
-                            font.pixelSize:   20
-                            text : model.textImage
-                        }
-
-
-
-                        Rectangle
-                        {
-
-                            id    : messageId
-                            color : "lightGrey"
-                            anchors.fill: parent
-
-                            visible : false
 
                             Text
                             {
@@ -450,65 +419,88 @@ Rectangle
                                 font.pixelSize:   20
                             }
 
-                        }
 
 
-                        MouseArea
-                        {
-                            anchors.fill : parent
-                            onClicked:
+                            property alias message : messageTextId.text
+
+                            /*
+                            ** Progress Message or Error download message
+                            */
+                            Rectangle
                             {
-                                if (!model.needDownload)
+
+                                id           : messageId
+                                color        : "lightGrey"
+                                anchors.fill : parent
+
+                                visible : false
+
+                            }
+
+
+                            MouseArea
+                            {
+                                anchors.fill : parent
+                                onClicked:
                                 {
-                                    resourceClicked(model.content)
-                                }
-                                else
-                                {
-
-                                    var query = zcStorageQueryStatusComponentId.createObject(imageId)
-                                    //                                query.progress.connect(function (q,v)
-                                    //                                {
-                                    //                                    console.log(">> V " + v)
-                                    //                                    if (v === 100)
-                                    //                                    {
-                                    //                                         messageId.visible = false;
-                                    //                                    }
-                                    //                                    else
-                                    //                                    {
-                                    //                                        messageId.visible = true
-                                    //                                        message = Math.round(v * 100)
-                                    //                                    }
-
-                                    //                                });
-
-
-                                    query.completed.connect(function (x) {
-                                        resourceClicked(x.content)
-                                        messageId.visible = false
-                                        imageId.message = ""
-                                        listRessource.setProperty(index, "needDownload", false)
-                                    });
-
-                                    query.errorOccured.connect(function (x) {
-                                        messageId.visible = true
-                                        imageId.message = "Error"
-                                    });
-
-                                    query.content = model.content;
-
-                                    var zrd = resourceDescriptorCompoennt.createObject(chatTabsDelegate);
-                                    zrd.fromJSON(model.content);
-                                    zrd.path = "";
-
-                                    if (documentFolder.downloadFile(zrd.name,zrd.size,query))
+                                    if (!model.needDownload)
                                     {
-                                        messageId.visible = true
-                                        imageId.message = "loading"
+                                        resourceClicked(model.content)
+                                    }
+                                    else
+                                    {
+
+                                        var query = zcStorageQueryStatusComponentId.createObject(imageId)
+
+
+                                        query.completed.connect(function (x) {
+                                            resourceClicked(x.content)
+                                            messageId.visible = false
+                                            imageId.message = ""
+                                            listRessource.setProperty(index, "needDownload", false)
+                                        });
+
+                                        query.errorOccured.connect(function (x) {
+                                            messageId.visible = true
+                                            imageId.message = "Error"
+                                        });
+
+                                        query.content = model.content;
+
+                                        var zrd = resourceDescriptorCompoennt.createObject(chatTabsDelegate);
+                                        zrd.fromJSON(model.content);
+                                        zrd.path = "";
+
+                                        if (documentFolder.downloadFile(zrd.name,zrd.size,query))
+                                        {
+                                            messageId.visible = true
+                                            imageId.message = "loading"
+                                        }
                                     }
                                 }
                             }
                         }
+
+                         Text
+                         {
+                            anchors
+                            {
+                                bottom                 : parent.bottom
+                                bottomMargin           : 1
+                                horizontalCenter       : parent.horizontalCenter
+                            }
+
+                            height : 15
+                            width : parent.width
+                            color : "black"
+
+                            font.pixelSize:   12
+                            text : model.textImage
+
+                            elide : Text.ElideLeft
+                        }
                     }
+
                 }
             }
 

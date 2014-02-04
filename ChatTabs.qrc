@@ -39,5 +39,14 @@
         <file>Views/ResourceViews/ResourceViewer/ChatTabsWebView.qml</file>
         <file>Views/ResourceViews/ResourceViewer/ResourceViewer.qml</file>
         <file>Packages/ChatTabs.cfg</file>
+        <file>Resources/folder.png</file>
+        <file>Resources/camera.png</file>
+        <file>Views/ChatAddsButtons.qml</file>
+        <file>Views/ResourceViewer2/ResourceViewer2.qml</file>
+        <file>Views/ResourceViewer2/ImageViewer.qml</file>
+        <file>Views/ResourceViewer2/WebViewer.qml</file>
+        <file>Views/ResourceViewer2/CameraView.qml</file>
+        <file>Resources/cancel2.png</file>
+        <file>Resources/ok2.png</file>
     </qresource>
 </RCC>
