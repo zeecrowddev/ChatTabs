@@ -295,6 +295,8 @@
             <QtResourceFile FileName="cancel2.png">
               <Properties>
                 <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
               </Properties>
               <Items />
             </QtResourceFile>
@@ -303,6 +305,8 @@
             <QtResourceFile FileName="ok2.png">
               <Properties>
                 <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
               </Properties>
               <Items />
             </QtResourceFile>
@@ -314,90 +318,6 @@
       <QtResourceProjectFolder Name="Views">
         <Properties />
         <Items>
-          <Item Template="QtResourceProjectFolder">
-            <QtResourceProjectFolder Name="ResourceViews">
-              <Properties />
-              <Items>
-                <Item Template="QtResourceProjectFolder">
-                  <QtResourceProjectFolder Name="ResourceViewer">
-                    <Properties />
-                    <Items>
-                      <Item Template="QtResourceFile">
-                        <QtResourceFile FileName="ChatTabsWebView.qml">
-                          <Properties>
-                            <BuildAction value="Compile" />
-                            <Locale value="" />
-                            <Alias value="" />
-                          </Properties>
-                          <Items />
-                        </QtResourceFile>
-                      </Item>
-                      <Item Template="QtResourceFile">
-                        <QtResourceFile FileName="ResourceViewer.qml">
-                          <Properties>
-                            <BuildAction value="Compile" />
-                            <Locale value="" />
-                            <Alias value="" />
-                          </Properties>
-                          <Items />
-                        </QtResourceFile>
-                      </Item>
-                    </Items>
-                  </QtResourceProjectFolder>
-                </Item>
-                <Item Template="QtResourceFile">
-                  <QtResourceFile FileName="AddFromLocalDrive.qml">
-                    <Properties>
-                      <BuildAction value="Compile" />
-                      <Locale value="" />
-                      <Alias value="" />
-                    </Properties>
-                    <Items />
-                  </QtResourceFile>
-                </Item>
-                <Item Template="QtResourceFile">
-                  <QtResourceFile FileName="AddWebView.qml">
-                    <Properties>
-                      <BuildAction value="Compile" />
-                      <Locale value="" />
-                      <Alias value="" />
-                    </Properties>
-                    <Items />
-                  </QtResourceFile>
-                </Item>
-                <Item Template="QtResourceFile">
-                  <QtResourceFile FileName="CameraView.qml">
-                    <Properties>
-                      <BuildAction value="Compile" />
-                      <Locale value="" />
-                      <Alias value="" />
-                    </Properties>
-                    <Items />
-                  </QtResourceFile>
-                </Item>
-                <Item Template="QtResourceFile">
-                  <QtResourceFile FileName="ChoiceResource.qml">
-                    <Properties>
-                      <BuildAction value="Compile" />
-                      <Locale value="" />
-                      <Alias value="" />
-                    </Properties>
-                    <Items />
-                  </QtResourceFile>
-                </Item>
-                <Item Template="QtResourceFile">
-                  <QtResourceFile FileName="ResourcesView.qml">
-                    <Properties>
-                      <BuildAction value="Compile" />
-                      <Locale value="" />
-                      <Alias value="" />
-                    </Properties>
-                    <Items />
-                  </QtResourceFile>
-                </Item>
-              </Items>
-            </QtResourceProjectFolder>
-          </Item>
           <Item Template="QtResourceFile">
             <QtResourceFile FileName="AddNewThreadDialogBox.qml">
               <Properties>

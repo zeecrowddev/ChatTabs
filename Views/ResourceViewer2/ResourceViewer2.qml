@@ -38,6 +38,21 @@ Rectangle
 
     signal uploadFile(string fileName)
 
+    function isKnownResourceDescriptor(resourceDescriptor)
+    {
+        var res =   JSON.parse(resourceDescriptor)
+
+        if (res.mimeType.indexOf("image") === 0 )
+            return true;
+
+        if (res.mimeType.indexOf("http") === 0 )
+            return true;
+
+        return false;
+    }
+
+
+
     function showCamera()
     {
         loader.source = "CameraView.qml"
