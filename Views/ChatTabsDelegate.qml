@@ -507,84 +507,84 @@ Rectangle
 
         }
 
-        Image
-        {
-            id                      : likesButtonId
-            height                 : 19
-            width                  : 19
-            anchors
-            {
-                top             : chatTabsDelegate.top
-                topMargin       : 2
-                right           : parent.right
-                rightMargin     : 2
-            }
-            source                  : "qrc:/ChatTabs/Resources/like.png"
-            MouseArea
-            {
-                anchors.fill    : parent
-                onClicked:
-                {
-                    cast.like();
-                }
-            }
-        }
+//        Image
+//        {
+//            id                      : likesButtonId
+//            height                 : 19
+//            width                  : 19
+//            anchors
+//            {
+//                top             : chatTabsDelegate.top
+//                topMargin       : 2
+//                right           : parent.right
+//                rightMargin     : 2
+//            }
+//            source                  : "qrc:/ChatTabs/Resources/like.png"
+//            MouseArea
+//            {
+//                anchors.fill    : parent
+//                onClicked:
+//                {
+//                    cast.like();
+//                }
+//            }
+//        }
 
-        Image
-        {
-            id                      : dislikesButtonId
-            height                 : 19
-            width                  : 19
-            anchors
-            {
-                top             : likesButtonId.bottom
-                topMargin       : 2
-                right           : likesButtonId.right
-            }
-            source                  : "qrc:/ChatTabs/Resources/dislike.png"
-            MouseArea
-            {
-                anchors.fill    : parent
-                onClicked:
-                {
-                    cast.dislike();
-                }
-            }
-        }
+//        Image
+//        {
+//            id                      : dislikesButtonId
+//            height                 : 19
+//            width                  : 19
+//            anchors
+//            {
+//                top             : likesButtonId.bottom
+//                topMargin       : 2
+//                right           : likesButtonId.right
+//            }
+//            source                  : "qrc:/ChatTabs/Resources/dislike.png"
+//            MouseArea
+//            {
+//                anchors.fill    : parent
+//                onClicked:
+//                {
+//                    cast.dislike();
+//                }
+//            }
+//        }
 
-        Label
-        {
-            id                      : likesId
-            text                    : model.cast.likes
-            font.pixelSize          : 12
-            anchors
-            {
-                verticalCenter  : likesButtonId.verticalCenter
-                right           : likesButtonId.left
-                rightMargin     : 4
-            }
-            maximumLineCount        : 1
-            font.bold               : likesWin
-            elide                   : Text.ElideRight
-            wrapMode                : Text.WrapAnywhere
-        }
+//        Label
+//        {
+//            id                      : likesId
+//            text                    : model.cast.likes
+//            font.pixelSize          : 12
+//            anchors
+//            {
+//                verticalCenter  : likesButtonId.verticalCenter
+//                right           : likesButtonId.left
+//                rightMargin     : 4
+//            }
+//            maximumLineCount        : 1
+//            font.bold               : likesWin
+//            elide                   : Text.ElideRight
+//            wrapMode                : Text.WrapAnywhere
+//        }
 
-        Label
-        {
-            id                      : dislikesId
-            text                    : model.cast.dislikes
-            font.pixelSize          : 12
-            anchors
-            {
-                verticalCenter  : dislikesButtonId.verticalCenter
-                right           : dislikesButtonId.left
-                rightMargin     : 4
-            }
-            maximumLineCount        : 1
-            font.bold               : dislikesWin
-            elide                   : Text.ElideRight
-            wrapMode                : Text.WrapAnywhere
-        }
+//        Label
+//        {
+//            id                      : dislikesId
+//            text                    : model.cast.dislikes
+//            font.pixelSize          : 12
+//            anchors
+//            {
+//                verticalCenter  : dislikesButtonId.verticalCenter
+//                right           : dislikesButtonId.left
+//                rightMargin     : 4
+//            }
+//            maximumLineCount        : 1
+//            font.bold               : dislikesWin
+//            elide                   : Text.ElideRight
+//            wrapMode                : Text.WrapAnywhere
+//        }
 
     }
 }
