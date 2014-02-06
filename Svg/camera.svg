@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.0 r9654"
-   sodipodi:docname="Nouveau document 1">
+   sodipodi:docname="camera.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -27,14 +27,14 @@
      inkscape:pageshadow="2"
      inkscape:zoom="7.95"
      inkscape:cx="153.5062"
-     inkscape:cy="563.1781"
+     inkscape:cy="563.49257"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1003"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:window-x="-32000"
+     inkscape:window-y="-32000"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -58,7 +58,10 @@
        width="100"
        height="100"
        x="103.5062"
-       y="439.18408" />
+       y="439.18408"
+       inkscape:export-filename="C:\github\ChatTabs\Resources\camera.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <image
        y="455.50177"
        x="108.19268"
@@ -185,6 +188,9 @@ su6/lu0UADCMEAcAwwhxADBsrU+7Xzt98GdiYmJiYkLaixcvZncsAMgp+/btkzoWi8ViMWn16Z4s
 YNj/AQAX1LZl+uYRAAAAAElFTkSuQmCC
 "
        height="67.68293"
-       width="90" />
+       width="90"
+       inkscape:export-filename="C:\github\ChatTabs\Resources\camera.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>
