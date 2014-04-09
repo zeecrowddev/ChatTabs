@@ -12,7 +12,9 @@
 		<file>Resources\aDocument.png</file>
 		<file>Resources\back.png</file>
 		<file>Resources\bell.png</file>
+		<file>Resources\camera.png</file>
 		<file>Resources\cancel.png</file>
+		<file>Resources\cancel2.png</file>
 		<file>Resources\ChatTabsMode.png</file>
 		<file>Resources\click.png</file>
 		<file>Resources\clipboard.png</file>
@@ -24,18 +26,14 @@
 		<file>Resources\like.png</file>
 		<file>Resources\next.png</file>
 		<file>Resources\ok.png</file>
-		<file>Resources\camera.png</file>
-		<file>Resources\paste.png</file>
-		<file>Resources\cancel2.png</file>
 		<file>Resources\ok2.png</file>
-		<file>Views\ResourceViews\ResourceViewer\ChatTabsWebView.qml</file>
-		<file>Views\ResourceViews\ResourceViewer\ResourceViewer.qml</file>
-		<file>Views\ResourceViews\AddFromLocalDrive.qml</file>
-		<file>Views\ResourceViews\AddWebView.qml</file>
-		<file>Views\ResourceViews\CameraView.qml</file>
-		<file>Views\ResourceViews\ChoiceResource.qml</file>
-		<file>Views\ResourceViews\ResourcesView.qml</file>
+		<file>Resources\paste.png</file>
+		<file>Views\ResourceViewer2\CameraView.qml</file>
+		<file>Views\ResourceViewer2\ImageViewer.qml</file>
+		<file>Views\ResourceViewer2\ResourceViewer2.qml</file>
+		<file>Views\ResourceViewer2\WebViewer.qml</file>
 		<file>Views\AddNewThreadDialogBox.qml</file>
+		<file>Views\ChatAddsButtons.qml</file>
 		<file>Views\ChatTabsButton.qml</file>
 		<file>Views\ChatTabsDelegate.qml</file>
 		<file>Views\ChatTabsListFilter.qml</file>
@@ -45,11 +43,6 @@
 		<file>Views\main.qml</file>
 		<file>Views\mainPresenter.js</file>
 		<file>Views\Tools.js</file>
-		<file>Views\ChatAddsButtons.qml</file>
-		<file>Views\ResourceViewer2\ResourceViewer2.qml</file>
-		<file>Views\ResourceViewer2\ImageViewer.qml</file>
-		<file>Views\ResourceViewer2\WebViewer.qml</file>
-		<file>Views\ResourceViewer2\CameraView.qml</file>
 		<file>ChatTabs.zeeapmanifest</file>
 	</qresource>
 </RCC>
