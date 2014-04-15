@@ -207,7 +207,7 @@ Rectangle
         function bodyChanged()
         {
             updateDelegate();
-            goToEnd();
+            //goToEnd();
         }
 
         function likesDislikesChanged()
