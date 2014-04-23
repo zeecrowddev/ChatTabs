@@ -21,10 +21,8 @@
 
 
 import QtQuick 2.0
-//import QtQuick.Dialogs 1.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
-//import QtQuick.Layouts 1.0
 
 //import ZcClient 1.0 as Zc
 
@@ -72,8 +70,6 @@ Rectangle
 
     function showResource(resource)
     {
-        console.log(">> showRessource " + resource)
-
         var res = JSON.parse(resource)
 
         /*

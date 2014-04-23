@@ -21,17 +21,126 @@
 
 
 import QtQuick 2.0
+import QtQuick.Controls 1.1
+import QtQuick.Layouts 1.1
+import QtQuick.Dialogs 1.0
 
-Image
+import ZcClient 1.0 as Zc
+
+Item
 {
-    id : image
-    anchors.fill: parent
+    Zc.StorageQueryStatus
+    {
+        id : query
 
-    fillMode : Image.PreserveAspectFit
+        onCompleted :
+        {
+            progressBar.visible = false;
+            downloadAction.enabled = true
+        }
+        onErrorOccured :
+        {
+            // TODO : faudrait gérer l'erreur
+            progressBar.visible = false;
+            downloadAction.enabled = true
+        }
+    }
+
+    anchors
+    {
+        top : parent.top
+        bottom : parent.bottom; bottomMargin : 5
+        left : parent.left; leftMargin : 5
+        right : parent.right; rightMargin : 5
+    }
+
+    property string fileName : ""
+    property string size : ""
 
     function show(resource)
     {
         var res = JSON.parse(resource)
         image.source = res.path
+        fileName = res.name
+        size = res.size
     }
+
+    ToolBar
+    {
+        id : toolBar
+
+        anchors.top : parent.top
+
+        RowLayout {
+            ToolButton
+            {
+                action : Action
+                {
+                    id : downloadAction
+                    shortcut    : "Ctrl+S"
+                    iconSource  : "qrc:/ChatTabs/Resources/import.png"
+                    tooltip     : "Save as .."
+                    onTriggered :
+                    {
+                        fileDialog.open();
+                    }
+                }
+            }
+        }
+    }
+
+    ProgressBar
+    {
+        id : progressBar
+        anchors.top  : toolBar.bottom
+        anchors.left : parent.left
+        anchors.right: parent.right
+
+        minimumValue: 0
+        maximumValue: 100
+
+        height : 10
+        visible : false
+
+        value: query.progressValue
+
+    }
+
+    Image
+    {
+
+        id : image
+
+        anchors.left : parent.left
+        anchors.right : parent.right
+        anchors.bottom: parent.bottom
+        anchors.top: progressBar.bottom
+        anchors.topMargin : 5
+
+        anchors.fill: parent
+
+        fillMode : Image.PreserveAspectFit
+
+    }
+
+    FileDialog
+    {
+        id: fileDialog
+
+        selectFolder   : false
+        selectExisting : false
+        selectMultiple : false
+
+        nameFilters: [ "Image files (*.jpg *.png *.gif *.png *.tiff)", "All files (*)" ]
+
+        onAccepted:
+        {
+            progressBar.visible = true;
+            downloadAction.enabled = false
+            console.log(">> size " + size)
+            documentFolder.downloadFileTo(fileName,fileUrl,size,query);
+        }
+
+    }
+
 }

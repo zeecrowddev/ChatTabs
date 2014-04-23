@@ -51,11 +51,8 @@ function forEachInArray(array, delegate)
 
 function decodeLessMore(text)
 {
-    console.log(">> before " + text)
     var tmpLess = text.replace(/</g,"&lt;")
-    console.log(">> after " + tmpLess)
     var tmpGreater = tmpLess.replace(/>/g,"&gt;")
-
     return tmpGreater;
 }
 

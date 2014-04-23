@@ -48,15 +48,17 @@ Rectangle
     property string to   : ""
     property double datetime : 0
     property string filename : ""
-
     property bool   busy     : false
+
+    property bool   cancelRequired : false
 
     signal showCamera();
     signal sendMessage(string title,string message);
 
+
+
     function setContext(context)
     {
-        console.log(">> setAppContext " + context)
         documentFolder.setAppContext(context)
     }
 
@@ -88,7 +90,10 @@ Rectangle
 
             BusyIndicator
             {
-                anchors.centerIn: parent
+                id : busyindicator
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                anchors.verticalCenter: parent.verticalCenter
                 width : 30
                 height: width
             }
@@ -97,6 +102,22 @@ Rectangle
             {
                 anchors.fill: parent
             }
+
+            Button
+            {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left : busyindicator.right
+                anchors.leftMargin: 20
+                height : 20
+                width  : 70
+                text   : "Cancel"
+                style : ButtonStyle{}
+                onClicked:
+                {
+                    cancelRequired = true;
+                }
+            }
+
         }
     }
 
@@ -131,10 +152,25 @@ Rectangle
     function onResourceProgress(query,value)
     {
         progress.value = value
+
+        if (cancelRequired)
+        {
+            query.progress.disconnect(onResourceProgress);
+            query.completed.disconnect(onUploadCompleted);
+
+            // wait eb developpement
+            //query.cancel();
+
+            cancelRequired = false;
+            progress.value = 0
+            busy = false
+
+        }
     }
 
     function onUploadCompleted(query)
     {
+        cancelRequired = false;
         busy = false
         progress.value = 0
 

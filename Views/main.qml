@@ -209,9 +209,7 @@ Zc.AppView
         if ( Presenter.instance["listener" + thread] === null ||
                 Presenter.instance["listener" + thread] === undefined )
         {
-            console.log(">>>>> 11")
             var tab = tabView.addTab(thread,chatTabsViewComponent)
-            console.log(">>>>> 12")
             var listener = newListenerId.createObject(tab);
             listener.filterSubject = thread;
             listener.model = listenerChat.messages
@@ -248,7 +246,6 @@ Zc.AppView
 
         onContextChanged :
         {
-            console.log(">>>> onContextChanged ")
             buttons.setContext(activity.context);
         }
 
@@ -367,13 +364,10 @@ Zc.AppView
 
             Component.onCompleted:
             {
-                console.log(">>>>>>>>>>>>>>>< scrollview size is " + height)
             }
 
             onHeightChanged:
-            {
-                console.log(">>>>>>>>>>>>>>>>>>>>>> scrollview size is now  " + height)
-
+            {           
             }
 
             onResourceClicked:
@@ -464,8 +458,16 @@ Zc.AppView
             id : handleDelegateDelegate
             Rectangle
             {
-                width : 10
+                width : 3
                 color :  styleData.hovered ? "grey" :  "lightgrey"
+
+                Rectangle
+                {
+                    height: parent.height
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width : 1
+                    color :  "grey"
+                }
             }
         }
 
@@ -686,7 +688,7 @@ Zc.AppView
 
             anchors
             {
-                top : parent.top;topMargin : 5
+                top : parent.top; //topMargin : 5
                 bottom: buttons.top;bottomMargin: 5
                 left : parent.left;leftMargin : 5
             }
@@ -712,7 +714,6 @@ Zc.AppView
 
             onSendMessage:
             {
-                console.log(">>>>>>>>> send message to " + title)
                 senderChat.subject = title;
                 senderChat.sendMessage(message);
             }

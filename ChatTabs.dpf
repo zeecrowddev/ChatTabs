@@ -152,7 +152,27 @@
             </QtResourceFile>
           </Item>
           <Item Template="QtResourceFile">
+            <QtResourceFile FileName="camera.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
             <QtResourceFile FileName="cancel.png">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="cancel2.png">
               <Properties>
                 <BuildAction value="Compile" />
                 <Locale value="" />
@@ -272,7 +292,7 @@
             </QtResourceFile>
           </Item>
           <Item Template="QtResourceFile">
-            <QtResourceFile FileName="camera.png">
+            <QtResourceFile FileName="ok2.png">
               <Properties>
                 <BuildAction value="Compile" />
                 <Locale value="" />
@@ -292,21 +312,9 @@
             </QtResourceFile>
           </Item>
           <Item Template="QtResourceFile">
-            <QtResourceFile FileName="cancel2.png">
+            <QtResourceFile FileName="import.png">
               <Properties>
                 <BuildAction value="Compile" />
-                <Locale value="" />
-                <Alias value="" />
-              </Properties>
-              <Items />
-            </QtResourceFile>
-          </Item>
-          <Item Template="QtResourceFile">
-            <QtResourceFile FileName="ok2.png">
-              <Properties>
-                <BuildAction value="Compile" />
-                <Locale value="" />
-                <Alias value="" />
               </Properties>
               <Items />
             </QtResourceFile>
@@ -318,8 +326,65 @@
       <QtResourceProjectFolder Name="Views">
         <Properties />
         <Items>
+          <Item Template="QtResourceProjectFolder">
+            <QtResourceProjectFolder Name="ResourceViewer2">
+              <Properties />
+              <Items>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="CameraView.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="ImageViewer.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="ResourceViewer2.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+                <Item Template="QtResourceFile">
+                  <QtResourceFile FileName="WebViewer.qml">
+                    <Properties>
+                      <BuildAction value="Compile" />
+                      <Locale value="" />
+                      <Alias value="" />
+                    </Properties>
+                    <Items />
+                  </QtResourceFile>
+                </Item>
+              </Items>
+            </QtResourceProjectFolder>
+          </Item>
           <Item Template="QtResourceFile">
             <QtResourceFile FileName="AddNewThreadDialogBox.qml">
+              <Properties>
+                <BuildAction value="Compile" />
+                <Locale value="" />
+                <Alias value="" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
+            <QtResourceFile FileName="ChatAddsButtons.qml">
               <Properties>
                 <BuildAction value="Compile" />
                 <Locale value="" />
@@ -419,63 +484,6 @@
               </Properties>
               <Items />
             </QtResourceFile>
-          </Item>
-          <Item Template="QtResourceFile">
-            <QtResourceFile FileName="ChatAddsButtons.qml">
-              <Properties>
-                <BuildAction value="Compile" />
-                <Locale value="" />
-                <Alias value="" />
-              </Properties>
-              <Items />
-            </QtResourceFile>
-          </Item>
-          <Item Template="QtResourceProjectFolder">
-            <QtResourceProjectFolder Name="ResourceViewer2">
-              <Properties />
-              <Items>
-                <Item Template="QtResourceFile">
-                  <QtResourceFile FileName="ResourceViewer2.qml">
-                    <Properties>
-                      <BuildAction value="Compile" />
-                      <Locale value="" />
-                      <Alias value="" />
-                    </Properties>
-                    <Items />
-                  </QtResourceFile>
-                </Item>
-                <Item Template="QtResourceFile">
-                  <QtResourceFile FileName="ImageViewer.qml">
-                    <Properties>
-                      <BuildAction value="Compile" />
-                      <Locale value="" />
-                      <Alias value="" />
-                    </Properties>
-                    <Items />
-                  </QtResourceFile>
-                </Item>
-                <Item Template="QtResourceFile">
-                  <QtResourceFile FileName="WebViewer.qml">
-                    <Properties>
-                      <BuildAction value="Compile" />
-                      <Locale value="" />
-                      <Alias value="" />
-                    </Properties>
-                    <Items />
-                  </QtResourceFile>
-                </Item>
-                <Item Template="QtResourceFile">
-                  <QtResourceFile FileName="CameraView.qml">
-                    <Properties>
-                      <BuildAction value="Compile" />
-                      <Locale value="" />
-                      <Alias value="" />
-                    </Properties>
-                    <Items />
-                  </QtResourceFile>
-                </Item>
-              </Items>
-            </QtResourceProjectFolder>
           </Item>
         </Items>
       </QtResourceProjectFolder>

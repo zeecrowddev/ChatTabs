@@ -149,8 +149,6 @@ Rectangle
                     {
                         var contentObject = JSON.parse(theContent)
 
-                        console.log(">> conetntObject " + theContent)
-
                         if (contentObject.mimeType.indexOf("image") === 0)
                         {
                             // verify doesn't already exist

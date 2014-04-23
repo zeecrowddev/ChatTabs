@@ -51,12 +51,6 @@ ScrollView
         var cy = chatTabs.flickableItem.contentY > 0 ? chatTabs.flickableItem.contentY : 0
         var delta = chatTabs.flickableItem.contentHeight - (cy + chatTabs.flickableItem.height);
 
-//        console.log(">> chatTabs.flickableItem.contentY " + chatTabs.flickableItem.contentY)
-//        console.log(">> chatTabs.flickableItem.contentHeight  " + chatTabs.flickableItem.contentHeight)
-//        console.log(">> chatTabs.flickableItem.height  " + chatTabs.flickableItem.height)
-//        console.log(">> cy "  +cy)
-        console.log(">> delta " + delta)
-
         if (delta <= 30)
         {
             chatTabs.flickableItem.contentY = Math.round(column.height - chatTabs.flickableItem.height);
