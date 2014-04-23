@@ -54,6 +54,8 @@ Rectangle
         width  : 50
         height : width
 
+        sourceSize.width: 50
+
         anchors
         {
             top        : parent.top
@@ -381,6 +383,8 @@ Rectangle
                             width : 100
                             height: width
                             fillMode: Image.PreserveAspectFit
+
+                            sourceSize.width: 100
 
                             onStatusChanged:
                             {

@@ -348,6 +348,9 @@ Rectangle
         height : 50
         width : height
         visible: busy
+
+        sourceSize.width: 50
+
     }
 
     Column
