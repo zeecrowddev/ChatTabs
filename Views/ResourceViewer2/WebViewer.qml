@@ -22,7 +22,9 @@
 
 import QtQuick 2.0
 import QtWebKit 3.0
+import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.1
+import QtQuick.Controls.Styles 1.1
 
 Item
 {
@@ -34,47 +36,121 @@ Item
         webView.url = res.path
     }
 
+    ToolBar
+    {
+        id : toolBar
+
+        anchors.top : parent.top
+
+        RowLayout
+        {
+            ToolButton
+            {
+                action : Action
+                {
+                id : downloadAction
+                iconSource  : "qrc:/ChatTabs/Resources/back.png"
+                tooltip     : "Back"
+                enabled  : webView.canGoBack
+                onTriggered :
+                {
+                    webView.goBack()
+                }
+            }
+        }
+        ToolButton
+        {
+            action : Action
+            {
+            id : toClopBoardAction
+            iconSource  : "qrc:/ChatTabs/Resources/next.png"
+            tooltip     : "Next"
+            enabled  : webView.canGoForward
+            onTriggered :
+            {
+                webView.goForward()
+            }
+        }
+    }
+    ToolButton
+    {
+        action : Action
+        {
+        iconSource  : "qrc:/ChatTabs/Resources/ok2.png"
+        tooltip     : "Add to chat"
+        onTriggered :
+        {
+            var result = "TXT|<a href=\"" + textFieldUrl.text + "\">" +  textFieldUrl.text + "</a>";
+            senderChat.sendMessage(result)
+        }
+    }
+}
+}
+}
+
+
+Rectangle
+{
+    id          : progressBarContainerId
+
+    color : "black"
+    anchors
+    {
+        top     : toolBar.bottom
+        right   : parent.right
+        left    : parent.left
+    }
+
+    height  : 3
+
+
     Rectangle
     {
-        id          : progressBarContainerId
+        id          : progressBarId
 
-        color : "black"
+
+        width : parent.width * webView.loadProgress / 100
+
+        color       : "red"
         anchors
         {
             top     : parent.top
-            right   : parent.right
             left    : parent.left
         }
 
         height  : 3
-
-
-        Rectangle
-        {
-            id          : progressBarId
-
-
-            width : parent.width * webView.loadProgress / 100
-
-            color       : "red"
-            anchors
-            {
-                top     : parent.top
-                left    : parent.left
-            }
-
-            height  : 3
-        }
     }
+}
 
-    WebView
+TextField
+{
+    style: TextFieldStyle{}
+
+    id: textFieldUrl
+    height : 20
+    anchors.left: parent.left
+    anchors.leftMargin : 3
+    anchors.right: parent.right
+    anchors.rightMargin: 3
+    anchors.top: progressBarContainerId.bottom
+    anchors.topMargin: 3
+
+    text : webView.url
+
+    onAccepted:
     {
-        id : webView
-
-        anchors.top         : parent.top
-        anchors.topMargin   : 4
-        anchors.bottom      : parent.bottom
-        anchors.left        : parent.left
-        anchors.right       : parent.right
+        webView.url = text
     }
+}
+
+WebView
+{
+    id : webView
+
+    anchors.top         : textFieldUrl.bottom
+    anchors.topMargin   : 4
+    anchors.bottom      : parent.bottom
+    anchors.left        : parent.left
+    anchors.right       : parent.right
+}
 }
