@@ -37,6 +37,11 @@ Item
         {
             progressBar.visible = false;
             downloadAction.enabled = true
+
+            if (downloadState == "ToClipboard")
+            {
+                clipboard.setImage(documentFolder.localPath + fileName)
+            }
         }
         onErrorOccured :
         {
@@ -56,6 +61,7 @@ Item
 
     property string fileName : ""
     property string size : ""
+    property string downloadState : ""
 
     function show(resource)
     {
@@ -77,12 +83,24 @@ Item
                 action : Action
                 {
                     id : downloadAction
-                    shortcut    : "Ctrl+S"
                     iconSource  : "qrc:/ChatTabs/Resources/import.png"
                     tooltip     : "Save as .."
                     onTriggered :
                     {
                         fileDialog.open();
+                    }
+                }
+            }
+            ToolButton
+            {
+                action : Action
+                {
+                    id : toClopBoardAction
+                    iconSource  : "qrc:/ChatTabs/Resources/clipboard.png"
+                    tooltip     : "Copy to clipboard ..."
+                    onTriggered :
+                    {
+                        copyToClipBoard();
                     }
                 }
             }
@@ -135,12 +153,22 @@ Item
 
         onAccepted:
         {
+            downloadState = "SaveAs"
             progressBar.visible = true;
             downloadAction.enabled = false
-            console.log(">> size " + size)
             documentFolder.downloadFileTo(fileName,fileUrl,size,query);
         }
 
     }
+
+    function copyToClipBoard()
+    {
+        downloadState = "ToClipboard"
+        progressBar.visible = true;
+        downloadAction.enabled = false
+        documentFolder.downloadFile(fileName,size,query);
+    }
+
+
 
 }
