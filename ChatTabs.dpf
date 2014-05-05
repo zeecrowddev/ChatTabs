@@ -262,6 +262,14 @@
             </QtResourceFile>
           </Item>
           <Item Template="QtResourceFile">
+            <QtResourceFile FileName="import.png">
+              <Properties>
+                <BuildAction value="Compile" />
+              </Properties>
+              <Items />
+            </QtResourceFile>
+          </Item>
+          <Item Template="QtResourceFile">
             <QtResourceFile FileName="like.png">
               <Properties>
                 <BuildAction value="Compile" />
@@ -312,7 +320,7 @@
             </QtResourceFile>
           </Item>
           <Item Template="QtResourceFile">
-            <QtResourceFile FileName="import.png">
+            <QtResourceFile FileName="OpenExternal.png">
               <Properties>
                 <BuildAction value="Compile" />
               </Properties>

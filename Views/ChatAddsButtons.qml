@@ -20,7 +20,7 @@
 */
 
 
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Dialogs 1.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
@@ -53,6 +53,7 @@ Rectangle
     property bool   cancelRequired : false
 
     signal showCamera();
+    signal showWebView();
     signal sendMessage(string title,string message);
 
 
@@ -316,6 +317,25 @@ Rectangle
         }
     }
 
+    ChatTabsButton
+    {
+        id                : addWebViewButton
+        imageSource        : "qrc:/ChatTabs/Resources/addUrl.png"
+
+        width : 50
+        height: 50
+
+        anchors.left: addPasteButton.right
+        anchors.leftMargin: 2
+        anchors.top: addPasteButton.top
+
+        onClicked:
+        {
+            showWebView();
+        }
+    }
+
+
     Loader
     {
         id : busyLoader
@@ -331,12 +351,14 @@ Rectangle
         id : progress
         height: 20
         anchors.left: addFileButton.left
-        anchors.right: addPasteButton.right
-        anchors.top : addPasteButton.bottom
+        anchors.right: addWebViewButton.right
+        anchors.top : addWebViewButton.bottom
         anchors.topMargin : 2
 
         minimumValue: 0
         maximumValue: 100
+
+        style : ProgressBarStyle{}
     }
 
     Image

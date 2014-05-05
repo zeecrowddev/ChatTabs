@@ -20,7 +20,7 @@
 */
 
 
-import QtQuick 2.0
+import QtQuick 2.2
 import QtWebKit 3.0
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.1
@@ -48,30 +48,44 @@ Item
             {
                 action : Action
                 {
-                id : downloadAction
-                iconSource  : "qrc:/ChatTabs/Resources/back.png"
-                tooltip     : "Back"
-                enabled  : webView.canGoBack
-                onTriggered :
-                {
-                    webView.goBack()
+                    id : downloadAction
+                    iconSource  : "qrc:/ChatTabs/Resources/back.png"
+                    tooltip     : "Back"
+                    enabled  : webView.canGoBack
+                    onTriggered :
+                    {
+                        webView.goBack()
+                    }
                 }
             }
-        }
-        ToolButton
-        {
-            action : Action
+            ToolButton
             {
-            id : toClopBoardAction
-            iconSource  : "qrc:/ChatTabs/Resources/next.png"
-            tooltip     : "Next"
-            enabled  : webView.canGoForward
-            onTriggered :
-            {
-                webView.goForward()
+                action : Action
+                {
+                    id : toClopBoardAction
+                    iconSource  : "qrc:/ChatTabs/Resources/next.png"
+                    tooltip     : "Next"
+                    enabled  : webView.canGoForward
+                    onTriggered :
+                    {
+                        webView.goForward()
+                    }
+                }
             }
-        }
-    }
+
+            ToolButton
+            {
+                action : Action
+                {
+                    id : openExternallyAction
+                    iconSource  : "qrc:/ChatTabs/Resources/OpenExternal.png"
+                    tooltip     : "Open on external browser"
+                    onTriggered :
+                    {
+                        Qt.openUrlExternally(webView.url)
+                    }
+                }
+            }
     ToolButton
     {
         action : Action

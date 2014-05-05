@@ -20,7 +20,7 @@
 */
 
 
-import QtQuick 2.0
+import QtQuick 2.2
 import MyCrowd 1.0
 
 Item

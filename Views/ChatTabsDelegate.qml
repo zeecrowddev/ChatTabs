@@ -20,7 +20,7 @@
 */
 
 
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Controls 1.0
 
 import ZcClient 1.0 as Zc

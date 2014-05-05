@@ -20,7 +20,7 @@
 */
 
 
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 
@@ -68,6 +68,16 @@ Rectangle
         loader.item.close.connect( function (x) {loader.source = ""})
     }
 
+    function showWebView()
+    {
+        var o = {}
+        o.path = "http://www.google.fr"
+
+        var urlresource = JSON.stringify(o)
+        loader.source = "WebViewer.qml"
+        loader.item.show(urlresource)
+    }
+
     function showResource(resource)
     {
         var res = JSON.parse(resource)
@@ -86,6 +96,8 @@ Rectangle
             loader.item.show(resource)
         }
     }
+
+
 
 
     Loader

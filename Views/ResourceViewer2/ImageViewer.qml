@@ -20,10 +20,11 @@
 */
 
 
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.0
+import QtQuick.Controls.Styles 1.1
 
 import ZcClient 1.0 as Zc
 
@@ -105,6 +106,8 @@ Item
                 }
             }
         }
+
+        style: ToolBarStyle {}
     }
 
     ProgressBar
@@ -122,6 +125,7 @@ Item
 
         value: query.progressValue
 
+        style : ProgressBarStyle{}
     }
 
     Image
@@ -134,8 +138,6 @@ Item
         anchors.bottom: parent.bottom
         anchors.top: progressBar.bottom
         anchors.topMargin : 5
-
-        anchors.fill: parent
 
         fillMode : Image.PreserveAspectFit
 

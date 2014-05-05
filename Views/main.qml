@@ -20,7 +20,7 @@
 */
 
 
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Dialogs 1.0
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
@@ -675,7 +675,7 @@ Zc.AppView
 
     Item
     {
-        width : 300
+        width : 350
 
 
         /*
@@ -721,6 +721,11 @@ Zc.AppView
             onShowCamera:
             {
                 resourceViewer2.showCamera()
+            }
+
+            onShowWebView:
+            {
+                resourceViewer2.showWebView()
             }
         }
     }
