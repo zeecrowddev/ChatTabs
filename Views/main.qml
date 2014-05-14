@@ -146,6 +146,13 @@ Zc.AppView
     ]
 
 
+    property alias splitViewDistance : splitViewPanelRight.x
+
+    function uploadFile(url)
+    {
+        buttons.uploadFile(url)
+    }
+
     /*
     ** This signal notify that a message arrive on a tab "subject"
     ** Each Chat Tab listen this signal to increment if necessary
@@ -450,6 +457,9 @@ Zc.AppView
 
     SplitView
     {
+
+        id : splitView
+
         anchors.fill: parent
         orientation: Qt.Horizontal
 
@@ -675,6 +685,8 @@ Zc.AppView
 
     Item
     {
+        id : splitViewPanelRight
+
         width : 350
 
 
