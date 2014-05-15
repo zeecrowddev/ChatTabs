@@ -31,6 +31,7 @@ Item
     id : mainWebView
 
     anchors.fill: parent
+    property bool stopGrabBinding : false
 
     function show(resource)
     {
@@ -125,7 +126,6 @@ ToolButton
 function grabVisible()
 {
     growDown.visible = true;
-  //  growCenter.visible = true;
     growUp.visible = true;
     grabBorder.visible = true;
     grabValidate.visible = true;
@@ -135,7 +135,6 @@ function grabVisible()
 function  grabUnvisible()
 {
     growDown.visible = false;
-    growCenter.visible = false;
     growUp.visible = false;
     grabBorder.visible = false;
     grabValidate.visible = false;
@@ -198,27 +197,31 @@ TextField
     }
 }
 
-WebView
+ScrollView
 {
-    id : webView
-
+    id : scrollView
     anchors.top         : textFieldUrl.bottom
     anchors.topMargin   : 4
     anchors.bottom      : parent.bottom
     anchors.left        : parent.left
     anchors.right       : parent.right
 
+WebView
+{
+    id : webView
+
+    anchors.fill: parent
+
     Component.onCompleted:
     {
-        grabBorder.x = 0
-        grabBorder.y = 0
         grabBorder.width = 100
         grabBorder.height = 100
-        growDown.x = grabBorder.width - 10
-        growDown.y = grabBorder.height - 10
-        growCenter.anchors.centerIn = grabBorder
-        growUp.x = -10
-        growUp.y = -10
+        grabBorder.x = parent.width / 2 - grabBorder.width /2
+        grabBorder.y = parent.height / 2 - grabBorder.height /2
+        growDown.x = grabBorder.x + grabBorder.width -11
+        growDown.y = grabBorder.y + grabBorder.height - 11
+        growUp.x = grabBorder.x - 11
+        growUp.y = grabBorder.y - 11
     }
 
     Rectangle
@@ -233,10 +236,47 @@ WebView
         border.width   : 2
         border.color   : "red"
 
-        color : "#00000000"
+        color : "lightgrey"
+
+        opacity : 0.5
+
+        onXChanged:
+        {
+        }
+        onYChanged:
+        {
+        }
 
 
 
+        MouseArea
+        {
+            anchors.fill: grabBorder
+
+            drag.target     : grabBorder
+            drag.axis       : Drag.XAndYAxis
+            drag.minimumX   : 0
+            drag.minimumY   : 0
+
+
+            onReleased:
+            {
+                mainWebView.stopGrabBinding = true
+                growUp.x = grabBorder.x - 11
+                growDown.x = grabBorder.x + grabBorder.width - 11
+                growUp.y = grabBorder.y - 11
+                growDown.y = grabBorder.y + grabBorder.height - 11
+                mainWebView.stopGrabBinding = false
+                growUp.visible = true
+                growDown.visible = true
+            }
+
+            onPressed:
+            {
+                growUp.visible = false
+                growDown.visible = false
+            }
+        }
     }
 
     Button
@@ -247,9 +287,9 @@ WebView
         visible : false
 
         anchors.top   : grabBorder.top
-        anchors.topMargin   : -10
+        anchors.topMargin   : -11
         anchors.left  : grabBorder.right
-        anchors.leftMargin: -10
+        anchors.leftMargin: -11
 
         style: ButtonStyle {
             background:
@@ -262,10 +302,10 @@ WebView
 
         onClicked:
         {
-            var tmpx = mainView.x + mainView.splitViewDistance +  grabBorder.x;
+            var tmpx = mainView.x + mainView.splitViewDistance - scrollView.flickableItem.contentX +  grabBorder.x;
             var val =  mainView.mapToItem(null,tmpx,mainView.y)
             grabUnvisible()
-            mainView.grabWindow(mainView.context.temporaryPath + "_grap.png" ,val.x,val.y + webView.y + grabBorder.y,grabBorder.width,grabBorder.height);
+            mainView.grabWindow(mainView.context.temporaryPath + "_grap.png" ,val.x,val.y + scrollView.y - scrollView.flickableItem.contentY + grabBorder.y,grabBorder.width,grabBorder.height);
             mainView.uploadFile(mainView.context.temporaryPath + "_grap.png")
         }
     }
@@ -278,9 +318,9 @@ WebView
         visible : false
 
         anchors.top        : grabBorder.bottom
-        anchors.topMargin  : -10
+        anchors.topMargin  : -11
         anchors.left       : grabBorder.left
-        anchors.leftMargin : -10
+        anchors.leftMargin : -11
 
         style: ButtonStyle {
             background:
@@ -297,55 +337,13 @@ WebView
          }
     }
 
-    Rectangle
-    {
-        id : growCenter
-
-        visible : false
-        radius : 10
-        color : "#00000000"
-        border.width    : 2
-        border.color    : "blue"
-
-
-        width           : 20
-        height          : 20
-
-//        onXChanged:
-//        {
-//            grabBorder.width = growDown.x - growUp.x
-//        }
-//        onYChanged:
-//        {
-//            grabBorder.height = growDown.y - growUp.y
-//        }
-
-
-//        MouseArea
-//        {
-
-//            anchors.fill  : parent
-
-//            drag.target     : growDown
-//            drag.axis       : Drag.XAndYAxis
-//            drag.minimumX   : 0
-//            drag.minimumY   : 0
-
-//            onReleased:
-//            {
-
-//            }
-//        }
-    }
-
-
 
     Rectangle
     {
         id : growDown
 
         visible : false
-        radius : 10
+        radius : 5
         color : "#00000000"
         border.width    : 2
         border.color    : "blue"
@@ -356,11 +354,13 @@ WebView
 
         onXChanged:
         {
-            grabBorder.width = growDown.x - growUp.x
+            if (!mainWebView.stopGrabBinding)
+                grabBorder.width = growDown.x - growUp.x
         }
         onYChanged:
         {
-            grabBorder.height = growDown.y - growUp.y
+            if (!mainWebView.stopGrabBinding)
+                grabBorder.height = growDown.y - growUp.y
         }
 
 
@@ -385,7 +385,7 @@ WebView
     {
         id : growUp
 
-        radius : 10
+        radius : 5
         color : "#00000000"
         border.width    : 2
         border.color    : "blue"
@@ -397,13 +397,19 @@ WebView
 
         onXChanged:
         {
-            grabBorder.x = x + 10
-            grabBorder.width = growDown.x - growUp.x
+            if (!mainWebView.stopGrabBinding)
+            {
+                grabBorder.x = x + 11
+                grabBorder.width = growDown.x - growUp.x
+            }
         }
         onYChanged:
         {
-            grabBorder.y = y + 10
-            grabBorder.height = growDown.y - growUp.y
+            if (!mainWebView.stopGrabBinding)
+            {
+                grabBorder.y = y + 11
+                grabBorder.height = growDown.y - growUp.y
+            }
         }
 
 
@@ -425,4 +431,6 @@ WebView
     }
 
 }
+}
+
 }

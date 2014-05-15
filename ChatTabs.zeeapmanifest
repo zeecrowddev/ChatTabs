@@ -3,7 +3,7 @@
   <a:ZeeapManifest.Metadata>
     <a:ZeeapManifestMetaData>
       <a:ZeeapManifestMetaData.AppName>ChatTabs</a:ZeeapManifestMetaData.AppName>
-      <a:ZeeapManifestMetaData.Version>129</a:ZeeapManifestMetaData.Version>
+      <a:ZeeapManifestMetaData.Version>131</a:ZeeapManifestMetaData.Version>
       <a:ZeeapManifestMetaData.AppConfig>ChatTabs.cfg</a:ZeeapManifestMetaData.AppConfig>
     </a:ZeeapManifestMetaData>
   </a:ZeeapManifest.Metadata>
