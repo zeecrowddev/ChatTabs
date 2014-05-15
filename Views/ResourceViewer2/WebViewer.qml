@@ -84,7 +84,7 @@ Item
         {
         id : openExternallyAction
         iconSource  : "qrc:/ChatTabs/Resources/OpenExternal.png"
-        tooltip     : "Open on external browser"
+        tooltip     : "Open in default browser"
         onTriggered :
         {
             grabUnvisible()
