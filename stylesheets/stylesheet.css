@@ -138,21 +138,48 @@ a.button {
   padding-top: 22px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
 }
+
+a.buttonZc {
+  width: 134px;
+  height: 58px;
+  line-height: 1.2;
+  font-size: 23px;
+  color: #000;
+  padding-left: 68px;
+  padding-top: 22px;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+}
+
 a.button small {
   display: block;
   font-size: 11px;
 }
+a.buttonZc small {
+  display: block;
+  font-size: 11px;
+}
+
 header a.button {
   position: absolute;
   right: 0;
   top: 0;
   background: transparent url(../images/github-button.png) 0 0 no-repeat;
 }
+
 aside a.button {
   width: 138px;
   padding-left: 64px;
   display: block;
   background: transparent url(../images/download-button.png) 0 0 no-repeat;
+  margin-bottom: 20px;
+  font-size: 21px;
+}
+
+aside a.buttonZc {
+  width: 138px;
+  padding-left: 80px;
+  display: block;
+  background: transparent url(../images/zeecrowd-logo.png) 0 0 no-repeat;
   margin-bottom: 20px;
   font-size: 21px;
 }
