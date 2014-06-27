@@ -199,6 +199,7 @@ TextField
 
 ScrollView
 {
+    style : ScrollViewStyle { transientScrollBars : false}
     id : scrollView
     anchors.top         : textFieldUrl.bottom
     anchors.topMargin   : 4

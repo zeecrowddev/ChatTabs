@@ -118,7 +118,10 @@ Zc.AppView
                     addThreadAction.iconSource  = "qrc:/ChatTabs/Resources/addThread.png"
 
                     inputMessageWidget.state    = "chat";
-                    tabView.getTab(tabView.currentIndex).item.state = "chat";
+                    if (tabView.getTab(tabView.currentIndex) !== null && tabView.getTab(tabView.currentIndex) !== undefined)
+                    {
+                        tabView.getTab(tabView.currentIndex).item.state = "chat";
+                    }
                 }}
         }
         ,

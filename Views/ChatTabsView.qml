@@ -21,11 +21,17 @@
 
 
 import QtQuick 2.2
-import QtQuick.Controls 1.0
+import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.1
 
 ScrollView
 {
     id : chatTabs
+
+    style: ScrollViewStyle
+    {
+           transientScrollBars : false
+    }
 
     width: 100
     height: 62
@@ -42,7 +48,8 @@ ScrollView
 
     Component.onCompleted:
     {
-        chatTabs.flickableItem.contentY = height
+      //  chatTabs.flickableItem.contentY = height
+      //  column.height = height
     }
 
     function goToEnd()
@@ -68,8 +75,6 @@ ScrollView
         {
             goToEnd();
         }
-
-
 
         Repeater
         {

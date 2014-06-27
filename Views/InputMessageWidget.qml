@@ -21,7 +21,9 @@
 
 
 import QtQuick 2.2
-import QtQuick.Controls 1.1
+import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.1
+
 
 import "Tools.js" as Tools
 
@@ -96,6 +98,9 @@ FocusScope
 
     ScrollView
     {
+
+        style : ScrollViewStyle { transientScrollBars : false}
+
         anchors.top: background.top
         anchors.topMargin: 2
         anchors.bottom: background.bottom
