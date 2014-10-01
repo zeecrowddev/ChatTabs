@@ -41,7 +41,7 @@ Item
 
             if (downloadState == "ToClipboard")
             {
-                clipboard.setImage(documentFolder.localPath + fileName)
+                clipboard.setImage(mainView.context.temporaryPath + fileName)
             }
         }
         onErrorOccured :

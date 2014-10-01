@@ -250,7 +250,7 @@ Zc.AppView
             // Now we know how i am i and set this static value to the ChatAddsButtons
             // need it to genrat file information
             buttons.nickname =  mainView.context.nickname
-            resourceViewer2.localPath = documentFolder.localPath;
+            resourceViewer2.localPath =  mainView.context.temporaryPath;
             threadItems.loadItems(threadItemsQueryStatus);
         }
 

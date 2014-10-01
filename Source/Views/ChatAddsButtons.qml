@@ -202,7 +202,8 @@ Rectangle
         query.completed.connect(onUploadCompleted);
 
         zcResourceDescriptor.name =  buttons.nickname + "_" + buttons.datetime + "." + zcResourceDescriptor.suffix;
-        zcResourceDescriptor.path = documentFolder.getUrl(zcResourceDescriptor.name);
+
+        zcResourceDescriptor.path =  documentFolder.getUrl(zcResourceDescriptor.name);
 
         var tmpContent = JSON.parse(zcResourceDescriptor.toJSON())
 
@@ -308,7 +309,7 @@ Rectangle
                 ** First copy clipboard on local file
                 ** then upload the file
                 */
-                var filePath = clipboard.savetoLocalPath(documentFolder.localPath,null);
+                var filePath = clipboard.savetoLocalPath(mainView.context.temporaryPath,null);
                 if (filePath !== "")
                 {
                     uploadFile(filePath)
