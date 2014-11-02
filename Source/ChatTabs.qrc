@@ -45,5 +45,6 @@
         <file>Resources/import.png</file>
         <file>Resources/OpenExternal.png</file>
         <file>Resources/grab.png</file>
+        <file>Resources/icon.png</file>
     </qresource>
 </RCC>
