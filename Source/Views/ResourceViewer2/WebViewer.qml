@@ -21,10 +21,11 @@
 
 
 import QtQuick 2.2
-import QtWebKit 3.0
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+
+import "../WebView"
 
 Item
 {
@@ -36,7 +37,7 @@ Item
     function show(resource)
     {
         var res = JSON.parse(resource)
-        webView.url = res.path
+        webView.item.url = res.path
     }
 
     ToolBar
@@ -54,7 +55,7 @@ Item
                 id : downloadAction
                 iconSource  : "qrc:/ChatTabs/Resources/back.png"
                 tooltip     : "Back"
-                enabled  : webView.canGoBack
+                enabled  : webView.item === null ? false : webView.item.canGoBack
                 onTriggered :
                 {
                     grabUnvisible()
@@ -69,7 +70,7 @@ Item
             id : toClopBoardAction
             iconSource  : "qrc:/ChatTabs/Resources/next.png"
             tooltip     : "Next"
-            enabled  : webView.canGoForward
+            enabled  : webView.item === null ? false : webView.item.canGoForward
             onTriggered :
             {
                 grabUnvisible()
@@ -88,7 +89,7 @@ Item
         onTriggered :
         {
             grabUnvisible()
-            Qt.openUrlExternally(webView.url)
+            Qt.openUrlExternally(webView.item.url)
         }
     }
 }
@@ -163,7 +164,7 @@ Rectangle
         id          : progressBarId
 
 
-        width : parent.width * webView.loadProgress / 100
+        width : webView.item === null ? 0 : parent.width * webView.item.loadProgress / 100
 
         color       : "red"
         anchors
@@ -189,11 +190,11 @@ TextField
     anchors.top: progressBarContainerId.bottom
     anchors.topMargin: 3
 
-    text : webView.url
+    text : webView.item === null ? "" : webView.item.url
 
     onAccepted:
     {
-        webView.url = text
+        webView.item.url = text
     }
 }
 
@@ -207,11 +208,30 @@ ScrollView
     anchors.left        : parent.left
     anchors.right       : parent.right
 
-WebView
+Item
 {
-    id : webView
+
 
     anchors.fill: parent
+
+    Loader
+    {
+            id : webView
+            width : scrollView.width
+            height : scrollView.height
+            Component.onCompleted:
+            {
+                if (Qt.platform.os === "osx")
+                {
+                    source = "qrc:/ChatTabs/Views/WebView/WebView1.1.qml"
+                }
+                else
+                {
+                    source = "qrc:/ChatTabs/Views/WebView/WebView3.0.qml"
+                }
+            }
+    }
+
 
     Component.onCompleted:
     {
@@ -223,6 +243,7 @@ WebView
         growDown.y = grabBorder.y + grabBorder.height - 11
         growUp.x = grabBorder.x - 11
         growUp.y = grabBorder.y - 11
+
     }
 
     Rectangle
