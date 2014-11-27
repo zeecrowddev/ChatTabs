@@ -74,8 +74,15 @@ Rectangle
         o.path = "http://www.google.fr"
 
         var urlresource = JSON.stringify(o)
-        loader.source = "WebViewer.qml"
-        loader.item.show(urlresource)
+        if (mainView.useWebView)
+        {
+            loader.source = "WebViewer.qml"
+            loader.item.show(urlresource)
+        }
+        else
+        {
+            Qt.openUrlExternally(urlresourceÒ)
+        }
     }
 
     function showResource(resource)

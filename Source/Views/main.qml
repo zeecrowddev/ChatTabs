@@ -36,6 +36,8 @@ Zc.AppView
 {
     id : mainView
 
+    property bool useWebView  : false
+
     anchors
     {
         top : parent.top
@@ -280,7 +282,9 @@ Zc.AppView
                     appNotification.incrementNotification();
                 }
 
-                if ( tabView.getTab(tabView.currentIndex).title !== subject )
+                if ( tabView.getTab(tabView.currentIndex) !== undefined &&
+                       tabView.getTab(tabView.currentIndex) !== null &&
+                         tabView.getTab(tabView.currentIndex).title !== subject )
                 {
                     if (Presenter.instance["notify" + subject] === undefined)
                     {
@@ -725,6 +729,7 @@ Zc.AppView
         {
             id : buttons
 
+
             currentTabViewTitle : mainView.currentTabViewTitle
 
             onSendMessage:
@@ -777,9 +782,18 @@ AddNewThreadDialogBox
 }
 
 
+
 onLoaded :
 {
     activity.start();
+    if (Qt.platform === "windows")
+    {
+        mainView.useWebView = true
+    }
+    else
+    {
+        mainView.useWebView = mainView.context.getQtModuleVersion("QtWebKit") !== "";
+    }
 }
 
 onClosed :

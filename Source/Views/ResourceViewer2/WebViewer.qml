@@ -221,9 +221,10 @@ Item
             height : scrollView.height
             Component.onCompleted:
             {
-                if (Qt.platform.os === "osx")
+
+                if (!mainView.useWebView)
                 {
-                    source = "qrc:/ChatTabs/Views/WebView/WebView1.1.qml"
+                    source = "qrc:/ChatTabs/Views/WebView/NoWebView.qml"
                 }
                 else
                 {

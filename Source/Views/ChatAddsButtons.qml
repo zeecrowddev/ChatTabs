@@ -323,6 +323,8 @@ Rectangle
         id                : addWebViewButton
         imageSource        : "qrc:/ChatTabs/Resources/addUrl.png"
 
+        visible : mainView.useWebView
+
         width : 50
         height: 50
 
