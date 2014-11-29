@@ -786,7 +786,7 @@ AddNewThreadDialogBox
 onLoaded :
 {
     activity.start();
-    if (Qt.platform === "windows")
+    if (Qt.platform.os === "windows")
     {
         mainView.useWebView = true
     }
