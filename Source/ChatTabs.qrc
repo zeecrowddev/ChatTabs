@@ -48,5 +48,7 @@
         <file>Resources/icon.png</file>
         <file>Views/WebView/WebView3.0.qml</file>
         <file>Views/WebView/NoWebView.qml</file>
+        <file>Resources/ballon.png</file>
+        <file>Resources/ballonme.png</file>
     </qresource>
 </RCC>

@@ -28,7 +28,7 @@ import ZcClient 1.0 as Zc
 import  "Tools.js" as Tools
 
 
-Rectangle
+Item
 {
     id : chatTabsDelegate
 
@@ -41,7 +41,21 @@ Rectangle
     height : 50
     width : chatTabs.flickableItem.width - 5
 
-    color : "white"
+    property bool isMe : false
+
+    Rectangle
+    {
+        anchors
+        {
+            top : parent.top
+            right : parent.right
+            bottom : parent.bottom
+            left : textZone.left
+        }
+
+        color : "white"
+    }
+
 
     /*
     ** Contact Image
@@ -73,13 +87,29 @@ Rectangle
         }
     }
 
+    BorderImage
+    {
+        anchors
+        {
+            right : textZone.left
+            top : textZone.top
+        }
+
+        height : textZone.height
+        width : 9
+
+        border.top: 50
+
+        source : isMe ? "qrc:/ChatTabs/Resources/ballonme.png" : "qrc:/ChatTabs/Resources/ballon.png"
+    }
+
     Item
     {
         id : textZone
 
         anchors.top : parent.top
         anchors.left : contactImage.right
-        anchors.leftMargin : 5
+        anchors.leftMargin : 9
 
         state : parent.state
 

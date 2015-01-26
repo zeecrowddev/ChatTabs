@@ -41,6 +41,8 @@ ScrollView
     property QtObject messages : null
     property QtObject crowdActivity : null
 
+
+
     onMessagesChanged:
     {
           bodiesRepeaterId.model = messages
@@ -86,6 +88,8 @@ ScrollView
                 onResourceClicked: chatTabs.resourceClicked(resourceDescriptor)
 
                 contactImageSource : crowdActivity.getParticipantImageUrl(from)
+
+                isMe : mainView.context.nickname === from
             }
 
         }
