@@ -51,8 +51,6 @@ Rectangle
         return false;
     }
 
-
-
     function showCamera()
     {
         loader.source = "CameraView.qml"
@@ -74,7 +72,7 @@ Rectangle
         o.path = "http://www.google.fr"
 
         var urlresource = JSON.stringify(o)
-        if (mainView.useWebView)
+        if (mainView.useWebView !== "")
         {
             loader.source = "WebViewer.qml"
             loader.item.show(urlresource)
@@ -103,9 +101,6 @@ Rectangle
             loader.item.show(resource)
         }
     }
-
-
-
 
     Loader
     {

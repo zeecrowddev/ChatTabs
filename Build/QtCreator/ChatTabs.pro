@@ -61,10 +61,13 @@ OTHER_FILES += \
     ../../Source/Views/ResourceViewer2/ImageViewer.qml \
     ../../Source/Views/ResourceViewer2/ResourceViewer2.qml \
     ../../Source/Views/ResourceViewer2/WebViewer.qml \
-    ../../Source/Views/WebView/WebView3.0.qml \
     ../../Source/Views/WebView/NoWebView.qml
   
 
 RESOURCES += \
     ChatTabs.qrc \
     ../../Source/ChatTabs.qrc
+
+DISTFILES += \
+    ../../Source/Views/WebView/WebKit3.0.qml \
+    ../../Source/Views/WebView/WebView1.0.qml

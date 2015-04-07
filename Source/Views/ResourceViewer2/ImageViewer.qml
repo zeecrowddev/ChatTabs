@@ -76,11 +76,22 @@ Item
     {
         id : toolBar
 
+        height: 50
+
         anchors.top : parent.top
 
         RowLayout {
+
             ToolButton
             {
+                 height : 45
+                 width : 45
+
+                 implicitHeight: 45
+                 implicitWidth: 45
+
+                style : ButtonStyle {}
+
                 action : Action
                 {
                     id : downloadAction
@@ -94,6 +105,14 @@ Item
             }
             ToolButton
             {
+                height : 45
+                width : 45
+
+                implicitHeight: 45
+                implicitWidth: 45
+
+                style : ButtonStyle {}
+
                 action : Action
                 {
                     id : toClopBoardAction
@@ -107,7 +126,7 @@ Item
             }
         }
 
-        style: ToolBarStyle {}
+        style: ToolBarStyle { }
     }
 
     ProgressBar

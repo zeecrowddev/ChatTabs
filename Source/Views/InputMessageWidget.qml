@@ -37,11 +37,15 @@ FocusScope
     signal accepted(string message);
 
 
-
-
+    function resetFocus()
+    {
+        textField.focus = false;
+    }
 
     function setFocus()
     {
+        if (Qt.platform.os === "android")
+            return;
         textField.focus = true;
         textField.forceActiveFocus();
     }
@@ -128,6 +132,11 @@ FocusScope
 
                 if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return)
                 {
+                    if (Qt.platform.os === "android")
+                    {
+                        input.resetFocus();
+                    }
+
                     event.accepted = true
                     if (!(event.modifiers & Qt.AltModifier))
                     {

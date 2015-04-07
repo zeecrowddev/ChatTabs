@@ -42,14 +42,23 @@ Item
 
     ToolBar
     {
+        height : 50
         id : toolBar
 
         anchors.top : parent.top
+
+        style: ToolBarStyle { }
 
         RowLayout
         {
             ToolButton
             {
+                height : 45
+                width : 45
+                implicitHeight : 45
+                implicitWidth : 45
+                style : ButtonStyle {}
+
                 action : Action
                 {
                 id : downloadAction
@@ -65,6 +74,11 @@ Item
         }
         ToolButton
         {
+            height : 45
+            width : 45
+            implicitHeight : 45
+            implicitWidth : 45
+            style : ButtonStyle {}
             action : Action
             {
             id : toClopBoardAction
@@ -81,6 +95,11 @@ Item
 
     ToolButton
     {
+        height : 45
+        width : 45
+        implicitHeight : 45
+        implicitWidth : 45
+        style : ButtonStyle {}
         action : Action
         {
         id : openExternallyAction
@@ -95,6 +114,11 @@ Item
 }
 ToolButton
 {
+    height : 45
+    width : 45
+    implicitHeight : 45
+    implicitWidth : 45
+    style : ButtonStyle {}
     action : Action
     {
     id : grabAction
@@ -108,6 +132,11 @@ ToolButton
 }
 ToolButton
 {
+    height : 45
+    width : 45
+    implicitHeight : 45
+    implicitWidth : 45
+    style : ButtonStyle {}
     action : Action
     {
         iconSource  : "qrc:/ChatTabs/Resources/ok2.png"
@@ -148,7 +177,8 @@ Rectangle
 {
     id          : progressBarContainerId
 
-    color : "black"
+    color : "red"
+
     anchors
     {
         top     : toolBar.bottom
@@ -202,34 +232,51 @@ ScrollView
 {
     style : ScrollViewStyle { transientScrollBars : false}
     id : scrollView
+
+    width : 100
+    height : 100
+
     anchors.top         : textFieldUrl.bottom
     anchors.topMargin   : 4
     anchors.bottom      : parent.bottom
     anchors.left        : parent.left
     anchors.right       : parent.right
 
+
+
 Item
 {
-
-
     anchors.fill: parent
+
+
 
     Loader
     {
             id : webView
             width : scrollView.width
             height : scrollView.height
+
             Component.onCompleted:
             {
 
-                if (!mainView.useWebView)
+                if (mainView.useWebView === "")
                 {
                     source = "qrc:/ChatTabs/Views/WebView/NoWebView.qml"
                 }
-                else
+                else if (mainView.useWebView === "WebKit")
                 {
-                    source = "qrc:/ChatTabs/Views/WebView/WebView3.0.qml"
+                    source = "qrc:/ChatTabs/Views/WebView/WebKit3.0.qml"
                 }
+                else if (mainView.useWebView === "WebView")
+                {
+                    source = "qrc:/ChatTabs/Views/WebView/WebView1.0.qml"
+                }
+            }
+
+            onLoaded:
+            {
+                loader.item.parent = webView
+                loader.item.z = loader.z + 1
             }
     }
 

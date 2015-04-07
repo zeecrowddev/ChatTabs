@@ -36,7 +36,7 @@ Zc.AppView
 {
     id : mainView
 
-    property bool useWebView  : false
+    property string useWebView  : ""
 
     anchors
     {
@@ -56,6 +56,7 @@ Zc.AppView
             tooltip : "Close Application"
             onTriggered:
             {
+                inputMessageWidget.resetFocus();
                 mainView.close();
             }
         }
@@ -498,6 +499,12 @@ Zc.AppView
             Layout.fillWidth : true
 
 
+//            MouseArea
+//            {
+//                anchors.fill: parent
+//                onClicked: inputMessageWidget.resetFocus();
+//            }
+
             TabView
             {
                 id : tabView
@@ -786,13 +793,24 @@ AddNewThreadDialogBox
 onLoaded :
 {
     activity.start();
+
+    var webViewVersion =  mainView.context.getQtModuleVersion("QtWebView") !== "";
+    var webKitVersion =  mainView.context.getQtModuleVersion("QtWebKit") !== "";
+    mainView.useWebView = "";
+
     if (Qt.platform.os === "windows")
     {
-        mainView.useWebView = true
+        if (webViewVersion !== null && webViewVersion !== undefined)
+            mainView.useWebView = "WebView"
+        else
+            mainView.useWebView = "WebKit"
     }
     else
     {
-        mainView.useWebView = mainView.context.getQtModuleVersion("QtWebKit") !== "";
+        if (webViewVersion !== null && webViewVersion !== undefined)
+            mainView.useWebView = "WebView"
+        else if (webKitVersion !== null && webKitVersion !== undefined)
+            mainView.useWebView = "WebKit"
     }
 }
 

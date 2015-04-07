@@ -46,9 +46,10 @@
         <file>Resources/OpenExternal.png</file>
         <file>Resources/grab.png</file>
         <file>Resources/icon.png</file>
-        <file>Views/WebView/WebView3.0.qml</file>
         <file>Views/WebView/NoWebView.qml</file>
         <file>Resources/ballon.png</file>
         <file>Resources/ballonme.png</file>
+        <file>Views/WebView/WebKit3.0.qml</file>
+        <file>Views/WebView/WebView1.0.qml</file>
     </qresource>
 </RCC>
