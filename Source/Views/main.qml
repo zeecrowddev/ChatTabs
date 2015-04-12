@@ -151,7 +151,6 @@ Zc.AppView
         }
     ]
 
-
     property alias splitViewDistance : splitViewPanelRight.x
 
     function uploadFile(url)
@@ -183,6 +182,12 @@ Zc.AppView
         {
             appNotification.resetNotification();
             inputMessageWidget.setFocus();
+            resourceViewer2.showWebViewIfNecessary();
+        }
+        else
+        {
+            inputMessageWidget.focus = false;
+            resourceViewer2.hideWebViewIfNecessary();
         }
     }
 

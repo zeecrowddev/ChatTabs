@@ -32,6 +32,31 @@ Rectangle
     height: 100
     width : 100
 
+    property string ressourceType : ""
+
+    function hideWebViewIfNecessary()
+    {
+        if (loader.item !== null && loader.item !== undefined)
+        {
+            console.log(">> ressourceType " + ressourceType)
+            if (ressourceType === "WebView")
+            {
+                loader.item.hideWebViewIfNecessary()
+            }
+        }
+    }
+
+    function showWebViewIfNecessary()
+    {
+        if (loader.item !== null && loader.item !== undefined)
+        {
+            if (ressourceType == "WebView")
+            {
+                loader.item.showWebViewIfNecessary()
+            }
+        }
+    }
+
     color : "white"
 
     property string localPath: ""
@@ -53,6 +78,8 @@ Rectangle
 
     function showCamera()
     {
+        ressourceType = "Camera"
+
         loader.source = "CameraView.qml"
         loader.item.localPath = resourceViewer.localPath
         loader.item.sendCameraPicture.connect(function (x)
@@ -68,6 +95,8 @@ Rectangle
 
     function showWebView()
     {
+        ressourceType = "WebView"
+
         var o = {}
         o.path = "http://www.google.fr"
 
@@ -92,11 +121,13 @@ Rectangle
         */
         if (res.mimeType.indexOf("image") === 0 )
         {
+            ressourceType = "ImageViewer"
             loader.source = "ImageViewer.qml"
             loader.item.show(resource)
         }
         else if (res.mimeType.indexOf("http") === 0 )
         {
+            ressourceType = "WebView"
             loader.source = "WebViewer.qml"
             loader.item.show(resource)
         }

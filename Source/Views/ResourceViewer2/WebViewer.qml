@@ -34,6 +34,22 @@ Item
     anchors.fill: parent
     property bool stopGrabBinding : false
 
+    function hideWebViewIfNecessary()
+    {
+        if (webView.item !== null && webView.item !== undefined )
+        {
+            webView.item.visible = false;
+        }
+    }
+
+    function showWebViewIfNecessary()
+    {
+        if (webView.item !== null && webView.item !== undefined )
+        {
+            webView.item.visible = true;
+        }
+    }
+
     function show(resource)
     {
         var res = JSON.parse(resource)
@@ -271,12 +287,6 @@ Item
                 {
                     source = "qrc:/ChatTabs/Views/WebView/WebView1.0.qml"
                 }
-            }
-
-            onLoaded:
-            {
-                loader.item.parent = webView
-                loader.item.z = loader.z + 1
             }
     }
 
