@@ -22,6 +22,7 @@
 
 import QtQuick 2.2
 import QtQuick.Dialogs 1.0
+import QtQuick.Window 2.2
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
 import QtQuick.Layouts 1.0
@@ -481,7 +482,7 @@ Zc.AppView
             id : handleDelegateDelegate
             Rectangle
             {
-                width : 3
+                width : Screen.logicalPixelDensity * 2
                 color :  styleData.hovered ? "grey" :  "lightgrey"
 
                 Rectangle
@@ -805,16 +806,16 @@ onLoaded :
 
     if (Qt.platform.os === "windows")
     {
-        if (webViewVersion !== null && webViewVersion !== undefined)
+        if (webViewVersion)
             mainView.useWebView = "WebView"
         else
             mainView.useWebView = "WebKit"
     }
     else
     {
-        if (webViewVersion !== null && webViewVersion !== undefined)
+        if (webViewVersion)
             mainView.useWebView = "WebView"
-        else if (webKitVersion !== null && webKitVersion !== undefined)
+        else if (webKitVersion)
             mainView.useWebView = "WebKit"
     }
 }

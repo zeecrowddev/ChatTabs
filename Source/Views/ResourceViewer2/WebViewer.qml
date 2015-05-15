@@ -84,7 +84,7 @@ Item
                 onTriggered :
                 {
                     grabUnvisible()
-                    webView.goBack()
+                    webView.item.goBack()
                 }
             }
         }
@@ -104,7 +104,7 @@ Item
             onTriggered :
             {
                 grabUnvisible()
-                webView.goForward()
+                webView.item.goForward()
             }
         }
     }

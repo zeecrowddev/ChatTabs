@@ -98,7 +98,7 @@ Rectangle
         ressourceType = "WebView"
 
         var o = {}
-        o.path = "http://www.google.fr"
+        o.path = "http://www.qwant.com"
 
         var urlresource = JSON.stringify(o)
         if (mainView.useWebView !== "")
