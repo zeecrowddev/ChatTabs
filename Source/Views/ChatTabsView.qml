@@ -28,6 +28,8 @@ ScrollView
 {
     id : chatTabs
 
+    anchors.fill : parent
+
     style: ScrollViewStyle
     {
            transientScrollBars : false
@@ -85,7 +87,10 @@ ScrollView
 //            model : chatTabs.messages
             ChatTabsDelegate
             {           
-                onResourceClicked: chatTabs.resourceClicked(resourceDescriptor)
+                onResourceClicked:
+                {
+                    chatTabs.resourceClicked(resourceDescriptor)
+                }
 
                 contactImageSource : crowdActivity.getParticipantImageUrl(from)
 

@@ -34,6 +34,22 @@ Item
     anchors.fill: parent
     property bool stopGrabBinding : false
 
+    function getUrl()
+    {
+        return webView.item.url;
+    }
+
+    function back()
+    {
+    }
+
+    function next()
+    {
+  //      webView.source = ""
+    }
+
+
+
     function hideWebViewIfNecessary()
     {
         if (webView.item !== null && webView.item !== undefined )
@@ -42,13 +58,13 @@ Item
         }
     }
 
-    function showWebViewIfNecessary()
+    /* function showWebViewIfNecessary()
     {
         if (webView.item !== null && webView.item !== undefined )
         {
             webView.item.visible = true;
         }
-    }
+    }*/
 
     function show(resource)
     {
@@ -56,7 +72,7 @@ Item
         webView.item.url = res.path
     }
 
-    ToolBar
+    /* ToolBar
     {
         height : 50
         id : toolBar
@@ -78,7 +94,7 @@ Item
                 action : Action
                 {
                 id : downloadAction
-                iconSource  : "qrc:/ChatTabs/Resources/back.png"
+                iconSource  : "../../Resources/back.png"
                 tooltip     : "Back"
                 enabled  : webView.item === null ? false : webView.item.canGoBack
                 onTriggered :
@@ -98,7 +114,7 @@ Item
             action : Action
             {
             id : toClopBoardAction
-            iconSource  : "qrc:/ChatTabs/Resources/next.png"
+            iconSource  : "../../Resources/next.png"
             tooltip     : "Next"
             enabled  : webView.item === null ? false : webView.item.canGoForward
             onTriggered :
@@ -155,7 +171,7 @@ ToolButton
     style : ButtonStyle {}
     action : Action
     {
-        iconSource  : "qrc:/ChatTabs/Resources/ok2.png"
+        iconSource  : "../../Resources/ok2.png"
         tooltip     : "Add to chat"
         onTriggered :
         {
@@ -166,9 +182,9 @@ ToolButton
     }
 }
 }
-}
+}*/
 
-
+    /*
 function grabVisible()
 {
     growDown.visible = true;
@@ -187,42 +203,43 @@ function  grabUnvisible()
     grabClose.visible = false;
 }
 
+*/
 
-
-Rectangle
-{
-    id          : progressBarContainerId
-
-    color : "red"
-
-    anchors
+/*    Rectangle
     {
-        top     : toolBar.bottom
-        right   : parent.right
-        left    : parent.left
-    }
+        id          : progressBarContainerId
 
-    height  : 3
+        color : "red"
 
-
-    Rectangle
-    {
-        id          : progressBarId
-
-
-        width : webView.item === null ? 0 : parent.width * webView.item.loadProgress / 100
-
-        color       : "red"
         anchors
         {
             top     : parent.top
+            right   : parent.right
             left    : parent.left
         }
 
         height  : 3
-    }
-}
+*/
 
+        Rectangle
+        {
+            id          : progressBarId
+
+
+            width : webView.item === null ? 0 : parent.width * webView.item.loadProgress / 100
+
+            color       : "blue"
+            anchors
+            {
+                top     : parent.top
+                left    : parent.left
+            }
+
+            height  : 3
+        }
+ //   }
+
+    /*
 TextField
 {
     style: TextFieldStyle{}
@@ -243,178 +260,179 @@ TextField
         webView.item.url = text
     }
 }
+*/
 
-ScrollView
-{
-    style : ScrollViewStyle { transientScrollBars : false}
-    id : scrollView
-
-    width : 100
-    height : 100
-
-    anchors.top         : textFieldUrl.bottom
-    anchors.topMargin   : 4
-    anchors.bottom      : parent.bottom
-    anchors.left        : parent.left
-    anchors.right       : parent.right
-
-
-
-Item
-{
-    anchors.fill: parent
-
-
-
-    Loader
+    ScrollView
     {
-            id : webView
-            width : scrollView.width
-            height : scrollView.height
+        style : ScrollViewStyle { transientScrollBars : false}
+        id : scrollView
+
+  //      width : 100
+  //      height : 100
+
+        anchors.top         : progressBarId.bottom
+//        anchors.topMargin   : 4
+        anchors.bottom      : parent.bottom
+        anchors.left        : parent.left
+        anchors.right       : parent.right
+
+
+
+        Item
+        {
+            anchors.fill: parent
+
+
+            Loader
+            {
+                id : webView
+                width : scrollView.width
+                height : scrollView.height
+
+                Component.onCompleted:
+                {
+                    if (mainView.useWebView === "")
+                    {
+                        source = "../WebView/NoWebView.qml"
+                    }
+                    else if (mainView.useWebView === "WebKit")
+                    {
+                        source = "../WebView/WebKit3.0.qml"
+                    }
+                    else if (mainView.useWebView === "WebView")
+                    {
+                        source = "../WebView/WebView1.0.qml"
+                    }
+                }
+            }
+
+            /*
 
             Component.onCompleted:
             {
-
-                if (mainView.useWebView === "")
-                {
-                    source = "qrc:/ChatTabs/Views/WebView/NoWebView.qml"
-                }
-                else if (mainView.useWebView === "WebKit")
-                {
-                    source = "qrc:/ChatTabs/Views/WebView/WebKit3.0.qml"
-                }
-                else if (mainView.useWebView === "WebView")
-                {
-                    source = "qrc:/ChatTabs/Views/WebView/WebView1.0.qml"
-                }
-            }
-    }
-
-
-    Component.onCompleted:
-    {
-        grabBorder.width = 100
-        grabBorder.height = 100
-        grabBorder.x = parent.width / 2 - grabBorder.width /2
-        grabBorder.y = parent.height / 2 - grabBorder.height /2
-        growDown.x = grabBorder.x + grabBorder.width -11
-        growDown.y = grabBorder.y + grabBorder.height - 11
-        growUp.x = grabBorder.x - 11
-        growUp.y = grabBorder.y - 11
-
-    }
-
-    Rectangle
-    {
-        id : grabBorder
-
-        x : 0
-        y : 0
-
-        visible : false
-
-        border.width   : 2
-        border.color   : "red"
-
-        color : "lightgrey"
-
-        opacity : 0.5
-
-        onXChanged:
-        {
-        }
-        onYChanged:
-        {
-        }
-
-
-
-        MouseArea
-        {
-            anchors.fill: grabBorder
-
-            drag.target     : grabBorder
-            drag.axis       : Drag.XAndYAxis
-            drag.minimumX   : 0
-            drag.minimumY   : 0
-
-
-            onReleased:
-            {
-                mainWebView.stopGrabBinding = true
-                growUp.x = grabBorder.x - 11
-                growDown.x = grabBorder.x + grabBorder.width - 11
-                growUp.y = grabBorder.y - 11
+                grabBorder.width = 100
+                grabBorder.height = 100
+                grabBorder.x = parent.width / 2 - grabBorder.width /2
+                grabBorder.y = parent.height / 2 - grabBorder.height /2
+                growDown.x = grabBorder.x + grabBorder.width -11
                 growDown.y = grabBorder.y + grabBorder.height - 11
-                mainWebView.stopGrabBinding = false
-                growUp.visible = true
-                growDown.visible = true
-            }
+                growUp.x = grabBorder.x - 11
+                growUp.y = grabBorder.y - 11
 
-            onPressed:
+            }*/
+
+            /*
+            Rectangle
             {
-                growUp.visible = false
-                growDown.visible = false
+                id : grabBorder
+
+                x : 0
+                y : 0
+
+                visible : false
+
+                border.width   : 2
+                border.color   : "red"
+
+                color : "lightgrey"
+
+                opacity : 0.5
+
+                onXChanged:
+                {
+                }
+                onYChanged:
+                {
+                }
+
+
+
+                MouseArea
+                {
+                    anchors.fill: grabBorder
+
+                    drag.target     : grabBorder
+                    drag.axis       : Drag.XAndYAxis
+                    drag.minimumX   : 0
+                    drag.minimumY   : 0
+
+
+                    onReleased:
+                    {
+                        mainWebView.stopGrabBinding = true
+                        growUp.x = grabBorder.x - 11
+                        growDown.x = grabBorder.x + grabBorder.width - 11
+                        growUp.y = grabBorder.y - 11
+                        growDown.y = grabBorder.y + grabBorder.height - 11
+                        mainWebView.stopGrabBinding = false
+                        growUp.visible = true
+                        growDown.visible = true
+                    }
+
+                    onPressed:
+                    {
+                        growUp.visible = false
+                        growDown.visible = false
+                    }
+                }
+            }
+
+            Button
+            {
+                id : grabValidate
+                width           : 20
+                height          : 20
+                visible : false
+
+                anchors.top   : grabBorder.top
+                anchors.topMargin   : -11
+                anchors.left  : grabBorder.right
+                anchors.leftMargin: -11
+
+                style: ButtonStyle {
+                    background:
+                        Image
+                    {
+                    source :  "../../Resources/ok2.png"
+                    anchors.fill: parent
+                }
+            }
+
+            onClicked:
+            {
+                var tmpx = mainView.x - scrollView.flickableItem.contentX +  grabBorder.x;
+                var val =  mainView.mapToItem(null,tmpx,mainView.y)
+                grabUnvisible()
+                mainView.grabWindow(mainView.context.temporaryPath + "_grap.png" ,val.x,val.y + scrollView.y - scrollView.flickableItem.contentY + grabBorder.y,grabBorder.width,grabBorder.height);
+                mainView.uploadFile(mainView.context.temporaryPath + "_grap.png")
             }
         }
-    }
 
-    Button
-    {
-        id : grabValidate
-        width           : 20
-        height          : 20
-        visible : false
-
-        anchors.top   : grabBorder.top
-        anchors.topMargin   : -11
-        anchors.left  : grabBorder.right
-        anchors.leftMargin: -11
-
-        style: ButtonStyle {
-            background:
-                Image
-                {
-                    source :  "qrc:/ChatTabs/Resources/ok2.png"
-                    anchors.fill: parent
-                }
-        }
-
-        onClicked:
+        Button
         {
-            var tmpx = mainView.x + mainView.splitViewDistance - scrollView.flickableItem.contentX +  grabBorder.x;
-            var val =  mainView.mapToItem(null,tmpx,mainView.y)
-            grabUnvisible()
-            mainView.grabWindow(mainView.context.temporaryPath + "_grap.png" ,val.x,val.y + scrollView.y - scrollView.flickableItem.contentY + grabBorder.y,grabBorder.width,grabBorder.height);
-            mainView.uploadFile(mainView.context.temporaryPath + "_grap.png")
-        }
-    }
+            id : grabClose
+            width           : 20
+            height          : 20
+            visible : false
 
-    Button
-    {
-        id : grabClose
-        width           : 20
-        height          : 20
-        visible : false
+            anchors.top        : grabBorder.bottom
+            anchors.topMargin  : -11
+            anchors.left       : grabBorder.left
+            anchors.leftMargin : -11
 
-        anchors.top        : grabBorder.bottom
-        anchors.topMargin  : -11
-        anchors.left       : grabBorder.left
-        anchors.leftMargin : -11
-
-        style: ButtonStyle {
-            background:
-                Image
+            style: ButtonStyle {
+                background:
+                    Image
                 {
-                    source :  "qrc:/ChatTabs/Resources/cancel2.png"
-                    anchors.fill: parent
-                }
+                source :  "../Resources/cancel2.png"
+                anchors.fill: parent
+            }
         }
 
         onClicked:
         {
             grabUnvisible()
-         }
+        }
     }
 
 
@@ -508,9 +526,10 @@ Item
 
             }
         }
-    }
+    }*/
 
-}
-}
+        }
+
+    }
 
 }

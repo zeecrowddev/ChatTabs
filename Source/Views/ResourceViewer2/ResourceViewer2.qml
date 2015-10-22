@@ -19,18 +19,145 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 import QtQuick 2.2
-import QtQuick.Controls 1.1
+import QtQuick.Dialogs 1.1
+import QtQuick.Window 2.1
+import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Layouts 1.1
 
-//import ZcClient 1.0 as Zc
+import ZcClient 1.0 as Zc
+import "../../Components" as CtComponents
 
-Rectangle
+
+Item
 {
     id : resourceViewer
     height: 100
     width : 100
+
+    property alias nextButtonVisible : nextButton.visible
+    property alias nextButtonText : nextButton.text
+
+    function setContext(context)
+    {
+        documentFolder.setAppContext(context)
+    }
+
+
+    Zc.CrowdSharedResource
+    {
+        id   : documentFolder
+        name : "ChatTabsResourceViewer"
+    }
+
+    Zc.ResourceDescriptor
+    {
+        id : zcResourceDescriptor
+    }
+
+    function onResourceProgress(query,value)
+    {
+    }
+
+    function onUploadCompleted(query)
+    {
+        busyIndicatorId.running = false
+
+        senderChat.subject = mainView.currentTabViewTitle;
+        var result = "###|" +  query.content;
+        senderChat.sendMessage(result);
+
+        mainView.chatViewVisible();
+
+    }
+
+    function uploadFile(fileUrl)
+    {
+        busyIndicatorId.running = true
+
+        zcResourceDescriptor.fromLocalFile(fileUrl);
+
+        var from = mainView.context.nickname
+        var to = mainView.currentTabViewTitle
+        var datetime = Date.now()
+        var filename = zcResourceDescriptor.name
+
+        var query = zcStorageQueryStatusComponentId.createObject(mainView)
+
+        query.progress.connect(onResourceProgress);
+        query.completed.connect(onUploadCompleted);
+
+        zcResourceDescriptor.name =  mainView.context.nickname + "_" + Date.now() + "." + zcResourceDescriptor.suffix;
+
+        zcResourceDescriptor.path =  documentFolder.getUrl(zcResourceDescriptor.name);
+
+        var tmpContent = JSON.parse(zcResourceDescriptor.toJSON())
+
+        tmpContent.displayName = filename;
+
+        query.content =  JSON.stringify(tmpContent);
+
+        if (!documentFolder.uploadFile(zcResourceDescriptor.name,fileUrl,query))
+        {
+            busyIndicatorId.running =false
+        }
+    }
+
+
+    CtComponents.ToolBar
+    {
+        id : toolbarId
+        anchors.right: parent.right
+        anchors.left: parent.left
+        anchors.top: parent.top
+
+        RowLayout {
+            anchors.fill: parent
+
+            CtComponents.ToolButton {
+                text: qsTr("< Back")
+                onClicked: {
+                    if (loader.item !== null && loader.item.back !== undefined)
+                    {
+                        loader.item.back();
+                    }
+                    if (ressourceType === "Camera")
+                    {
+                        loader.source = ""
+                    }
+
+                    mainView.chatViewVisible();
+                }
+            }
+
+            CtComponents.ToolButton {
+                id : nextButton
+                text: qsTr("Next")
+                Layout.alignment: Qt.AlignRight
+
+                onClicked: {
+
+                    if (loader.item !== null && loader.item.next !== undefined)
+                    {
+                        loader.item.next();
+                    }
+
+                    if (ressourceType === "Camera") {
+                        resourceViewer.uploadFile(loader.item.path)
+                        loader.source = ""
+                    } else if (ressourceType === "WebView") {
+                        Qt.openUrlExternally(loader.item.getUrl())
+                    } else if (ressourceType === "ImageViewer") {
+                        mainView.downloadFile(loader.item.fileName,"pictures");
+                    } else {
+                        mainView.chatViewVisible()
+                    }
+                }
+            }
+        }
+
+    }
 
     property string ressourceType : ""
 
@@ -38,7 +165,6 @@ Rectangle
     {
         if (loader.item !== null && loader.item !== undefined)
         {
-            console.log(">> ressourceType " + ressourceType)
             if (ressourceType === "WebView")
             {
                 loader.item.hideWebViewIfNecessary()
@@ -46,7 +172,7 @@ Rectangle
         }
     }
 
-    function showWebViewIfNecessary()
+ /*   function showWebViewIfNecessary()
     {
         if (loader.item !== null && loader.item !== undefined)
         {
@@ -55,17 +181,13 @@ Rectangle
                 loader.item.showWebViewIfNecessary()
             }
         }
-    }
-
-    color : "white"
+    }*/
 
     property string localPath: ""
 
-    signal uploadFile(string fileName)
-
     function isKnownResourceDescriptor(resourceDescriptor)
     {
-        var res =   JSON.parse(resourceDescriptor)
+        var res = JSON.parse(resourceDescriptor)
 
         if (res.mimeType.indexOf("image") === 0 )
             return true;
@@ -79,21 +201,13 @@ Rectangle
     function showCamera()
     {
         ressourceType = "Camera"
-
         loader.source = "CameraView.qml"
         loader.item.localPath = resourceViewer.localPath
-        loader.item.sendCameraPicture.connect(function (x)
-        {
-            if (x !== "")
-            {
-               resourceViewer.uploadFile(x)
-               loader.source = ""
-            }
-        } );
-        loader.item.close.connect( function (x) {loader.source = ""})
+        nextButtonText = "Validate >"
+        nextButtonVisible = false
     }
 
-    function showWebView()
+   /* function showWebView()
     {
         ressourceType = "WebView"
 
@@ -108,14 +222,13 @@ Rectangle
         }
         else
         {
-            Qt.openUrlExternally(urlresourceÒ)
+            Qt.openUrlExternally(urlresource)
         }
-    }
+    }*/
 
     function showResource(resource)
-    {
+    {   
         var res = JSON.parse(resource)
-
         /*
         ** Show an image
         */
@@ -123,12 +236,16 @@ Rectangle
         {
             ressourceType = "ImageViewer"
             loader.source = "ImageViewer.qml"
+            nextButtonVisible = true
+            nextButtonText = "Save >"
             loader.item.show(resource)
         }
         else if (res.mimeType.indexOf("http") === 0 )
         {
-            ressourceType = "WebView"
+           ressourceType = "WebView"
             loader.source = "WebViewer.qml"
+            nextButtonVisible = true
+            nextButtonText = "Browser >"
             loader.item.show(resource)
         }
     }
@@ -136,6 +253,17 @@ Rectangle
     Loader
     {
         id : loader
-        anchors.fill: parent
+        anchors {
+            top : toolbarId.bottom
+            bottom : parent.bottom
+            right : parent.right
+            left : parent.left
+        }
     }
+
+    CtComponents.BusyIndicator
+    {
+        id : busyIndicatorId
+    }
+
 }

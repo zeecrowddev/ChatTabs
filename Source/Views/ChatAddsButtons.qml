@@ -32,13 +32,12 @@ Rectangle
 {
     id : buttons
 
-    anchors.bottom: parent.bottom
+//    anchors.bottom: parent.bottom
+//    width : parent.width - 5
+//    anchors.right       : parent.right
+//    anchors.leftMargin : 5
 
-    width : parent.width - 5
-    anchors.left       : parent.left
-    anchors.leftMargin : 5
-
-    height : 75
+//    height : 75
     color : "white"
 
 
@@ -248,7 +247,7 @@ Rectangle
     ChatTabsButton
     {
         id                : addFileButton
-        imageSource        : "qrc:/ChatTabs/Resources/folder.png"
+        imageSource        : "..//Resources/folder.png"
 
         width : 50
         height: 50
@@ -267,7 +266,7 @@ Rectangle
     ChatTabsButton
     {
         id                : addCameraButton
-        imageSource        : "qrc:/ChatTabs/Resources/camera.png"
+        imageSource        : "../Resources/camera.png"
 
         width : 50
         height: 50
@@ -291,7 +290,7 @@ Rectangle
     ChatTabsButton
     {
         id                : addPasteButton
-        imageSource        : "qrc:/ChatTabs/Resources/paste.png"
+        imageSource        : "../Resources/paste.png"
 
         width : 50
         height: 50
@@ -321,7 +320,7 @@ Rectangle
     ChatTabsButton
     {
         id                : addWebViewButton
-        imageSource        : "qrc:/ChatTabs/Resources/addUrl.png"
+        imageSource        : "../Resources/addUrl.png"
 
         visible : mainView.useWebView !== ""
 

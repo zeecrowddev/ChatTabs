@@ -72,6 +72,8 @@ Item
         size = res.size
     }
 
+    /*
+
     ToolBar
     {
         id : toolBar
@@ -128,18 +130,19 @@ Item
 
         style: ToolBarStyle { }
     }
+    */
 
     ProgressBar
     {
         id : progressBar
-        anchors.top  : toolBar.bottom
+        anchors.top  : parent.top
         anchors.left : parent.left
         anchors.right: parent.right
 
         minimumValue: 0
         maximumValue: 100
 
-        height : 10
+        height : 3
         visible : false
 
         value: query.progressValue
@@ -156,7 +159,7 @@ Item
         anchors.right : parent.right
         anchors.bottom: parent.bottom
         anchors.top: progressBar.bottom
-        anchors.topMargin : 5
+     //   anchors.topMargin : 5
 
         fillMode : Image.PreserveAspectFit
 
@@ -182,6 +185,7 @@ Item
 
     }
 
+    // CP : a garder absolument code pratique à l'avenir
     function copyToClipBoard()
     {
         downloadState = "ToClipboard"
@@ -189,7 +193,5 @@ Item
         downloadAction.enabled = false
         documentFolder.downloadFile(fileName,size,query);
     }
-
-
 
 }

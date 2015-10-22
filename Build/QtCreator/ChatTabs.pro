@@ -70,4 +70,19 @@ RESOURCES += \
 
 DISTFILES += \
     ../../Source/Views/WebView/WebKit3.0.qml \
-    ../../Source/Views/WebView/WebView1.0.qml
+    ../../Source/Views/WebView/WebView1.0.qml \
+    ../../Source/Components/ToolBar.qml \
+    ../../Source/Components/AppStyleSheet.qml \
+    ../../Source/Components/ToolButton.qml \
+    ../../Source/Components/AsynchronousQuery.qml \
+    ../../Source/Components/BusyIndicator.qml \
+    ../../Source/Components/BusyIndicatorStyle.qml \
+    ../../Source/Components/IconButton.qml \
+    ../../Source/Components/ActionList.qml \
+    ../../Source/Components/ActionButtonStyle.qml \
+    ../../Source/Components/FormButton.qml \
+    ../../Source/Components/FormLabel.qml \
+    ../../Source/Components/FormSpacer.qml \
+    ../../Source/Components/FormTextField.qml \
+    ../../Source/Components/BasicForm.qml \
+    ../../Source/Components/MessageInput.qml

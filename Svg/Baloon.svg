@@ -52,21 +52,22 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#f98c19;fill-rule:evenodd;stroke:none;fill-opacity:1"
+       style="fill:#f98c19;fill-opacity:1;fill-rule:evenodd;stroke:none"
        id="rect2985"
        width="4"
        height="50"
-       x="291.42856"
+       x="-290.69885"
        y="181.21933"
-       inkscape:export-filename="D:\github\ChatTabs\Source\Resources\ballon.png"
+       inkscape:export-filename="C:\dev\ZC\Crowd\Source\Client\Crowd.Core\Images\ballon.png"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
+       inkscape:export-ydpi="90"
+       transform="scale(-1,1)" />
     <path
-       style="fill:#f98c19;stroke:none;fill-opacity:1"
-       d="m 291.62163,199.12859 -4.92278,-7.48263 4.92278,-0.0985 z"
+       style="fill:#f98c19;fill-opacity:1;stroke:none"
+       d="m 290.50578,199.12859 4.92278,-7.48263 -4.92278,-0.0985 z"
        id="path3755"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="D:\github\ChatTabs\Source\Resources\ballon.png"
+       inkscape:export-filename="C:\dev\ZC\Crowd\Source\Client\Crowd.Core\Images\ballon.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
   </g>

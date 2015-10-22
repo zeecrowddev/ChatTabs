@@ -21,68 +21,95 @@
 
 
 import QtQuick 2.2
-import QtQuick.Dialogs 1.0
-import QtQuick.Window 2.2
-import QtQuick.Controls 1.0
-import QtQuick.Controls.Styles 1.0
-import QtQuick.Layouts 1.0
+import QtQuick.Dialogs 1.1
+import QtQuick.Window 2.1
+import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.1
+import QtQuick.Layouts 1.1
 
 import ZcClient 1.0 as Zc
 
+import "../Components" as CtComponents
 import"./ResourceViewer2"
 import "mainPresenter.js" as Presenter
+import "Tools.js" as Tools
 
 
 Zc.AppView
 {
     id : mainView
 
-    property string useWebView  : ""
-
-    anchors
+    CtComponents.AppStyleSheet
     {
-        top : parent.top
-        left: parent.left
-        leftMargin : 5
-        bottom: parent.bottom
-        right  : parent.right
+        id : appStyleSheet
     }
+
+    Zc.QClipboard
+    {
+        id: clipboard
+    }
+
+    Component
+    {
+        id : zcStorageQueryStatusComponentId
+
+        Zc.StorageQueryStatus
+        {
+
+        }
+
+    }
+
+   // property string useWebView  : ""
+    property bool enableIndexChanged: true
+
+    function chatViewVisible() {
+        chatViewId.visible = true;
+        resourcesViewId.visible = false;
+    }
+
+    function resourceViewVisible() {
+        chatViewId.visible = false;
+        resourcesViewId.visible = true;
+    }
+
+    anchors.fill: parent
 
     toolBarActions :
         [
         Action {
             id: closeAction
             shortcut: "Ctrl+X"
-            iconSource: "qrc:/ChatTabs/Resources/close.png"
+            iconSource: "../Resources/close.png"
             tooltip : "Close Application"
             onTriggered:
             {
-                inputMessageWidget.resetFocus();
+                inputMessageWidget.focus = false;
                 mainView.close();
             }
         }
-        ,
-        Action {
-            id: editOrCopyAction
-            iconSource  : "qrc:/ChatTabs/Resources/editmode.png"
-            tooltip  : "Edit Mode"
-            onTriggered:
-            {
-                if (mainView.state === "chat")
-                {
-                    mainView.state = "edit"
-                }
-                else
-                {
-                    mainView.state = "chat"
-                }
-            }
-        }
-        ,
-        Action {
+      //  ,
+      //  Action {
+      //      id: editOrCopyAction
+      //      iconSource  : "../Resources/editmode.png"
+      //      tooltip  : "Edit Mode"
+      //      onTriggered:
+      //      {
+      //          if (mainView.state === "chat")
+      //          {
+      //              mainView.state = "edit"
+      //          }
+      //          else
+      //          {
+      //              mainView.state = "chat"
+      //          }
+      //      }
+      //  }
+      //  ,
+     /*   Action {
             id: addThreadAction
             shortcut: "Ctrl+X"
-            iconSource: "qrc:/ChatTabs/Resources/addThread.png"
+            iconSource: "../Resources/addThread.png"
             tooltip : "Add new thread discussion"
             onTriggered:
             {
@@ -95,11 +122,10 @@ Zc.AppView
                 addNewThreadDialogBox.visible = true;
                 addNewThreadDialogBox.setFocus();
             }
-        }
+        }*/
     ]
 
     state : "chat"
-
 
     states :
         [
@@ -111,17 +137,17 @@ Zc.AppView
                 script:
                 {
 
-                    editModeButtons.visible = false;
-                    editModeButtons.enabled = false;
+                    // editModeButtons.visible = false;
+                    // editModeButtons.enabled = false;
 
-                    editOrCopyAction.iconSource = "qrc:/ChatTabs/Resources/editmode.png";
-                    editOrCopyAction.enabled = true;
-                    editOrCopyAction.tooltip = "Edit Mode";
+                    //editOrCopyAction.iconSource = "../Resources/editmode.png";
+                    //editOrCopyAction.enabled = true;
+                    //editOrCopyAction.tooltip = "Edit Mode";
 
-                    addThreadAction.enabled     = true;
-                    addThreadAction.iconSource  = "qrc:/ChatTabs/Resources/addThread.png"
+                    //addThreadAction.enabled     = true;
+                    //addThreadAction.iconSource  = "../Resources/addThread.png"
 
-                    inputMessageWidget.state    = "chat";
+                    //inputMessageWidget.state    = "chat";
                     if (tabView.getTab(tabView.currentIndex) !== null && tabView.getTab(tabView.currentIndex) !== undefined)
                     {
                         tabView.getTab(tabView.currentIndex).item.state = "chat";
@@ -136,29 +162,94 @@ Zc.AppView
             StateChangeScript {
                 script:
                 {
-                    editOrCopyAction.iconSource = "qrc:/ChatTabs/Resources/chatTabsMode.png";
-                    editOrCopyAction.tooltip = "Chat Mode"
-                    editOrCopyAction.enabled = true;
+                    //editOrCopyAction.iconSource = "qrc:/ChatTabs/Resources/chatTabsMode.png";
+                    //editOrCopyAction.tooltip = "Chat Mode"
+                    //editOrCopyAction.enabled = true;
 
-                    addThreadAction.enabled     = true;
+                    //addThreadAction.enabled     = true;
 
-                    addThreadAction.iconSource  = "qrc:/ChatTabs/Resources/addThread.png"
+                    //addThreadAction.iconSource  = "../Resources/addThread.png"
 
-                    editModeButtons.visible = true;
-                    editModeButtons.enabled = true;
-                    inputMessageWidget.state = 'unvisible'
+                    //editModeButtons.visible = true;
+                    //editModeButtons.enabled = true;
+                    //inputMessageWidget.state = 'unvisible'
                     tabView.getTab(tabView.currentIndex).item.state = "edit";
                 }}
         }
     ]
 
-    property alias splitViewDistance : splitViewPanelRight.x
 
-    function uploadFile(url)
+    function onResourceProgress(query,value)
     {
-        buttons.uploadFile(url)
     }
 
+    function onUploadCompleted(query)
+    {
+        busyIndicatorId.running = false
+
+        senderChat.subject = mainView.currentTabViewTitle;
+        var result = "###|" +  query.content;
+        senderChat.sendMessage(result);
+
+        mainView.chatViewVisible();
+
+    }
+
+    function onDownloadCompleted(query)
+    {
+        busyIndicatorId.running = false
+        mainView.chatViewVisible();
+    }
+
+
+    function downloadFileTo(from,to)
+    {
+        busyIndicatorId.running = true
+
+        var query = zcStorageQueryStatusComponentId.createObject(mainView)
+
+        query.progress.connect(onResourceProgress);
+        query.completed.connect(onDownloadCompleted);
+
+        var result =  documentFolder.downloadFileTo(from,to,query);
+
+        if (!result)
+        {
+            busyIndicatorId.running = false;
+        }
+
+    }
+
+    function uploadFile(fileUrl)
+    {
+        busyIndicatorId.running = true
+
+        zcResourceDescriptorId.fromLocalFile(fileUrl);
+
+        var from = mainView.context.nickname
+        var to = mainView.currentTabViewTitle
+        var datetime = Date.now()
+        var filename = zcResourceDescriptorId.name
+
+        var query = zcStorageQueryStatusComponentId.createObject(mainView)
+
+        query.progress.connect(onResourceProgress);
+        query.completed.connect(onUploadCompleted);
+
+        zcResourceDescriptorId.name =  mainView.context.nickname + "_" + Date.now() + "." + zcResourceDescriptorId.suffix;
+        zcResourceDescriptorId.path =  documentFolder.getUrl(zcResourceDescriptorId.name);
+
+        var tmpContent = JSON.parse(zcResourceDescriptorId.toJSON())
+
+        tmpContent.displayName = filename;
+
+        query.content =  JSON.stringify(tmpContent);
+
+        if (!documentFolder.uploadFile(zcResourceDescriptorId.name,fileUrl,query))
+        {
+            busyIndicatorId.running =false
+        }
+    }
     /*
     ** This signal notify that a message arrive on a tab "subject"
     ** Each Chat Tab listen this signal to increment if necessary
@@ -182,31 +273,20 @@ Zc.AppView
         if (isCurrentView == true)
         {
             appNotification.resetNotification();
-            inputMessageWidget.setFocus();
-            resourceViewer2.showWebViewIfNecessary();
+            chatViewVisible();
+            inputMessageWidget.forceActiveFocus();
+        //    resourceViewer2.showWebViewIfNecessary();
         }
         else
         {
+            chatViewVisible();
             inputMessageWidget.focus = false;
-            resourceViewer2.hideWebViewIfNecessary();
+        //    resourceViewer2.hideWebViewIfNecessary();
         }
     }
 
 
-    Component
-    {
-        id : zcStorageQueryStatusComponentId
-
-        Zc.StorageQueryStatus
-        {
-
-        }
-
-    }
-
-
-
-    function importFile(resourceDescriptor)
+    /*function importFile(resourceDescriptor)
     {
 
         var query = zcStorageQueryStatusComponentId.createObject(mainView)
@@ -219,7 +299,7 @@ Zc.AppView
         query.content =  resourceDescriptor.toJSON();
 
         return documentFolder.uploadFile(resourceDescriptor.name,localFileName,query);
-    }
+    }*/
 
 
     function addThread(thread)
@@ -228,7 +308,21 @@ Zc.AppView
         if ( Presenter.instance["listener" + thread] === null ||
                 Presenter.instance["listener" + thread] === undefined )
         {
-            var tab = tabView.addTab(thread,chatTabsViewComponent)
+           // var index = 0;
+           // if (tabView.count > 0)
+           // {
+           //     if (tabView.getTab(tabView.count - 1).title === "+")
+           //     {
+           //         index = tabView.count - 1
+           //     }
+           // }
+
+            var index = tabView.count > 0 ? tabView.count - 1 : 0
+
+            mainView.enableIndexChanged  = false
+            var tab = tabView.insertTab(index,thread,chatTabsViewComponent)
+            mainView.enableIndexChanged  = true
+            //var tab = tabView.addTab(thread,chatTabsViewComponent)
             var listener = newListenerId.createObject(tab);
             listener.filterSubject = thread;
             listener.model = listenerChat.messages
@@ -239,7 +333,7 @@ Zc.AppView
                 tab.item.messages = listener.messages;
             }
 
-            tabView.currentIndex = tabView.count - 1;
+            tabView.currentIndex = tabView.count - 2;
         }
     }
 
@@ -258,14 +352,16 @@ Zc.AppView
         {
             // Now we know how i am i and set this static value to the ChatAddsButtons
             // need it to genrat file information
-            buttons.nickname =  mainView.context.nickname
+            // buttons.nickname =  mainView.context.nickname
+
             resourceViewer2.localPath =  mainView.context.temporaryPath;
             threadItems.loadItems(threadItemsQueryStatus);
         }
 
         onContextChanged :
         {
-            buttons.setContext(activity.context);
+            //   buttons.setContext(activity.context);
+            resourceViewer2.setContext(activity.context)
         }
 
         Zc.ChatMessageSender
@@ -290,8 +386,8 @@ Zc.AppView
                 }
 
                 if ( tabView.getTab(tabView.currentIndex) !== undefined &&
-                       tabView.getTab(tabView.currentIndex) !== null &&
-                         tabView.getTab(tabView.currentIndex).title !== subject )
+                        tabView.getTab(tabView.currentIndex) !== null &&
+                        tabView.getTab(tabView.currentIndex).title !== subject )
                 {
                     if (Presenter.instance["notify" + subject] === undefined)
                     {
@@ -328,6 +424,10 @@ Zc.AppView
                     {
                         mainView.addThread("Main");
                     }
+
+                    var tab = tabView.addTab("+",null)
+
+                    tabView.currentIndex = 0;
                 }
             }
 
@@ -374,8 +474,8 @@ Zc.AppView
             anchors
             {
                 top         : parent.top
-                topMargin   : 10
-                //                bottom      : inputMessageWidget.top
+                topMargin   : 4
+                bottom      : parent.bottom
                 //                bottomMargin   : 100
                 left        : parent.left
                 right       : parent.right
@@ -388,30 +488,28 @@ Zc.AppView
             }
 
             onHeightChanged:
-            {           
+            {
             }
 
             onResourceClicked:
             {
+                var res = JSON.parse(resourceDescriptor)
                 if (resourceViewer2.isKnownResourceDescriptor(resourceDescriptor))
                 {
-                    resourceViewer2.showResource(resourceDescriptor);
+                    if (res.mimeType.indexOf("http") === 0 ) {
+                        Qt.openUrlExternally(res.path);
+                    } else {
+                        resourceViewVisible()
+                        resourceViewer2.showResource(resourceDescriptor);
+                    }
                 }
                 else
                 {
-                     var res =   JSON.parse(resourceDescriptor)
-
                     documentFolder.openFileWithDefaultApplication(res.name);
                 }
             }
         }
     }
-
-    Zc.QClipboard
-    {
-        id: clipboard
-    }
-
 
     function foreachInListModel(listModel, delegate)
     {
@@ -421,6 +519,7 @@ Zc.AppView
         }
     }
 
+    /*
     function copyToClipboard()
     {
         var result = "";
@@ -460,96 +559,73 @@ Zc.AppView
                                }
                            });
         clipboard.setText(result);
-    }
+    }*/
 
+    /*
     function selectAll(val)
     {
         var subject =  tabView.getTab(tabView.currentIndex).title;
         mainView.foreachInListModel(listenerChat.messages, function (x)
         { if (x.subject === subject) x.isSelected = val});
-    }
+    }*/
 
-    SplitView
+
+    ColumnLayout
     {
+        id : chatViewId
 
-        id : splitView
+        anchors.fill        : parent
+        anchors.margins     : 1
 
-        anchors.fill: parent
-        orientation: Qt.Horizontal
+        spacing: 2
 
-        Component
+        TabView
         {
-            id : handleDelegateDelegate
-            Rectangle
-            {
-                width : Screen.logicalPixelDensity * 2
-                color :  styleData.hovered ? "grey" :  "lightgrey"
+            id : tabView
 
-                Rectangle
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            onCurrentIndexChanged :
+            {
+                if (tabView.getTab(currentIndex)=== undefined)
+                    return;
+
+                if ( tabView.getTab(currentIndex).title === "+" && mainView.enableIndexChanged)
                 {
-                    height: parent.height
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    width : 1
-                    color :  "grey"
+                    addNewThreadDialogBox.reset();
+                    addNewThreadDialogBox.visible = true;
+                    addNewThreadDialogBox.setFocus();
+                    return;
                 }
+
+                mainView.currentTabViewTitle = tabView.getTab(currentIndex).title
+
+                var title = mainView.currentTabViewTitle;
+
+                if (tabView.getTab(currentIndex).item !==null && (tabView.getTab(currentIndex).item.messages === null ||
+                        tabView.getTab(currentIndex).item.messages === undefined))
+                {
+                    tabView.getTab(currentIndex).item.messages = Presenter.instance["listener" + title].messages;
+
+                    tabView.getTab(currentIndex).item.goToEnd();
+                }
+
+                inputMessageWidget.forceActiveFocus();
+
+                Presenter.instance["notify" +  title] = 0;
+                notify(title)
             }
-        }
 
-        handleDelegate : handleDelegateDelegate
-
-        Item
-        {
-
-            anchors.rightMargin: 5
-
-            Layout.fillWidth : true
+            style: TabViewStyle {
+                tab: Rectangle {
+                    color: styleData.selected ? "steelblue" :"#448"
+                    implicitWidth: Math.max(text.width + 4, appStyleSheet.width(0.5))
+                    implicitHeight: appStyleSheet.height(0.26)
+                    border.width: 1
+                    border.color : "transparent"
 
 
-//            MouseArea
-//            {
-//                anchors.fill: parent
-//                onClicked: inputMessageWidget.resetFocus();
-//            }
-
-            TabView
-            {
-                id : tabView
-                anchors.top          : parent.top
-                anchors.left         : parent.left
-                anchors.right        : parent.right
-                anchors.bottom       : inputMessageWidget.top
-                anchors.bottomMargin : 15
-
-
-                onCurrentIndexChanged :
-                {
-
-                    mainView.currentTabViewTitle = tabView.getTab(currentIndex).title
-
-                    var title = mainView.currentTabViewTitle;
-
-                    if (tabView.getTab(currentIndex).item.messages === null ||
-                            tabView.getTab(currentIndex).item.messages === undefined)
-                    {
-                        tabView.getTab(currentIndex).item.messages = Presenter.instance["listener" + title].messages;
-
-                        tabView.getTab(currentIndex).item.goToEnd();
-                    }
-
-                    inputMessageWidget.setFocus();
-
-                    Presenter.instance["notify" +  title] = 0;
-                    notify(title)
-                }
-
-
-                style: TabViewStyle {
-                 tab: Rectangle {
-                    color: styleData.selected ? "steelblue" :"lightsteelblue"
-                    border.color:  "steelblue"
-                    implicitWidth: Math.max(text.width + 4, 80)
-                    implicitHeight: 30
-                    radius: 2
 
                     Component.onCompleted:
                     {
@@ -558,7 +634,7 @@ Zc.AppView
                                     {
                                         if (styleData.title === subject)
                                         {
-                                            if (Presenter.instance["notify" + subject] === 0)
+                                           /* if (Presenter.instance["notify" + subject] === 0)
                                             {
                                                 nbrItemId.visible = false;
                                                 nbrItemId.opacity = 0;
@@ -569,6 +645,8 @@ Zc.AppView
                                                 nbrItemId.opacity = 1;
                                             }
                                             nbrItemTextId.text = Presenter.instance["notify" + subject];
+                                            */
+                                            alertCounter.count = Presenter.instance["notify" + subject];
                                         }
 
                                     }
@@ -576,11 +654,12 @@ Zc.AppView
 
                     }
 
+                    /*
                     Rectangle
                     {
                         id              : nbrItemId
 
-                        property int  nbrItemSize :  15
+                        property int  nbrItemSize :  appStyleSheet.height(0.13)
 
                         width           : visible ?  nbrItemSize * 2 : 0
                         height          : nbrItemSize
@@ -598,7 +677,7 @@ Zc.AppView
                             height               : parent.height
                             width                : height
                             fillMode             : Image.Stretch
-                            source               : "qrc:/ChatTabs/Resources/bell.png"
+                            source               : "../Resources/bell.png"
                             anchors.top         : parent.top
                             anchors.right       : parent.right
                         }
@@ -607,7 +686,7 @@ Zc.AppView
                         {
                             id                  : nbrItemTextId
                             clip                : true
-                            font.pixelSize      : 10
+                            font.pixelSize      : appStyleSheet.height(0.12)
                             color               : "white"
 
                             anchors
@@ -629,199 +708,258 @@ Zc.AppView
                         }
                     }
 
+                    */
                     Text {
                         id: text
                         anchors.centerIn: parent
                         text: styleData.title
-                        color: styleData.selected ? "white" : "black"
+                        color: "white"
+                    }
+
+                    CtComponents.AlertCounter {
+                        id : alertCounter
+                        anchors.top: parent.top
+                        anchors.right: parent.right
+                        height : appStyleSheet.height(0.13)
+                        width : height
                     }
                 }
                 frame: Item { }
             }
         }
 
-        Item
-        {
-            id : editModeButtons
+        RowLayout {
 
-            anchors.left         : parent.left
-            anchors.right        : parent.right
-            anchors.bottom       : parent.bottom
+            Layout.fillWidth: true
 
-            height : inputMessageWidget.height
+            Layout.preferredHeight: inputMessageWidget.autoHeight
 
-            visible : false
-
-            CheckBox
+            CtComponents.MessageInput
             {
-                id                      : checkBoxght
-                anchors.left            : parent.left
-                anchors.verticalCenter  : parent.verticalCenter
+                id : inputMessageWidget
 
-                width                   : 20
+                Layout.fillWidth: true
+                Layout.preferredHeight: inputMessageWidget.autoHeight
+                fontSize : appStyleSheet.inputChatHeight
+                minLines: appStyleSheet.minLines
 
-                onCheckedChanged:
+
+                onValidated :
                 {
-                    mainView.selectAll(checked)
+                    var title = tabView.getTab(tabView.currentIndex).title;
+                    senderChat.subject = title;
+                    var result = "TXT|" + Tools.decodeUrl(Tools.decodeLessMore(text))
+                    senderChat.sendMessage(result);
+                    inputMessageWidget.text = "";
                 }
             }
 
-            Image
-            {
-                anchors.left        :   parent.left
-                anchors.leftMargin  :   20
-                anchors.verticalCenter  : parent.verticalCenter
+            CtComponents.IconButton {
+                Layout.preferredWidth: Layout.preferredHeight
+                Layout.preferredHeight: Math.min(inputMessageWidget.height,appStyleSheet.inputChatHeight*2)
+                Layout.alignment: Qt.AlignVCenter
+                imageSource: Qt.resolvedUrl("../Resources/addResource.png")
+                onClicked: addresource.show()
+            }
 
-                height  : parent.height
-                width   : height
+            CtComponents.ActionList {
+                id: addresource
 
-                source  : "qrc:/ChatTabs/Resources/copy.png"
+                Action {
+                    text: qsTr("Camera")
+                    onTriggered: {
+                        mainView.resourceViewVisible()
+                        resourceViewer2.showCamera()
+                    }
+                }
 
-                MouseArea
-                {
-                    anchors.fill: parent
-                    onClicked: mainView.copyToClipboard();
+                Action {
+                    text: qsTr("Photo Album")
+                    onTriggered: {
+                        fileDialog.folder = fileDialog.shortcuts.pictures;
+                        fileDialog.open()   ;
+                    }
+                }
+
+                Action {
+                    text: qsTr("Files")
+                    onTriggered: {
+                        fileDialog.folder = fileDialog.shortcuts.documents;
+                        fileDialog.open()
+                    }
+                }
+
+                Action {
+                    text: qsTr("Paste")
+                    onTriggered: {
+                        if (clipboard.isImage() || clipboard.isText())
+                        {
+                            /*
+                                    ** First copy clipboard on local file
+                                    ** then upload the file
+                                    */
+                            var filePath = clipboard.savetoLocalPath(mainView.context.temporaryPath,null);
+                            if (filePath !== "")
+                            {
+                                uploadFile(filePath)
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        InputMessageWidget
-        {
-            id : inputMessageWidget
 
-            anchors.left         : parent.left
-            anchors.right        : parent.right
-            anchors.bottom       : parent.bottom
-
-            onAccepted :
-            {
-                var title = tabView.getTab(tabView.currentIndex).title;
-                senderChat.subject = title;
-                senderChat.sendMessage(message);
-            }
-        }
     }
-
 
     Item
     {
-        id : splitViewPanelRight
+        id : resourcesViewId
+        visible : false
 
-        width : 350
-
+        anchors.fill: parent
 
         /*
-        ** View Resources from the ChatList delegate
-        */
+            ** View Resources from the ChatList delegate
+            */
 
         ResourceViewer2
         {
             id : resourceViewer2
 
-            anchors
-            {
-                top : parent.top; //topMargin : 5
-                bottom: buttons.top;bottomMargin: 5
-                left : parent.left;leftMargin : 5
-            }
+            anchors.fill : parent
 
-            width : parent.width - 10
 
-            onUploadFile:
-            {
-                 buttons.uploadFile(fileName)
-            }
+        //    width : parent.width - 10
+
+            //onUploadFile:
+            //{
+            //     buttons.uploadFile(fileName)
+            //}
         }
 
         /*
-        ** Buttons to addFiles to the chat
-        ** Progressbar show the upload or download status
-        */
+            ** Buttons to addFiles to the chat
+            ** Progressbar show the upload or download status
+            */
 
-        ChatAddsButtons
+    }
+
+
+    Rectangle
+    {
+        color : "white"
+        anchors.fill : addNewThreadDialogBox
+        visible: addNewThreadDialogBox.visible
+    }
+
+    AddNewThreadDialogBox {
+        id : addNewThreadDialogBox
+
+        visible : false
+
+        function close()
         {
-            id : buttons
+            visible = false
+        }
 
+        onOk:
+        {
+            close();
+            threadItems.setItem(addNewThreadDialogBox.thread,"")
+            inputMessageWidget.forceActiveFocus();
+        }
 
-            currentTabViewTitle : mainView.currentTabViewTitle
-
-            onSendMessage:
-            {
-                senderChat.subject = title;
-                senderChat.sendMessage(message);
-            }
-
-            onShowCamera:
-            {
-                resourceViewer2.showCamera()
-            }
-
-            onShowWebView:
-            {
-                resourceViewer2.showWebView()
-            }
+        onCancel :
+        {
+            close();
+            inputMessageWidget.forceActiveFocus();
         }
     }
-}
 
-AddNewThreadDialogBox
-{
-    id : addNewThreadDialogBox
-    width : 0
-    height : 0
-    visible : false
-    opacity: 0
-
-    function close()
+    FileDialog
     {
-        width = 0
-        height = 0;
-        visible = false
-        opacity = 0
+        id: fileDialog
+
+        selectFolder : false
+        nameFilters: ["All Files(*.*)"]     
+
+        onAccepted:
+        {
+            uploadFile(fileUrl)
+        }
     }
 
-    onOk:
+    function downloadFile(from,shortcut)
     {
-        close();
-        threadItems.setItem(addNewThreadDialogBox.thread,"")
-        inputMessageWidget.setFocus();
-    }
-
-    onCancel :
-    {
-        close();
-        inputMessageWidget.setFocus();
-    }
-}
-
-
-
-onLoaded :
-{
-    activity.start();
-
-    var webViewVersion =  mainView.context.getQtModuleVersion("QtWebView") !== "";
-    var webKitVersion =  mainView.context.getQtModuleVersion("QtWebKit") !== "";
-    mainView.useWebView = "";
-
-    if (Qt.platform.os === "windows")
-    {
-        if (webViewVersion)
-            mainView.useWebView = "WebView"
+        if (shortcut === "pictures")
+        {
+            fileDialogToDownload.folder = fileDialogToDownload.shortcuts.pictures
+         //   fileDialogToDownload.nameFilters = [ from, "All files (*)" ]
+        }
         else
-            mainView.useWebView = "WebKit"
-    }
-    else
-    {
-        if (webViewVersion)
-            mainView.useWebView = "WebView"
-        else if (webKitVersion)
-            mainView.useWebView = "WebKit"
-    }
-}
+        {
+            fileDialogToDownload.folder = fileDialogToDownload.shortcuts.documents
+     //       fileDialogToDownload.nameFilters = [ from, "All files (*)" ]
+        }
 
-onClosed :
-{
-    activity.stop();
-}
+        fileDialogToDownload.from = from;
+        fileDialogToDownload.selectedNameFilter = from;
+        fileDialogToDownload.open()
+    }
+
+    FileDialog
+    {
+        id: fileDialogToDownload
+        title : qsTr("Choose a Folder")
+
+        selectFolder   : true
+        selectExisting : false
+        selectMultiple : false
+
+        property string from
+
+        onAccepted:
+        {
+            downloadFileTo(from,fileUrl + "/" + from);
+        }
+
+    }
+
+    CtComponents.BusyIndicator
+    {
+        id : busyIndicatorId
+    }
+
+    onLoaded :
+    {
+        activity.start();
+
+ /*       var webViewVersion =  mainView.context.getQtModuleVersion("QtWebView") !== "";
+        var webKitVersion =  mainView.context.getQtModuleVersion("QtWebKit") !== "";
+        mainView.useWebView = "";
+
+        if (Qt.platform.os === "windows")
+        {
+            // webView pas compatible pour l'instand sux xp et w7
+         /*   if (webViewVersion)
+                mainView.useWebView = "WebView"
+            else*/
+        /*
+                mainView.useWebView = "WebKit"
+        }
+        else
+        {
+            if (webViewVersion)
+                mainView.useWebView = "WebView"
+            else if (webKitVersion)
+                mainView.useWebView = "WebKit"
+        }
+    */
+    }
+
+    onClosed :
+    {
+        activity.stop();
+    }
 }

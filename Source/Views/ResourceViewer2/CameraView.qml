@@ -21,9 +21,12 @@
 
 
 import QtQuick 2.2
-import QtQuick.Controls 1.0
+import QtQuick.Dialogs 1.1
+import QtQuick.Window 2.1
+import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.1
+import QtQuick.Layouts 1.1
 import QtMultimedia 5.0
-import QtQuick.Controls.Styles 1.2
 
 import "../"
 
@@ -34,31 +37,36 @@ Item {
     anchors.fill: parent
 
     property string localPath : ""
-    property string path : localPath + "cameraCapture.jpg";
+    property string path : localPath + "/cameraCapture.jpg";
 
-    signal sendCameraPicture(string fileName)
-    signal close()
+    function back()
+    {
+        camera.stop();
+    }
+
+    function next()
+    {
+    }
+
+
+    Component.onCompleted: {
+
+    }
+
 
     Component.onDestruction:
     {
         camera.stop()
     }
 
-    //    signal showValidate();
-    //    signal captured();
-
-
     Item
     {
         id : cameraViewer
-        anchors.centerIn: parent
-        width: parent.width * 2 /3
-        height: parent.height * 2 /3
+        anchors.fill: parent
 
         Camera
         {
             id: camera
-
 
             imageProcessing.whiteBalanceMode: CameraImageProcessing.WhiteBalanceFlash
 
@@ -74,15 +82,20 @@ Item {
                 {
                     cameraViewer.visible = false
                     photoPreview.visible = true
-                    okCancel.visible = true
-                    clickButton.visible = false
-                    clickButton.enabled = false
-                }
+                    resourceViewer.nextButtonText = "Validate >"
+                    resourceViewer.nextButtonVisible = true
 
-                onImageCaptured:
-                {
-                    photoPreview.source = preview
-                }
+                    if (Qt.platform.os === "windows" && cameraView.path.search("file:///") === -1)
+                    {
+                        photoPreview.source = "file:///" + cameraView.path
+                    }
+                    else
+                    {
+                        photoPreview.source = cameraView.path
+
+                    }
+            }
+
             }
         }
 
@@ -90,109 +103,28 @@ Item {
             source: camera
             anchors.fill: parent
             focus : visible // to receive focus and capture key events when visible
+
+            MouseArea
+            {
+                anchors.fill: parent
+
+                onClicked:
+                {
+                    camera.imageCapture.captureToLocation(cameraView.path);
+                }
+            }
         }
     }
-
-    //    function     onOk()
-    //    {
-    //        camera.stop();
-    //        cameraView.captured();
-    //    }
 
     Image
     {
         id: photoPreview
         anchors.centerIn: parent
-        width: parent.width * 2 /3
-        height: parent.height * 2 /3
+        width: parent.width
+        height: parent.height
         visible: false;
         fillMode: Image.PreserveAspectFit
-    }
-
-    Row
-    {
-        id : cameraOrClose
-        height              : 50
-        width               : height * 2 + 5
-        anchors.bottom      : cameraView.bottom
-        anchors.bottomMargin:  5
-        anchors.horizontalCenter: photoPreview.horizontalCenter
-
-        spacing: 5
-
-        ChatTabsButton
-        {
-            id : closeButton
-            height              : 50
-            width               : height
-
-            imageSource : "qrc:/ChatTabs/Resources/cancel2.png"
-
-            onClicked:
-            {
-                camera.stop();
-                cameraView.close()
-            }
-        }
-
-        ChatTabsButton
-        {
-            id : clickButton
-            height              : 50
-            width               : height
-
-            imageSource : "qrc:/ChatTabs/Resources/camera.png"
-
-            onClicked:
-            {
-                camera.imageCapture.captureToLocation(cameraView.path);
-            }
-        }
-    }
-
-    Row
-    {
-        id : okCancel
-        height              : 50
-        width               : height * 2 + 5
-        anchors.bottom      : cameraView.bottom
-        anchors.bottomMargin:  5
-        anchors.horizontalCenter: photoPreview.horizontalCenter
-        visible : false
-        spacing: 5
-
-        ChatTabsButton
-        {
-            id : ok
-            height              : 50
-            width               : height
-
-            imageSource : "qrc:/ChatTabs/Resources/cancel2.png"
-
-            onClicked:
-            {
-                cameraViewer.visible = true
-                photoPreview.visible = false
-                okCancel.visible = false
-                clickButton.visible = true
-                clickButton.enabled = true
-            }
-        }
-        ChatTabsButton
-        {
-            id : cancel
-            height              : 50
-            width               : height
-
-            imageSource : "qrc:/ChatTabs/Resources/ok2.png"
-
-            onClicked:
-            {
-                camera.stop();
-                sendCameraPicture(path)
-            }
-        }
-
+        cache: false
     }
 
 }

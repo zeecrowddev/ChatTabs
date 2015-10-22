@@ -19,17 +19,17 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 import QtQuick 2.2
-import QtQuick.Controls 1.0
-import QtQuick.Controls.Styles 1.0
+import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.1
+import QtQuick.Layouts 1.1
 
-Item
+import "../Components" as CtComponents
+
+
+CtComponents.BasicForm
 {
     id : main
-
-    height : 70
-    width  : 180
 
     function setFocus()
     {
@@ -42,10 +42,11 @@ Item
         textEdit.text = "";
     }
 
-
-    anchors.centerIn: parent
-
-    clip : true
+    Text {
+        Layout.fillWidth: true
+        wrapMode: TextEdit.WordWrap
+        text : qsTr("New subject:")
+    }
 
     property alias thread : textEdit.text
 
@@ -53,99 +54,23 @@ Item
     signal cancel();
 
 
-    Rectangle
-    {
-        border.width: 2
-        border.color: "black"
-        anchors.fill    : parent
-        color           : "#FFFFFF"
-    }
-
-    Label
-    {
-        id : label
-        anchors.top : parent.top
-        anchors.topMargin : 20
-        anchors.left: parent.left
-        anchors.leftMargin: 20
-
-        font.pixelSize  : 16
-        text : "New subject:"
-    }
-
-    TextField
-    {
+    CtComponents.FormTextField {
         id              : textEdit
-        anchors.left    : label.left;
-        anchors.top     : label.bottom
-        anchors.topMargin     : 10
-        font.pixelSize  : 18
-        height          : 25
-        width           : 200
 
-
-        style: ChatTabsTextFieldStyle {
-
-               focused : textEdit.focus
-
-           }
         onAccepted: ok();
     }
 
-    Button
-    {
+    CtComponents.FormButton {
         id : okButton
 
-        height              : 30
-        width               : height
-        anchors.verticalCenter:  textEdit.verticalCenter
-        anchors.left        : textEdit.right
-        anchors.leftMargin : 5
-
-        style: ButtonStyle {
-                background: Rectangle {
-                    implicitWidth: 100
-                    implicitHeight: 25
-
-                    color : control.pressed ? "#EEEEEE" : "#00000000"
-                    radius: 4
-
-                    Image
-                    {
-                        source : "qrc:/ChatTabs/Resources/next.png"
-                        anchors.fill: parent
-                    }
-                }
-            }
+        text : qsTr("Ok")
 
         onClicked: main.ok()
 
     }
 
-    Button
-    {
-        height              : 30
-        width               : height
-        anchors.top         : okButton.bottom
-        anchors.topMargin   : 5
-        anchors.left        : okButton.left
-        anchors.rightMargin : 5
-
-        style: ButtonStyle {
-                background: Rectangle {
-                    implicitWidth: 100
-                    implicitHeight: 25
-
-                    color : control.pressed ? "#EEEEEE" : "#00000000"
-                    radius: 4
-
-                    Image
-                    {
-                        source : "qrc:/ChatTabs/Resources/back.png"
-                        anchors.fill: parent
-                    }
-                }
-            }
+    CtComponents.FormButton {
+        text : qsTr("Cancel")
 
         onClicked: main.cancel()
     }

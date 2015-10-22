@@ -21,7 +21,11 @@
 
 
 import QtQuick 2.2
-import QtQuick.Controls 1.0
+import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.1
+import QtQuick.Layouts 1.1
+
+import "../Components" as CtComponents
 
 import ZcClient 1.0 as Zc
 
@@ -32,13 +36,114 @@ Item
 {
     id : chatTabsDelegate
 
-    state : parent.state
+    CtComponents.AppStyleSheet
+    {
+        id : appStyleSheet
 
+        Component.onCompleted: {
+            chatTabsDelegate.updateDelegate();
+        }
+    }
+
+    function updateDelegate()
+    {
+        var result = "";
+
+        Tools.forEachInObjectList(model.groupedMessages, function (x) {
+
+            try
+            {
+                var isResource = false;
+                var theContent = "";
+                var type = ""
+
+                if (x.cast.body < 4)
+                    return;
+
+                type = x.cast.body.substring(0,3);
+                theContent =  x.cast.body.substring(4,x.cast.body.length)
+
+                if (type === "TXT")
+                {
+                    theContent =  theContent.replace(/\n/g,"<br>")
+                    result += theContent;
+                    result+= "<br>";
+                }
+                else
+                {
+                    var contentObject = JSON.parse(theContent)
+
+                    if (contentObject.mimeType.indexOf("image") === 0)
+                    {
+
+                        // verify doesn't already exist
+                        if (Tools.findInListModel(listRessource, function (x) {return x.content === theContent} ) === null)
+                        {
+                            listRessource.append({ imageSource : contentObject.path, content : theContent, needDownload : false , textImage : contentObject.displayName});
+                        }
+                    }
+                    else
+                    {
+                        // verify doesn't already exist
+                        if (Tools.findInListModel(listRessource, function (x) {return x.content === theContent} ) === null)
+                        {
+                            listRessource.append({ imageSource : "image://icons/" + contentObject.name, content : theContent, needDownload : true, textImage : contentObject.displayName});
+                        }
+                    }
+                }
+            }
+            catch(e)
+            {
+                console.log(">> ERROR TO DECODE : " + model.cast.body)
+            }
+        }
+        );
+
+        if (result.length == 4)
+            result = "";
+        else
+            result = result.substring(0,result.length - 4);
+
+        textEdit.text = result;
+
+        var ligneHeight =  textEdit.contentHeight; //textEdit.lineCount * 17
+        var resourcesHeight = (appStyleSheet.resourceHeight + (appStyleSheet.labelResourceHeight * 1.1) + appStyleSheet.height(0.05)) * listRessource.count ;
+
+        var finalHeight = 10;
+
+        if (ligneHeight > resourcesHeight)
+        {
+            finalHeight = ligneHeight + fromId.height + appStyleSheet.height(0.05); //28 + ligneHeight;
+        }
+        else
+        {
+            finalHeight = resourcesHeight + fromId.height + appStyleSheet.height(0.05); //28 + resourcesHeight;
+        }
+
+        if (finalHeight > (appStyleSheet.contactHeight + appStyleSheet.labelFromHeight))
+        {
+            textZone.height = finalHeight;
+            chatTabsDelegate.height = finalHeight;
+        }
+        else
+        {
+            textZone.height = (appStyleSheet.contactHeight + appStyleSheet.labelFromHeight);
+            chatTabsDelegate.height = (appStyleSheet.contactHeight + appStyleSheet.labelFromHeight);
+        }
+
+
+    }
+
+    function bodyChanged()
+    {
+         chatTabsDelegate.updateDelegate();
+        //goToEnd();
+    }
     signal resourceClicked(string resourceDescriptor)
 
     property alias contactImageSource : contactImage.source
 
-    height : 50
+    //height : 300
     width : chatTabs.flickableItem.width - 5
 
     property bool isMe : false
@@ -65,7 +170,7 @@ Item
     {
         id : contactImage
 
-        width  : 50
+        width  : appStyleSheet.contactHeight
         height : width
 
         sourceSize.width: 50
@@ -82,7 +187,7 @@ Item
         {
             if (status === Image.Error)
             {
-                source = "qrc:/Crowd.Core/Qml/Ressources/Pictures/DefaultUser.png"
+                source = "../Resources/contact.png"
             }
         }
     }
@@ -96,11 +201,18 @@ Item
         }
 
         height : textZone.height
-        width : 9
+        width : appStyleSheet.width(0.05)
 
-        border.top: 50
+        border.top: appStyleSheet.contactHeight
 
-        source : isMe ? "qrc:/ChatTabs/Resources/ballonme.png" : "qrc:/ChatTabs/Resources/ballon.png"
+        source : isMe ? "../Resources/ballonme.png" : "../Resources/ballon.png"
+    }
+
+    Component.onCompleted:
+    {
+        chatTabsDelegate.updateDelegate();
+        model.cast.bodyChanged.connect(bodyChanged)
+     //   model.cast.likesChanged.connect(likesDislikesChanged)
     }
 
     Item
@@ -109,13 +221,13 @@ Item
 
         anchors.top : parent.top
         anchors.left : contactImage.right
-        anchors.leftMargin : 9
+        anchors.leftMargin : appStyleSheet.width(0.05)
+        anchors.right : parent.right
+        anchors.rightMargin : appStyleSheet.width(0.05)
 
         state : parent.state
 
-        height : 50
-        width : chatTabs.flickableItem.width - 60
-
+        /*
         states :
             [
             State
@@ -123,8 +235,8 @@ Item
                 name   : "chat"
                 PropertyChanges
                 {
-                    target : checkBox
-                    visible  : false
+          //          target : checkBox
+          //          visible  : false
                 }
             }
             ,
@@ -133,11 +245,11 @@ Item
                 name   : "edit"
                 PropertyChanges
                 {
-                    target : checkBox
-                    visible  : true
+            //        target : checkBox
+            //        visible  : true
                 }
             }
-        ]
+        ]*/
 
         ListModel
         {
@@ -153,106 +265,19 @@ Item
             }
         }
 
-        function updateDelegate()
-        {
-            var result = "";
 
-            Tools.forEachInObjectList(model.groupedMessages, function (x) {
 
-                try
-                {
-                    var isResource = false;
-                    var theContent = "";
-                    var type = ""
 
-                    if (x.cast.body < 4)
-                        return;
-
-                    type = x.cast.body.substring(0,3);
-                    theContent =  x.cast.body.substring(4,x.cast.body.length)
-
-                    if (type === "TXT")
-                    {
-                        theContent =  theContent.replace(/\n/g,"<br>")
-                        result += theContent;
-                        result+= "<br>";
-                    }
-                    else
-                    {
-                        var contentObject = JSON.parse(theContent)
-
-                        if (contentObject.mimeType.indexOf("image") === 0)
-                        {
-                            // verify doesn't already exist
-                            if (Tools.findInListModel(listRessource, function (x) {return x.content === theContent} ) === null)
-                            {
-                                listRessource.append({ imageSource : contentObject.path, content : theContent, needDownload : false , textImage : contentObject.displayName});
-                            }
-                        }
-                        else
-                        {
-                            // verify doesn't already exist
-                            if (Tools.findInListModel(listRessource, function (x) {return x.content === theContent} ) === null)
-                            {
-                                listRessource.append({ imageSource : "image://icons/" + contentObject.name, content : theContent, needDownload : true, textImage : contentObject.displayName});
-                            }
-                        }
-                    }
-                }
-                catch(e)
-                {
-                    console.log(">> ERROR TO DECODE : " + model.cast.body)
-                }
-            }
-            );
-
-            if (result.length == 4)
-                result = "";
-            else
-                result = result.substring(0,result.length - 4);
-
-            textEdit.text = result;
-
-            var ligneHeight =  textEdit.lineCount * 17
-            var resourcesHeight = (120 + 5) * listRessource.count ;
-
-            var finalHeight = 60;
-
-            if (ligneHeight > resourcesHeight)
-            {
-                finalHeight = 28 + ligneHeight;
-            }
-            else
-            {
-                finalHeight = 28 + resourcesHeight;
-            }
-
-            if (finalHeight < 60)
-                finalHeight = 60;
-
-            textZone.height = finalHeight;
-            chatTabsDelegate.height = finalHeight;
-        }
-
-        function bodyChanged()
-        {
-            updateDelegate();
-            //goToEnd();
-        }
-
+        /*
         function likesDislikesChanged()
         {
-            updateDelegate()
+            chatTabsDelegate.updateDelegate()
         }
+        */
 
-        Component.onCompleted:
-        {
-            updateDelegate();
-            model.cast.bodyChanged.connect(bodyChanged)
-            model.cast.likesChanged.connect(likesDislikesChanged)
-        }
 
-        CheckBox
+
+/*        CheckBox
         {
             id : checkBox
 
@@ -275,15 +300,18 @@ Item
             {
                 model.cast.isSelected = checked
             }
-        }
+        }*/
 
 
+        /*
+        ** FROM
+        */
         Label
         {
             id                      : fromId
             text                    : from
             color                   : "black"
-            font.pixelSize          : appStyleId.baseTextHeigth
+            font.pixelSize          : appStyleSheet.labelFromHeight
             anchors
             {
                 top             : parent.top
@@ -298,8 +326,9 @@ Item
             wrapMode                : Text.WrapAnywhere
         }
 
-
-
+        /*
+        ** TIME
+        */
         Label
         {
             id                      : timeStampId
@@ -317,9 +346,9 @@ Item
             color                   : "gray"
         }
 
-
-        Item
+        RowLayout
         {
+            id : tmpId
 
             clip : true
 
@@ -327,9 +356,9 @@ Item
             {
                 top        : fromId.bottom
                 left       : parent.left
-                leftMargin : 25
+                leftMargin : appStyleSheet.width(0.05)
                 right      : parent.right
-                rightMargin: 45
+                //rightMargin : appStyleSheet.width(0.05)
                 bottom     : parent.bottom
             }
 
@@ -338,20 +367,14 @@ Item
                 id  : textEdit
                 color : "black"
 
-                textFormat: Text.RichText
+                Layout.alignment: Qt.AlignTop
+                Layout.fillWidth: true
 
-                anchors
-                {
-                    top         : parent.top
-                    left        : parent.left
-                    leftMargin  : 5
-                    right       : column.left
-                    bottom      : parent.bottom
-                }
+                textFormat: Text.RichText
 
                 readOnly                : true
                 selectByMouse           : true
-                font.pixelSize          : 14
+                font.pixelSize          : appStyleSheet.textChatHeight
                 wrapMode                : TextEdit.WrapAtWordBoundaryOrAnywhere
 
                 onLinkActivated:
@@ -365,20 +388,17 @@ Item
 
             Column
             {
-                id : column
+                id : columnResource
 
-                anchors
-                {
-                    top        : parent.top
-                    right      : parent.right
-                    bottom     : parent.bottom
-                }
+                Layout.alignment: Qt.AlignTop
+                Layout.preferredWidth: listRessource.count > 0 ? appStyleSheet.resourceHeight : 0
+                //Layout.preferredWidth: 0
 
-                width      : 100
-                spacing: 5
+          //      Layout.preferredHeight: parent.height
 
+                spacing: appStyleSheet.height(0.05)
 
-                Component
+/*                Component
                 {
                     id : zcStorageQueryStatusComponentId
 
@@ -387,7 +407,7 @@ Item
 
                     }
 
-                }
+                }*/
 
 
                 Repeater
@@ -404,18 +424,19 @@ Item
 
                     Item
                     {
-                        width : 100
-                        height: 120
+                        width : appStyleSheet.resourceHeight
+                        height: appStyleSheet.resourceHeight + (appStyleSheet.labelResourceHeight * 1.1)
 
                         Image
                         {
                             id : imageId
-                            width : 100
-                            height: width
+                            width : appStyleSheet.resourceHeight
+                            height: appStyleSheet.resourceHeight
                             fillMode: Image.PreserveAspectFit
 
-                            sourceSize.width: 100
+                            sourceSize.width: appStyleSheet.resourceHeight
 
+                            /*
                             onStatusChanged:
                             {
                                 if (status != Image.Error )
@@ -438,28 +459,27 @@ Item
                                     message = Math.round(imageId.progress * 100)
                                     messageId.visible = true
                                 }
-                            }
+                            }*/
 
                             Component.onCompleted:
                             {
                                 source = imageSource
                             }
 
+                            /*
                             Text
                             {
                                 id : messageTextId
                                 anchors.centerIn : parent
                                 color : "white"
-                                font.pixelSize:   20
+                                font.pixelSize: appStyleSheet.labelResourceHeight
                             }
+                            */
 
-
-
-                            property alias message : messageTextId.text
+                            //property alias message : messageTextId.text
 
                             /*
-                            ** Progress Message or Error download message
-                            */
+
                             Rectangle
                             {
 
@@ -471,6 +491,7 @@ Item
 
                             }
 
+                            */
 
                             MouseArea
                             {
@@ -483,33 +504,12 @@ Item
                                     }
                                     else
                                     {
-
-                                        var query = zcStorageQueryStatusComponentId.createObject(imageId)
-
-
-                                        query.completed.connect(function (x) {
-                                            resourceClicked(x.content)
-                                            messageId.visible = false
-                                            imageId.message = ""
-                                            listRessource.setProperty(index, "needDownload", false)
-                                        });
-
-                                        query.errorOccured.connect(function (x) {
-                                            messageId.visible = true
-                                            imageId.message = "Error"
-                                        });
-
-                                        query.content = model.content;
-
                                         var zrd = resourceDescriptorCompoennt.createObject(chatTabsDelegate);
                                         zrd.fromJSON(model.content);
                                         zrd.path = "";
 
-                                        if (documentFolder.downloadFile(zrd.name,zrd.size,query))
-                                        {
-                                            messageId.visible = true
-                                            imageId.message = "loading"
-                                        }
+                                        mainView.downloadFile(zrd.name,"documents");
+
                                     }
                                 }
                             }
@@ -524,101 +524,23 @@ Item
                                 horizontalCenter       : parent.horizontalCenter
                             }
 
-                            height : 15
+                            height : appStyleSheet.labelResourceHeight
                             width : parent.width
                             color : "black"
 
-                            font.pixelSize:   12
+                            font.pixelSize: appStyleSheet.labelResourceHeight
                             text : model.textImage
 
                             elide : Text.ElideLeft
                         }
                     }
 
+
                 }
             }
 
-
         }
 
-//        Image
-//        {
-//            id                      : likesButtonId
-//            height                 : 19
-//            width                  : 19
-//            anchors
-//            {
-//                top             : chatTabsDelegate.top
-//                topMargin       : 2
-//                right           : parent.right
-//                rightMargin     : 2
-//            }
-//            source                  : "qrc:/ChatTabs/Resources/like.png"
-//            MouseArea
-//            {
-//                anchors.fill    : parent
-//                onClicked:
-//                {
-//                    cast.like();
-//                }
-//            }
-//        }
-
-//        Image
-//        {
-//            id                      : dislikesButtonId
-//            height                 : 19
-//            width                  : 19
-//            anchors
-//            {
-//                top             : likesButtonId.bottom
-//                topMargin       : 2
-//                right           : likesButtonId.right
-//            }
-//            source                  : "qrc:/ChatTabs/Resources/dislike.png"
-//            MouseArea
-//            {
-//                anchors.fill    : parent
-//                onClicked:
-//                {
-//                    cast.dislike();
-//                }
-//            }
-//        }
-
-//        Label
-//        {
-//            id                      : likesId
-//            text                    : model.cast.likes
-//            font.pixelSize          : 12
-//            anchors
-//            {
-//                verticalCenter  : likesButtonId.verticalCenter
-//                right           : likesButtonId.left
-//                rightMargin     : 4
-//            }
-//            maximumLineCount        : 1
-//            font.bold               : likesWin
-//            elide                   : Text.ElideRight
-//            wrapMode                : Text.WrapAnywhere
-//        }
-
-//        Label
-//        {
-//            id                      : dislikesId
-//            text                    : model.cast.dislikes
-//            font.pixelSize          : 12
-//            anchors
-//            {
-//                verticalCenter  : dislikesButtonId.verticalCenter
-//                right           : dislikesButtonId.left
-//                rightMargin     : 4
-//            }
-//            maximumLineCount        : 1
-//            font.bold               : dislikesWin
-//            elide                   : Text.ElideRight
-//            wrapMode                : Text.WrapAnywhere
-//        }
 
     }
 }
