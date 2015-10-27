@@ -1,8 +1,9 @@
-import QtQuick 2.5
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Layouts 1.2
-import QtQuick.Window 2.2
+import QtQuick 2.2
+import QtQuick.Dialogs 1.1
+import QtQuick.Window 2.1
+import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.1
+import QtQuick.Layouts 1.1
 
 
 Rectangle {
@@ -22,6 +23,7 @@ Rectangle {
     property int verticalMargins: appStyleSheet.height(0.03)
     property int maxLines: 4
     property int minLines : 1
+    property int lineCount : edit2.lineCount
 
     signal validated
 

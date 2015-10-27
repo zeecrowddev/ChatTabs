@@ -12,8 +12,11 @@ ToolBar {
         id : appStyleSheet
     }
 
+    ToolButton {id : foo }
 
-    implicitHeight: appStyleSheet.height(0.26)
+
+
+    implicitHeight: foo.height // appStyleSheet.height(0.26)
 	
     style: ToolBarStyle {
         padding {
@@ -24,8 +27,9 @@ ToolBar {
         }
 		
         background: Rectangle {
-            implicitHeight: appStyleSheet.height(0.26)
+            implicitHeight: foo.height // appStyleSheet.height(0.26)
             color: "#448"
+            // juste pour l'aligner sur la hauteur d'un texte
         }
     }
 }

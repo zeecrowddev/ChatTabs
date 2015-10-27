@@ -38,7 +38,6 @@
         <file>Views/ChatTabsListFilter.qml</file>
         <file>Views/ChatTabsTextFieldStyle.qml</file>
         <file>Views/ChatTabsView.qml</file>
-        <file>Views/InputMessageWidget.qml</file>
         <file>Views/main.qml</file>
         <file>Views/mainPresenter.js</file>
         <file>Views/Tools.js</file>

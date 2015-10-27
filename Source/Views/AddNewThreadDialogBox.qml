@@ -26,52 +26,66 @@ import QtQuick.Layouts 1.1
 
 import "../Components" as CtComponents
 
-
-CtComponents.BasicForm
-{
-    id : main
-
-    function setFocus()
+    CtComponents.BasicForm
     {
-        textEdit.focus = true;
-        textEdit.forceActiveFocus();
+
+        CtComponents.AppStyleSheet
+        {
+            id : appStyleSheet
+        }
+
+        id : main
+
+        signal ok()
+        signal cancel()
+
+        function setFocus()
+        {
+            textEdit.focus = true;
+            textEdit.forceActiveFocus();
+        }
+
+        function reset()
+        {
+            textEdit.text = "";
+        }
+
+        Text {
+            Layout.fillWidth: true
+            wrapMode: TextEdit.WordWrap
+            text : qsTr("New subject:")
+        }
+
+        property alias thread : textEdit.text
+
+
+
+        CtComponents.FormTextField {
+            id              : textEdit
+
+            onAccepted: ok();
+        }
+
+        CtComponents.FormButton {
+            id : okButton
+
+            text : qsTr("Ok")
+
+            onClicked: main.ok()
+
+        }
+
+        CtComponents.FormButton {
+            text : qsTr("Cancel")
+
+            onClicked: main.cancel()
+        }
+
+
+        Item
+        {
+            Layout.fillWidth: true
+            Layout.preferredHeight: appStyleSheet.height(0.10)
+        }
+
     }
-
-    function reset()
-    {
-        textEdit.text = "";
-    }
-
-    Text {
-        Layout.fillWidth: true
-        wrapMode: TextEdit.WordWrap
-        text : qsTr("New subject:")
-    }
-
-    property alias thread : textEdit.text
-
-    signal ok();
-    signal cancel();
-
-
-    CtComponents.FormTextField {
-        id              : textEdit
-
-        onAccepted: ok();
-    }
-
-    CtComponents.FormButton {
-        id : okButton
-
-        text : qsTr("Ok")
-
-        onClicked: main.ok()
-
-    }
-
-    CtComponents.FormButton {
-        text : qsTr("Cancel")
-
-        onClicked: main.cancel()
-    }
-}

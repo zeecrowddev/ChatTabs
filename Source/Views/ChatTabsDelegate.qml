@@ -374,7 +374,7 @@ Item
 
                 readOnly                : true
                 selectByMouse           : true
-                font.pixelSize          : appStyleSheet.textChatHeight
+          //      font.pixelSize          : appStyleSheet.textChatHeight
                 wrapMode                : TextEdit.WrapAtWordBoundaryOrAnywhere
 
                 onLinkActivated:

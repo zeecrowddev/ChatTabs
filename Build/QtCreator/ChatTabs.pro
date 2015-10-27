@@ -55,7 +55,6 @@ OTHER_FILES += \
     ../../Source/Views/ChatTabsListFilter.qml \
     ../../Source/Views/ChatTabsTextFieldStyle.qml \
     ../../Source/Views/ChatTabsView.qml \
-    ../../Source/Views/InputMessageWidget.qml \
     ../../Source/Views/main.qml \
     ../../Source/Views/ResourceViewer2/CameraView.qml \
     ../../Source/Views/ResourceViewer2/ImageViewer.qml \

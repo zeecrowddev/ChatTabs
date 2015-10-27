@@ -88,41 +88,6 @@ Zc.AppView
                 mainView.close();
             }
         }
-      //  ,
-      //  Action {
-      //      id: editOrCopyAction
-      //      iconSource  : "../Resources/editmode.png"
-      //      tooltip  : "Edit Mode"
-      //      onTriggered:
-      //      {
-      //          if (mainView.state === "chat")
-      //          {
-      //              mainView.state = "edit"
-      //          }
-      //          else
-      //          {
-      //              mainView.state = "chat"
-      //          }
-      //      }
-      //  }
-      //  ,
-     /*   Action {
-            id: addThreadAction
-            shortcut: "Ctrl+X"
-            iconSource: "../Resources/addThread.png"
-            tooltip : "Add new thread discussion"
-            onTriggered:
-            {
-                addNewThreadDialogBox.height = 130
-                addNewThreadDialogBox.width = 275
-
-                addNewThreadDialogBox.reset();
-                addNewThreadDialogBox.anchors.centerIn = mainView;
-                addNewThreadDialogBox.opacity = 1;
-                addNewThreadDialogBox.visible = true;
-                addNewThreadDialogBox.setFocus();
-            }
-        }*/
     ]
 
     state : "chat"
@@ -621,11 +586,9 @@ Zc.AppView
                 tab: Rectangle {
                     color: styleData.selected ? "steelblue" :"#448"
                     implicitWidth: Math.max(text.width + 4, appStyleSheet.width(0.5))
-                    implicitHeight: appStyleSheet.height(0.26)
+                    implicitHeight: text.font.pixelSize * 1.5
                     border.width: 1
                     border.color : "transparent"
-
-
 
                     Component.onCompleted:
                     {
@@ -639,7 +602,7 @@ Zc.AppView
                                                 nbrItemId.visible = false;
                                                 nbrItemId.opacity = 0;
                                             }
-                                            else
+                                            elses
                                             {
                                                 nbrItemId.visible = true;
                                                 nbrItemId.opacity = 1;
@@ -654,61 +617,6 @@ Zc.AppView
 
                     }
 
-                    /*
-                    Rectangle
-                    {
-                        id              : nbrItemId
-
-                        property int  nbrItemSize :  appStyleSheet.height(0.13)
-
-                        width           : visible ?  nbrItemSize * 2 : 0
-                        height          : nbrItemSize
-                        color           : "red"
-
-                        opacity         : 0;
-                        visible         : false
-
-                        anchors.top         : parent.top
-                        anchors.right       : parent.right
-
-                        Image
-                        {
-                            id : imageNbrItemId
-                            height               : parent.height
-                            width                : height
-                            fillMode             : Image.Stretch
-                            source               : "../Resources/bell.png"
-                            anchors.top         : parent.top
-                            anchors.right       : parent.right
-                        }
-
-                        Label
-                        {
-                            id                  : nbrItemTextId
-                            clip                : true
-                            font.pixelSize      : appStyleSheet.height(0.12)
-                            color               : "white"
-
-                            anchors
-                            {
-                                top         : parent.top
-                                bottom      : parent.bottom
-                                left        : parent.left
-                                leftMargin  : 2
-                            }
-
-                            width            : parent.width / 2
-
-                            anchors.fill            : parent
-                            horizontalAlignment     : Text.AlignLeft
-
-                            elide               : Text.ElideRight
-                            wrapMode            : Text.WrapAnywhere
-
-                        }
-                    }
-
-                    */
                     Text {
                         id: text
                         anchors.centerIn: parent
@@ -740,7 +648,7 @@ Zc.AppView
 
                 Layout.fillWidth: true
                 Layout.preferredHeight: inputMessageWidget.autoHeight
-                fontSize : appStyleSheet.inputChatHeight
+                //fontSize : appStyleSheet.inputChatHeight
                 minLines: appStyleSheet.minLines
 
 
@@ -756,7 +664,7 @@ Zc.AppView
 
             CtComponents.IconButton {
                 Layout.preferredWidth: Layout.preferredHeight
-                Layout.preferredHeight: Math.min(inputMessageWidget.height,appStyleSheet.inputChatHeight*2)
+                Layout.preferredHeight: Math.min(inputMessageWidget.height,inputMessageWidget.fontSize * 2)
                 Layout.alignment: Qt.AlignVCenter
                 imageSource: Qt.resolvedUrl("../Resources/addResource.png")
                 onClicked: addresource.show()
@@ -895,12 +803,10 @@ Zc.AppView
         if (shortcut === "pictures")
         {
             fileDialogToDownload.folder = fileDialogToDownload.shortcuts.pictures
-         //   fileDialogToDownload.nameFilters = [ from, "All files (*)" ]
         }
         else
         {
             fileDialogToDownload.folder = fileDialogToDownload.shortcuts.documents
-     //       fileDialogToDownload.nameFilters = [ from, "All files (*)" ]
         }
 
         fileDialogToDownload.from = from;

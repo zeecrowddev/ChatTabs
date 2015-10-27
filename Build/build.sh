@@ -2,7 +2,7 @@
 
 NAME=ChatTabs
 CFGNAME=ChatTabs
-RCC=${HOME}/Qt5.4.1/5.4/clang_64/bin/rcc
+RCC=${HOME}/Qt/5.5/clang_64/bin/rcc
 SRC=../Source/
 OUTPUT=./Deploy
 
