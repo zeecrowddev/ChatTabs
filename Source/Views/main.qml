@@ -160,8 +160,11 @@ Zc.AppView
 
     }
 
-    function onDownloadCompleted(query)
-    {
+    function onDownloadCompleted(query) {
+        if (Qt.platform.os === "ios") {
+            Qt.openUrlExternally(query.content)
+        }
+
         busyIndicatorId.running = false
         mainView.chatViewVisible();
     }
@@ -173,6 +176,7 @@ Zc.AppView
 
         var query = zcStorageQueryStatusComponentId.createObject(mainView)
 
+        query.content = to;
         query.progress.connect(onResourceProgress);
         query.completed.connect(onDownloadCompleted);
 
@@ -180,13 +184,16 @@ Zc.AppView
 
         if (!result)
         {
+            console.log(">> ERROR DOWNLOAD")
             busyIndicatorId.running = false;
+            mainView.chatViewVisible();
         }
 
     }
 
-    function uploadFile(fileUrl)
+    function uploadFile(fileUrl,fromPictureFolder)
     {
+
         busyIndicatorId.running = true
 
         zcResourceDescriptorId.fromLocalFile(fileUrl);
@@ -195,6 +202,14 @@ Zc.AppView
         var to = mainView.currentTabViewTitle
         var datetime = Date.now()
         var filename = zcResourceDescriptorId.name
+
+        if (fromPictureFolder === true && Qt.platform.os === "ios")
+        {
+            zcResourceDescriptorId.mimeType  = "image"
+            var pos = zcResourceDescriptorId.suffix.indexOf("?");
+            var suffix = zcResourceDescriptorId.suffix;
+            zcResourceDescriptorId.suffix = suffix.substring(0,pos);
+        }
 
         var query = zcStorageQueryStatusComponentId.createObject(mainView)
 
@@ -205,7 +220,6 @@ Zc.AppView
         zcResourceDescriptorId.path =  documentFolder.getUrl(zcResourceDescriptorId.name);
 
         var tmpContent = JSON.parse(zcResourceDescriptorId.toJSON())
-
         tmpContent.displayName = filename;
 
         query.content =  JSON.stringify(tmpContent);
@@ -259,7 +273,7 @@ Zc.AppView
         query.completed.connect(onUploadCompleted);
 
         var localFileName = resourceDescriptor.path;
-        resourceDescriptor.name = mainView.context.nickname + "_" + Date.now().toString() + "." + resourceDescriptor.suffix;
+        resourceDescriptor.name = mainView.context.nickname + "_" + Date.now().toString() + "." + resourceDescriptor.;
         resourceDescriptor.path = documentFolder.getUrl(resourceDescriptor.name);
         query.content =  resourceDescriptor.toJSON();
 
@@ -457,7 +471,7 @@ Zc.AppView
             }
 
             onResourceClicked:
-            {
+            {            
                 var res = JSON.parse(resourceDescriptor)
                 if (resourceViewer2.isKnownResourceDescriptor(resourceDescriptor))
                 {
@@ -569,10 +583,11 @@ Zc.AppView
                 var title = mainView.currentTabViewTitle;
 
                 if (tabView.getTab(currentIndex).item !==null && (tabView.getTab(currentIndex).item.messages === null ||
-                        tabView.getTab(currentIndex).item.messages === undefined))
-                {
+                        tabView.getTab(currentIndex).item.messages === undefined)) {
                     tabView.getTab(currentIndex).item.messages = Presenter.instance["listener" + title].messages;
+                }
 
+                if (tabView.getTab(currentIndex).item !==null ) {
                     tabView.getTab(currentIndex).item.goToEnd();
                 }
 
@@ -652,13 +667,16 @@ Zc.AppView
                 minLines: appStyleSheet.minLines
 
 
-                onValidated :
-                {
+                onValidated : {
                     var title = tabView.getTab(tabView.currentIndex).title;
                     senderChat.subject = title;
                     var result = "TXT|" + Tools.decodeUrl(Tools.decodeLessMore(text))
                     senderChat.sendMessage(result);
                     inputMessageWidget.text = "";
+
+                    if (Qt.platform.os === "ios" || Qt.platform.os === "android") {
+                        inputMessageWidget.focus = false;
+                    }
                 }
             }
 
@@ -684,6 +702,7 @@ Zc.AppView
                 Action {
                     text: qsTr("Photo Album")
                     onTriggered: {
+                        fileDialog.isFromPicture = true;
                         fileDialog.folder = fileDialog.shortcuts.pictures;
                         fileDialog.open()   ;
                     }
@@ -692,6 +711,7 @@ Zc.AppView
                 Action {
                     text: qsTr("Files")
                     onTriggered: {
+                        fileDialog.isFromPicture = false;
                         fileDialog.folder = fileDialog.shortcuts.documents;
                         fileDialog.open()
                     }
@@ -792,20 +812,23 @@ Zc.AppView
         selectFolder : false
         nameFilters: ["All Files(*.*)"]     
 
-        onAccepted:
-        {
-            uploadFile(fileUrl)
+        property bool isFromPicture : false
+
+        onAccepted: {
+            uploadFile(fileUrl,isFromPicture)
         }
     }
 
-    function downloadFile(from,shortcut)
-    {
-        if (shortcut === "pictures")
-        {
-            fileDialogToDownload.folder = fileDialogToDownload.shortcuts.pictures
+    function downloadFile(from,shortcut) {
+
+        if (Qt.platform.os === "ios") {
+             downloadFileTo(from,Zc.HostInfo.writableLocation(14) + "/" + from);
+            return;
         }
-        else
-        {
+
+        if (shortcut === "pictures") {
+            fileDialogToDownload.folder = fileDialogToDownload.shortcuts.pictures;
+        } else {
             fileDialogToDownload.folder = fileDialogToDownload.shortcuts.documents
         }
 
@@ -841,7 +864,7 @@ Zc.AppView
     {
         activity.start();
 
- /*       var webViewVersion =  mainView.context.getQtModuleVersion("QtWebView") !== "";
+ /*       var webViewVersion =  download.getQtModuleVersion("QtWebView") !== "";
         var webKitVersion =  mainView.context.getQtModuleVersion("QtWebKit") !== "";
         mainView.useWebView = "";
 

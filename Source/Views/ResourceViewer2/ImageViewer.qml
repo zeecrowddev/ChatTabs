@@ -163,7 +163,43 @@ Item
 
         fillMode : Image.PreserveAspectFit
 
+        onStatusChanged:
+        {
+            if (status != Image.Error )
+            {
+                messageId.visible = false
+                messageTextId.text = "";
+            }
+            else
+            {
+                messageTextId.text = "Error"
+            }
+
+        }
+
+        onProgressChanged:
+        {
+            if ( status === Image.Loading)
+            {
+                messageTextId.text = Math.round( image.progress * 100) + "%"
+                messageId.visible = true
+            }
+        }
+
     }
+
+    Rectangle {
+        id : messageId
+        anchors.fill: image
+        Text {
+            id : messageTextId
+            anchors.centerIn : parent
+            color : "black"
+            text : "Loading ..."
+        }
+
+    }
+
 
     FileDialog
     {

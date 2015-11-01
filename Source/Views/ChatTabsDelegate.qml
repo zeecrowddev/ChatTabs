@@ -436,18 +436,18 @@ Item
 
                             sourceSize.width: appStyleSheet.resourceHeight
 
-                            /*
+
                             onStatusChanged:
                             {
                                 if (status != Image.Error )
                                 {
-                                    messageId.visible = false
-                                    message = "";
+                                    messageTextId.visible = false
+                                    messageTextId.text = "";
                                 }
                                 else
                                 {
-                                    messageId.visible = false
-                                    message = "Error"
+                                    messageTextId.visible = false
+                                    messageTextId.text = "Error"
                                 }
 
                             }
@@ -456,25 +456,24 @@ Item
                             {
                                 if ( status === Image.Loading)
                                 {
-                                    message = Math.round(imageId.progress * 100)
-                                    messageId.visible = true
+                                    messageTextId.text = Math.round(imageId.progress * 100) + "%"
+                                    messageTextId.visible = true
                                 }
-                            }*/
+                            }
 
                             Component.onCompleted:
                             {
                                 source = imageSource
                             }
 
-                            /*
                             Text
                             {
                                 id : messageTextId
                                 anchors.centerIn : parent
-                                color : "white"
-                                font.pixelSize: appStyleSheet.labelResourceHeight
+                                color : "black"
+                                text : "Loading ..."
                             }
-                            */
+
 
                             //property alias message : messageTextId.text
 
