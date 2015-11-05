@@ -232,12 +232,14 @@ Item
         /*
         ** Show an image
         */
-        if (res.mimeType.indexOf("image") === 0 )
-        {
-            ressourceType = "ImageViewer"
-            loader.source = "ImageViewer.qml"
-            nextButtonVisible = true
-            nextButtonText = "Save >"
+        if (res.mimeType.indexOf("image") === 0 ) {
+            // not supported by ios now
+            if (Qt.platform.os !== "ios") {
+                ressourceType = "ImageViewer"
+                loader.source = "ImageViewer.qml"
+                nextButtonVisible = true
+                nextButtonText = "Save >"
+            }
             loader.item.show(resource)
         }
         else if (res.mimeType.indexOf("http") === 0 )

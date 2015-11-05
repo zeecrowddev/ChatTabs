@@ -582,7 +582,8 @@ Zc.AppView
                     tabView.getTab(currentIndex).item.messages = Presenter.instance["listener" + title].messages;
                 }
 
-                if (tabView.getTab(currentIndex).item !==null ) {
+                if (tabView.getTab(currentIndex).item !==null && tabView.getTab(currentIndex).item !==undefined) {
+                    console.log(">> go to end " + mainView.currentTabViewTitle)
                     tabView.getTab(currentIndex).item.goToEnd();
                 }
 

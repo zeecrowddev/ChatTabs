@@ -58,11 +58,10 @@ ScrollView
 
     function goToEnd()
     {
-
         var cy = chatTabs.flickableItem.contentY > 0 ? chatTabs.flickableItem.contentY : 0
         var delta = chatTabs.flickableItem.contentHeight - (cy + chatTabs.flickableItem.height);
 
-        if (delta <= 30)
+        if (delta <= 30 && column.height > chatTabs.flickableItem.height)
         {
             chatTabs.flickableItem.contentY = Math.round(column.height - chatTabs.flickableItem.height);
         }
