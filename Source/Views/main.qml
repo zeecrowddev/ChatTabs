@@ -672,6 +672,11 @@ Zc.AppView
                     inputMessageWidget.text = "";
                     inputMessageWidget.focus = false;
                 }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: inputMessageWidget.forceActiveFocus();
+                }
             }
 
             CtComponents.IconButton {
