@@ -247,20 +247,16 @@ Zc.AppView
     ** Set the focus
     */
 
-    onIsCurrentViewChanged :
-    {
-        if (isCurrentView == true)
-        {
+    onIsCurrentViewChanged : {
+        if (isCurrentView == true) {
             appNotification.resetNotification();
             chatViewVisible();
-            inputMessageWidget.forceActiveFocus();
-        //    resourceViewer2.showWebViewIfNecessary();
-        }
-        else
-        {
+            if (Qt.platform.os !== "ios" && Qt.platform.os !== "android") {
+                inputMessageWidget.forceActiveFocus();
+            }
+        } else {
             chatViewVisible();
             inputMessageWidget.focus = false;
-        //    resourceViewer2.hideWebViewIfNecessary();
         }
     }
 
@@ -558,23 +554,22 @@ Zc.AppView
 
         spacing: 2
 
-        TabView
-        {
+        TabView {
             id : tabView
 
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            onCurrentIndexChanged :
-            {
+            onCurrentIndexChanged : {
                 if (tabView.getTab(currentIndex)=== undefined)
                     return;
 
-                if ( tabView.getTab(currentIndex).title === "+" && mainView.enableIndexChanged)
-                {
+                if ( tabView.getTab(currentIndex).title === "+" && mainView.enableIndexChanged) {
                     addNewThreadDialogBox.reset();
                     addNewThreadDialogBox.visible = true;
-                    addNewThreadDialogBox.setFocus();
+                    if (Qt.platform.os !== "ios" && Qt.platform.os !== "android") {
+                        addNewThreadDialogBox.setFocus();
+                    }
                     return;
                 }
 
@@ -591,8 +586,9 @@ Zc.AppView
                     tabView.getTab(currentIndex).item.goToEnd();
                 }
 
-                inputMessageWidget.forceActiveFocus();
-
+                if (Qt.platform.os !== "ios" && Qt.platform.os !== "android") {
+                    inputMessageWidget.forceActiveFocus();
+                }
                 Presenter.instance["notify" +  title] = 0;
                 notify(title)
             }
@@ -673,10 +669,7 @@ Zc.AppView
                     var result = "TXT|" + Tools.decodeUrl(Tools.decodeLessMore(text))
                     senderChat.sendMessage(result);
                     inputMessageWidget.text = "";
-
-                    if (Qt.platform.os === "ios" || Qt.platform.os === "android") {
-                        inputMessageWidget.focus = false;
-                    }
+                    inputMessageWidget.focus = false;
                 }
             }
 
@@ -786,22 +779,23 @@ Zc.AppView
 
         visible : false
 
-        function close()
-        {
+        function close() {
             visible = false
         }
 
-        onOk:
-        {
+        onOk: {
             close();
             threadItems.setItem(addNewThreadDialogBox.thread,"")
-            inputMessageWidget.forceActiveFocus();
+            if (Qt.platform.os !== "ios" && Qt.platform.os !== "android") {
+                inputMessageWidget.forceActiveFocus();
+            }
         }
 
-        onCancel :
-        {
+        onCancel : {
             close();
-            inputMessageWidget.forceActiveFocus();
+            if (Qt.platform.os !== "ios" && Qt.platform.os !== "android") {
+               inputMessageWidget.forceActiveFocus();
+            }
         }
     }
 
