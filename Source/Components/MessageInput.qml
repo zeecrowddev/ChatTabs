@@ -41,10 +41,21 @@ Rectangle {
         anchors.bottomMargin: verticalMargins
         height: Math.max(Math.min(edit2.contentHeight * maxLines / edit2.lineCount, edit2.contentHeight),edit2.contentHeight * minLines / edit2.lineCount)
         clip: true
-        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
 
         property int autoHeight: height + 2*verticalMargins
+
+
+        Component.onCompleted: {
+            // A mettre dans le properties dés que la V2 est partout de ZC
+            if (horizontalScrollBarPolicy!==undefined)
+            {
+                horizontalScrollBarPolicy =  Qt.ScrollBarAlwaysOff
+            }
+            if (verticalScrollBarPolicy!==undefined)
+            {
+                verticalScrollBarPolicy =  Qt.ScrollBarAlwaysOff
+            }
+        }
 
         function ensureVisible(r) {
             if (flickableItem.contentY >= r.y)
@@ -64,6 +75,9 @@ Rectangle {
                 if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
                     event.accepted = true;
                     validated();
+                    if (Qt.platform.os === "ios" || Qt.platform.os === "android") {
+                        edit2.focus = false;
+                    }
                 }
             }
         }

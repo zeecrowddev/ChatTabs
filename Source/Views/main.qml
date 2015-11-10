@@ -670,7 +670,6 @@ Zc.AppView
                     var result = "TXT|" + Tools.decodeUrl(Tools.decodeLessMore(text))
                     senderChat.sendMessage(result);
                     inputMessageWidget.text = "";
-                    inputMessageWidget.focus = false;
                 }
 
                 MouseArea {
