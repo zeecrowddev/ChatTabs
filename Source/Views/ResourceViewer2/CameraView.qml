@@ -26,7 +26,9 @@ import QtQuick.Window 2.1
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Layouts 1.1
-import QtMultimedia 5.2
+import QtMultimedia 5.0
+
+import ZcClient 1.0 as Zc
 
 import "../"
 
@@ -36,8 +38,8 @@ Item {
 
     anchors.fill: parent
 
-    property string localPath : ""
-    property string path : localPath + "/cameraCapture.jpg";
+  /*  property string localPath : ""
+    property string path : localPath + "/cameraCapture.jpg";*/
 
     function back()
     {
@@ -57,6 +59,11 @@ Item {
     Component.onDestruction:
     {
         camera.stop()
+    }
+
+    Zc.Image
+    {
+        id : imageId
     }
 
     Item
@@ -80,21 +87,40 @@ Item {
 
                 onImageSaved:
                 {
+
+                 /*   var tmpFileName = Zc.HostInfo.temporaryPath + "/cameraCapture.jpg";
+
+                    if (Qt.platform.os === "ios") {
+                        tmpFileName = "file:/" + tmpFileName;
+                        imageId.copyFileFromPath( fileUrl.toString().replace("file:///","") , tmpFileName.replace("file:/",""));
+                    } if (Qt.platform.os === "android") {
+                        imageId.copyFileFromPath( fileUrl.toString().replace("file://","") , tmpFileName);
+                    }
+                    else
+                    {
+                        imageId.copyFileFromUrl(fileUrl , tmpFileName);
+                    }
+
+                    if (Qt.platform.os === "windows")
+                    {
+                        tmpFileName = "file:///" + tmpFileName
+                    }*/
+
                     cameraViewer.visible = false
                     photoPreview.visible = true
                     resourceViewer.nextButtonText = "Validate >"
                     resourceViewer.nextButtonVisible = true
 
-                    if (Qt.platform.os === "windows" && cameraView.path.search("file:///") === -1)
+                    var tmpFileName = mainView.context.temporaryPath + "cameraCapture.jpg";
+                    if (Qt.platform.os === "windows" && tmpFileName.search("file:///") === -1)
                     {
-                        photoPreview.source = "file:///" + cameraView.path
+                        tmpFileName = "file:///" + tmpFileName
                     }
-                    else
-                    {
-                        photoPreview.source = cameraView.path
 
-                    }
-            }
+
+                        photoPreview.source = tmpFileName
+
+                }
 
             }
         }
@@ -104,7 +130,7 @@ Item {
             anchors.fill: parent
             focus : visible // to receive focus and capture key events when visible
 
-            autoOrientation : true
+            //autoOrientation : true
 
             MouseArea
             {
@@ -112,7 +138,15 @@ Item {
 
                 onClicked:
                 {
-                    camera.imageCapture.captureToLocation(cameraView.path);
+                    var tmpFileName = mainView.context.temporaryPath + "cameraCapture.jpg";
+                    if (Qt.platform.os === "windows" && tmpFileName.search("file:///") === -1)
+                    {
+                        tmpFileName = "file:///" + tmpFileName
+                    }
+
+                    console.log(">> captureToLocation(tmpFileName) " + tmpFileName)
+
+                    camera.imageCapture.captureToLocation(tmpFileName);
                 }
             }
         }

@@ -202,7 +202,7 @@ Item
     {
         ressourceType = "Camera"
         loader.source = "CameraView.qml"
-        loader.item.localPath = resourceViewer.localPath
+    //    loader.item.localPath = resourceViewer.localPath
         nextButtonText = "Validate >"
         nextButtonVisible = false
     }
