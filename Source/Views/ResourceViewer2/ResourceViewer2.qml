@@ -233,10 +233,11 @@ Item
         ** Show an image
         */
         if (res.mimeType.indexOf("image") === 0 ) {
+            ressourceType = "ImageViewer"
+            loader.source = "ImageViewer.qml"
+
             // not supported by ios now
             if (Qt.platform.os !== "ios") {
-                ressourceType = "ImageViewer"
-                loader.source = "ImageViewer.qml"
                 nextButtonVisible = true
                 nextButtonText = "Save >"
             }

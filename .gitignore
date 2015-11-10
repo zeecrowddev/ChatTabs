@@ -24,3 +24,5 @@ Build/build-ChatTabs-Clone_de_Desktop_Qt_5_3_clang_64bit-Debug/.qmake.stash
 Build/build-ChatTabs-Clone_de_Desktop_Qt_5_3_clang_64bit-Debug/ChatTabs.app/Contents/Info.plist
 Build/build-ChatTabs-Clone_de_Desktop_Qt_5_3_clang_64bit-Debug/ChatTabs.app/Contents/PkgInfo
 Build/build-ChatTabs-Clone_de_Desktop_Qt_5_3_clang_64bit-Debug/ChatTabs.app/Contents/Resources/empty.lproj
+Build/Deploy/ChatTabs.cfg
+Build/Deploy/ChatTabs.rcc
