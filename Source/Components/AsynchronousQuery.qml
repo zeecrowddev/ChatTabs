@@ -22,7 +22,7 @@ Item {
 
     function onBusyIndicatorRunningChanged() {
         if (!busyIndicator.running) {
-            console.log("Received cancel from busy indicator");
+           // console.log("Received cancel from busy indicator");
             cancel();
         }
     }
@@ -53,19 +53,19 @@ Item {
         query.statusChanged.disconnect(onStatusChanged);
 
         if (query.isCompleted() && (query.success("200") || query.success("201"))) {
-	        console.log("AsyncQuery: status: completed");
+          //  console.log("AsyncQuery: status: completed");
 
             hideBusyIndicator();
 
             completed(query);
             
 	        if (query.success("200") || query.success("201")) {
-		        console.log("AsyncQuery: succeeded");
+              //  console.log("AsyncQuery: succeeded");
 	            succeeded(query);
 	        }
         }
         else if (query.isCancelled()) {
-	        console.log("AsyncQuery: status: cancelled");
+          //  console.log("AsyncQuery: status: cancelled");
             hideBusyIndicator();
             cancelled(query);
         }

@@ -58,10 +58,15 @@ ScrollView
 
     function goToEnd()
     {
+/*        console.log(">> chatTabs.flickableItem.contentY " + chatTabs.flickableItem.contentY)
+        console.log(">> chatTabs.flickableItem.contentHeight " + chatTabs.flickableItem.contentHeight)
+        console.log(">> chatTabs.flickableItem.height " + chatTabs.flickableItem.height)
+        console.log(">> column.height " + column.height)*/
+
         var cy = chatTabs.flickableItem.contentY > 0 ? chatTabs.flickableItem.contentY : 0
         var delta = chatTabs.flickableItem.contentHeight - (cy + chatTabs.flickableItem.height);
 
-        if (delta <= 30 && column.height > chatTabs.flickableItem.height)
+        if (delta <= (parent.height*0.2)  && column.height > chatTabs.flickableItem.height)
         {
             chatTabs.flickableItem.contentY = Math.round(column.height - chatTabs.flickableItem.height);
         }

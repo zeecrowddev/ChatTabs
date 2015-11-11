@@ -39,6 +39,9 @@ Item
     property alias nextButtonVisible : nextButton.visible
     property alias nextButtonText : nextButton.text
 
+    property alias optionButtonVisible : optionButton.visible
+    property alias optionButtonText : optionButton.text
+
     function setContext(context)
     {
         documentFolder.setAppContext(context)
@@ -132,6 +135,35 @@ Item
             }
 
             CtComponents.ToolButton {
+                id : optionButton
+                text: qsTr("Flip Camera")
+                Layout.alignment: Qt.AlignCenter
+
+
+                visible : false
+
+                onClicked: {
+
+                    if (loader.item !== null && loader.item.option !== undefined)
+                    {
+                        loader.item.option();
+                    }
+
+                    /*
+                    if (ressourceType === "Camera") {
+                        resourceViewer.uploadFile(loader.item.path)
+                        loader.source = ""
+                    } else if (ressourceType === "WebView") {
+                        Qt.openUrlExternally(loader.item.getUrl())
+                    } else if (ressourceType === "ImageViewer") {
+                        mainView.downloadFile(loader.item.fileName,"pictures");
+                    } else {
+                        mainView.chatViewVisible()
+                    }*/
+                }
+            }
+
+            CtComponents.ToolButton {
                 id : nextButton
                 text: qsTr("Next")
                 Layout.alignment: Qt.AlignRight
@@ -205,6 +237,8 @@ Item
     //    loader.item.localPath = resourceViewer.localPath
         nextButtonText = "Validate >"
         nextButtonVisible = false
+    //    optionButtonText = "Flip Camera >"
+    //    optionButtonVisible = true
     }
 
    /* function showWebView()
@@ -229,6 +263,10 @@ Item
     function showResource(resource)
     {   
         var res = JSON.parse(resource)
+
+     //   optionButtonText = ""
+     //   optionButtonVisible = false
+
         /*
         ** Show an image
         */
@@ -241,6 +279,11 @@ Item
                 nextButtonVisible = true
                 nextButtonText = "Save >"
             }
+            else {
+                nextButtonVisible = false
+                nextButtonText = ""
+            }
+
             loader.item.show(resource)
         }
         else if (res.mimeType.indexOf("http") === 0 )

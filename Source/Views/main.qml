@@ -583,7 +583,6 @@ Zc.AppView
                 }
 
                 if (tabView.getTab(currentIndex).item !==null && tabView.getTab(currentIndex).item !==undefined) {
-                    console.log(">> go to end " + mainView.currentTabViewTitle)
                     tabView.getTab(currentIndex).item.goToEnd();
                 }
 
@@ -680,7 +679,7 @@ Zc.AppView
 
             CtComponents.IconButton {
                 Layout.preferredWidth: Layout.preferredHeight
-                Layout.preferredHeight: Math.min(inputMessageWidget.height,inputMessageWidget.fontSize * 2)
+                Layout.preferredHeight: Math.min(inputMessageWidget.height,inputMessageWidget.fontSize * 3)
                 Layout.alignment: Qt.AlignVCenter
                 imageSource: Qt.resolvedUrl("../Resources/addResource.png")
                 onClicked: addresource.show()

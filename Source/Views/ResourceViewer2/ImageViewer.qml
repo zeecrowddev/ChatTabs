@@ -132,6 +132,12 @@ Item
     }
     */
 
+    Rectangle {
+        anchors.fill: image
+        color : "white"
+    }
+
+
     ProgressBar
     {
         id : progressBar
@@ -167,7 +173,7 @@ Item
         {
             if (status != Image.Error )
             {
-                messageId.visible = false
+                messageTextId.visible = false
                 messageTextId.text = "";
             }
             else
@@ -182,23 +188,19 @@ Item
             if ( status === Image.Loading)
             {
                 messageTextId.text = Math.round( image.progress * 100) + "%"
-                messageId.visible = true
+                messageTextId.visible = true
             }
         }
 
     }
 
-    Rectangle {
-        id : messageId
-        anchors.fill: image
-        Text {
+    Text {
             id : messageTextId
             anchors.centerIn : parent
             color : "black"
             text : "Loading ..."
-        }
-
     }
+
 
 
     FileDialog

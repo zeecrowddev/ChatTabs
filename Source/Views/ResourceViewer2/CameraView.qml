@@ -26,7 +26,7 @@ import QtQuick.Window 2.1
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Layouts 1.1
-import QtMultimedia 5.0
+import QtMultimedia 5.2
 
 import ZcClient 1.0 as Zc
 
@@ -41,12 +41,18 @@ Item {
   /*  property string localPath : ""
     property string path : localPath + "/cameraCapture.jpg";*/
 
+    property string path : ""
+
     function back()
     {
         camera.stop();
     }
 
     function next()
+    {
+    }
+
+    function option()
     {
     }
 
@@ -64,6 +70,12 @@ Item {
     Zc.Image
     {
         id : imageId
+    }
+
+    Rectangle
+    {
+        anchors.fill: parent
+        color : "white"
     }
 
     Item
@@ -111,15 +123,25 @@ Item {
                     resourceViewer.nextButtonText = "Validate >"
                     resourceViewer.nextButtonVisible = true
 
-                    var tmpFileName = mainView.context.temporaryPath + "cameraCapture.jpg";
-                    if (Qt.platform.os === "windows" && tmpFileName.search("file:///") === -1)
+                    cameraView.path = mainView.context.temporaryPath + "cameraCapture.jpg";
+                    var imageSource = path;
+                    if (Qt.platform.os === "windows" && cameraView.path.search("file:///") === -1)
                     {
-                        tmpFileName = "file:///" + tmpFileName
+                        imageSource = "file:///" + path
+                    }
+                    else if (Qt.platform.os === "ios")
+                    {
+                        imageSource = "file:/" + path
+                    }
+                    else if (Qt.platform.os === "android")
+                    {
+                        imageSource = "file://" + path
+                    }
+                    else {
+                        imageSource = "path"
                     }
 
-
-                        photoPreview.source = tmpFileName
-
+                    photoPreview.source = imageSource
                 }
 
             }
@@ -130,7 +152,7 @@ Item {
             anchors.fill: parent
             focus : visible // to receive focus and capture key events when visible
 
-            //autoOrientation : true
+            autoOrientation : true
 
             MouseArea
             {
@@ -139,10 +161,10 @@ Item {
                 onClicked:
                 {
                     var tmpFileName = mainView.context.temporaryPath + "cameraCapture.jpg";
-                    if (Qt.platform.os === "windows" && tmpFileName.search("file:///") === -1)
+                    /*if (Qt.platform.os === "windows" && tmpFileName.search("file:///") === -1)
                     {
                         tmpFileName = "file:///" + tmpFileName
-                    }
+                    }*/
 
                     console.log(">> captureToLocation(tmpFileName) " + tmpFileName)
 
