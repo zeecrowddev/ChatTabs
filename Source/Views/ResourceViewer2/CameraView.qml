@@ -126,7 +126,22 @@ Item {
             //        console.log(">> preview " + preview)
                     console.log(">> capturedImagePath " + camera.imageCapture.capturedImagePath)
 
-                  //  photoPreview.source = camera.imageCapture.capturedImagePath
+
+                    console.log((">> camera orie,tation " + camera.orientation))
+                    console.log((">> videoOutput orie,tation " + videoOutput.orientation))
+
+                    console.log(">> Screen.orientation " +  Screen.orientation)
+                    console.log(">> Screen.primaryOrientation " +  Screen.primaryOrientation)
+
+                    if (camera.orientation != videoOutput.orientation)
+                    {
+                        photoPreview.rotation = camera.orientation - videoOutput.orientation
+                    }
+                    else
+                     {
+                        photoPreview.rotation = 0
+                    }
+
                     photoPreview.source = imageSource
                 }
 
@@ -149,7 +164,7 @@ Item {
                 {
                     var tmpFileName = mainView.context.temporaryPath + "cameraCapture.jpg";
                     console.log(">> tmpFileName " + tmpFileName)
-                    //camera.imageCapture.captureToLocation(tmpFileName);
+                    console.log(">> videoOutput.orientation " + videoOutput.orientation)
 
                     camera.imageCapture.capture();
                 }
@@ -167,7 +182,6 @@ Item {
         fillMode: Image.PreserveAspectFit
         cache: false
         autoTransform : true
-        transform: Rotation { origin.x : photoPreview.x + photoPreview.width / 2;origin.y : photoPreview.y + photoPreview.heght / 2;angle: -videoOutput.orientation}
     }
 
 }
