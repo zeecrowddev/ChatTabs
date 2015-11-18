@@ -20,13 +20,13 @@
 */
 
 
-import QtQuick 2.2
-import QtQuick.Dialogs 1.1
-import QtQuick.Window 2.1
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Styles 1.1
-import QtQuick.Layouts 1.1
-import QtMultimedia 5.2
+import QtQuick 2.5
+import QtQuick.Dialogs 1.2
+import QtQuick.Window 2.2
+import QtQuick.Controls 1.3
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.2
+import QtMultimedia 5.5
 
 import ZcClient 1.0 as Zc
 
@@ -99,31 +99,12 @@ Item {
 
                 onImageSaved:
                 {
-
-                 /*   var tmpFileName = Zc.HostInfo.temporaryPath + "/cameraCapture.jpg";
-
-                    if (Qt.platform.os === "ios") {
-                        tmpFileName = "file:/" + tmpFileName;
-                        imageId.copyFileFromPath( fileUrl.toString().replace("file:///","") , tmpFileName.replace("file:/",""));
-                    } if (Qt.platform.os === "android") {
-                        imageId.copyFileFromPath( fileUrl.toString().replace("file://","") , tmpFileName);
-                    }
-                    else
-                    {
-                        imageId.copyFileFromUrl(fileUrl , tmpFileName);
-                    }
-
-                    if (Qt.platform.os === "windows")
-                    {
-                        tmpFileName = "file:///" + tmpFileName
-                    }*/
-
                     cameraViewer.visible = false
                     photoPreview.visible = true
                     resourceViewer.nextButtonText = "Validate >"
                     resourceViewer.nextButtonVisible = true
 
-                    cameraView.path = mainView.context.temporaryPath + "cameraCapture.jpg";
+                    cameraView.path = camera.imageCapture.capturedImagePath ////mainView.context.temporaryPath + "cameraCapture.jpg";
                     var imageSource = path;
                     if (Qt.platform.os === "windows" && cameraView.path.search("file:///") === -1)
                     {
@@ -141,6 +122,11 @@ Item {
                         imageSource = "path"
                     }
 
+                    console.log(">> imageSource " + imageSource)
+            //        console.log(">> preview " + preview)
+                    console.log(">> capturedImagePath " + camera.imageCapture.capturedImagePath)
+
+                  //  photoPreview.source = camera.imageCapture.capturedImagePath
                     photoPreview.source = imageSource
                 }
 
@@ -148,6 +134,7 @@ Item {
         }
 
         VideoOutput {
+            id : videoOutput
             source: camera
             anchors.fill: parent
             focus : visible // to receive focus and capture key events when visible
@@ -161,14 +148,10 @@ Item {
                 onClicked:
                 {
                     var tmpFileName = mainView.context.temporaryPath + "cameraCapture.jpg";
-                    /*if (Qt.platform.os === "windows" && tmpFileName.search("file:///") === -1)
-                    {
-                        tmpFileName = "file:///" + tmpFileName
-                    }*/
+                    console.log(">> tmpFileName " + tmpFileName)
+                    //camera.imageCapture.captureToLocation(tmpFileName);
 
-                    console.log(">> captureToLocation(tmpFileName) " + tmpFileName)
-
-                    camera.imageCapture.captureToLocation(tmpFileName);
+                    camera.imageCapture.capture();
                 }
             }
         }
@@ -183,6 +166,8 @@ Item {
         visible: false;
         fillMode: Image.PreserveAspectFit
         cache: false
+        autoTransform : true
+        transform: Rotation { origin.x : photoPreview.x + photoPreview.width / 2;origin.y : photoPreview.y + photoPreview.heght / 2;angle: -videoOutput.orientation}
     }
 
 }

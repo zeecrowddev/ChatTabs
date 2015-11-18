@@ -20,11 +20,11 @@
 */
 
 
-import QtQuick 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import QtQuick.Dialogs 1.0
-import QtQuick.Controls.Styles 1.1
+import QtQuick 2.5
+import QtQuick.Dialogs 1.2
+import QtQuick.Controls 1.3
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.2
 
 import ZcClient 1.0 as Zc
 
@@ -72,66 +72,6 @@ Item
         size = res.size
     }
 
-    /*
-
-    ToolBar
-    {
-        id : toolBar
-
-        height: 50
-
-        anchors.top : parent.top
-
-        RowLayout {
-
-            ToolButton
-            {
-                 height : 45
-                 width : 45
-
-                 implicitHeight: 45
-                 implicitWidth: 45
-
-                style : ButtonStyle {}
-
-                action : Action
-                {
-                    id : downloadAction
-                    iconSource  : "qrc:/ChatTabs/Resources/import.png"
-                    tooltip     : "Save as .."
-                    onTriggered :
-                    {
-                        fileDialog.open();
-                    }
-                }
-            }
-            ToolButton
-            {
-                height : 45
-                width : 45
-
-                implicitHeight: 45
-                implicitWidth: 45
-
-                style : ButtonStyle {}
-
-                action : Action
-                {
-                    id : toClopBoardAction
-                    iconSource  : "qrc:/ChatTabs/Resources/clipboard.png"
-                    tooltip     : "Copy to clipboard ..."
-                    onTriggered :
-                    {
-                        copyToClipBoard();
-                    }
-                }
-            }
-        }
-
-        style: ToolBarStyle { }
-    }
-    */
-
     Rectangle {
         anchors.fill: image
         color : "white"
@@ -165,6 +105,9 @@ Item
         anchors.right : parent.right
         anchors.bottom: parent.bottom
         anchors.top: progressBar.bottom
+
+        autoTransform : true
+
      //   anchors.topMargin : 5
 
         fillMode : Image.PreserveAspectFit
