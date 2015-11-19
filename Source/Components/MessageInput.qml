@@ -8,7 +8,11 @@ import QtQuick.Layouts 1.2
 
 Rectangle {
     id: control
-    color: edit2.focus ?  Qt.lighter("#ff6600") : "white"
+
+    border.color:  edit2.focus ? "#448" : Qt.lighter("#ff6600")
+    border.width:  edit2.focus ? 1 : 0
+
+    color : edit2.focus ? "white" : "lightgrey"
 
     AppStyleSheet
     {
@@ -26,6 +30,13 @@ Rectangle {
     property int lineCount : edit2.lineCount
 
     signal validated
+
+    function sendValidated() {
+        validated();
+        if (Qt.platform.os === "ios" || Qt.platform.os === "android") {
+            edit2.focus = false;
+        }
+    }
 
     function forceActiveFocus() {
         edit2.forceActiveFocus();
@@ -68,16 +79,14 @@ Rectangle {
             id: edit2
             width: control.width
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+            font.pixelSize: appStyleSheet.inputChatHeight
 
             onCursorRectangleChanged: f.ensureVisible(cursorRectangle)
 
             Keys.onPressed: {
                 if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
                     event.accepted = true;
-                    validated();
-                    if (Qt.platform.os === "ios" || Qt.platform.os === "android") {
-                        edit2.focus = false;
-                    }
+                    sendValidated()
                 }
             }
         }

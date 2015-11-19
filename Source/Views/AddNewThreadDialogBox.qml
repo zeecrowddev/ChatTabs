@@ -54,6 +54,7 @@ import "../Components" as CtComponents
             Layout.fillWidth: true
             wrapMode: TextEdit.WordWrap
             text : qsTr("New subject:")
+            font.pixelSize: appStyleSheet.textChatHeight
         }
 
         property alias thread : textEdit.text
@@ -62,7 +63,6 @@ import "../Components" as CtComponents
 
         CtComponents.FormTextField {
             id              : textEdit
-
             onAccepted: ok();
         }
 

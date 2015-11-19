@@ -14,7 +14,7 @@
    height="1052.3622047"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.0 r9654"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="addResource.svg">
   <defs
      id="defs4">
@@ -51,10 +51,10 @@
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1003"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -79,25 +79,25 @@
        height="50"
        x="156.3398"
        y="199.37984"
-       inkscape:export-filename="C:\dev\ZC\Crowd\Source\ZcMuc\Resources\addResource.png"
+       inkscape:export-filename="C:\dev\github\ChatTabs\Source\Resources\addResource.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <rect
-       style="fill:#006180;fill-opacity:1;stroke:#964646;stroke-width:0;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#ffffff;fill-opacity:1;stroke:#964646;stroke-width:0;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect3806"
        width="44.982506"
        height="45.076736"
        x="158.89772"
        y="201.86925"
-       inkscape:export-filename="C:\dev\ZC\Crowd\Source\ZcMuc\Resources\addResource.png"
+       inkscape:export-filename="C:\dev\github\ChatTabs\Source\Resources\addResource.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <path
-       style="fill:none;stroke:#fffff8;stroke-width:2.41948748;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:none;stroke:#006180;stroke-width:2.41948747999999990;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;fill-opacity:1"
        d="m 182.74875,208.32978 -16.21625,21.08788 3.4195,10.40579 10.20655,0.7251 18.98804,-24.53203 -10.99301,-8.59032 -15.65937,20.55051 1.99077,5.8979 5.89324,0.003 11.19029,-13.91189"
        id="path3005"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="C:\dev\ZC\Crowd\Source\ZcMuc\Resources\addResource.png"
+       inkscape:export-filename="C:\dev\github\ChatTabs\Source\Resources\addResource.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
   </g>

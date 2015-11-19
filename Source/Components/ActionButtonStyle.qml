@@ -15,7 +15,7 @@ ButtonStyle {
     label: Text {
         width: parent.width
         text: control.text
-        //font.pixelSize: appStyleSheet.height(0.12)
+        font.pixelSize: appStyleSheet.textChatHeight
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         color: textColor

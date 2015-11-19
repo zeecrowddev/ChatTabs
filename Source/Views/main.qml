@@ -100,18 +100,6 @@ Zc.AppView
             StateChangeScript {
                 script:
                 {
-
-                    // editModeButtons.visible = false;
-                    // editModeButtons.enabled = false;
-
-                    //editOrCopyAction.iconSource = "../Resources/editmode.png";
-                    //editOrCopyAction.enabled = true;
-                    //editOrCopyAction.tooltip = "Edit Mode";
-
-                    //addThreadAction.enabled     = true;
-                    //addThreadAction.iconSource  = "../Resources/addThread.png"
-
-                    //inputMessageWidget.state    = "chat";
                     if (tabView.getTab(tabView.currentIndex) !== null && tabView.getTab(tabView.currentIndex) !== undefined)
                     {
                         tabView.getTab(tabView.currentIndex).item.state = "chat";
@@ -142,7 +130,6 @@ Zc.AppView
         }
     ]
 
-
     function onResourceProgress(query,value)
     {
     }
@@ -167,7 +154,6 @@ Zc.AppView
         busyIndicatorId.running = false
         mainView.chatViewVisible();
     }
-
 
     function downloadFileTo(from,to)
     {
@@ -228,6 +214,7 @@ Zc.AppView
             busyIndicatorId.running =false
         }
     }
+
     /*
     ** This signal notify that a message arrive on a tab "subject"
     ** Each Chat Tab listen this signal to increment if necessary
@@ -258,23 +245,6 @@ Zc.AppView
             inputMessageWidget.focus = false;
         }
     }
-
-
-    /*function importFile(resourceDescriptor)
-    {
-
-        var query = zcStorageQueryStatusComponentId.createObject(mainView)
-        query.progress.connect(onResourceProgress);
-        query.completed.connect(onUploadCompleted);
-
-        var localFileName = resourceDescriptor.path;
-        resourceDescriptor.name = mainView.context.nickname + "_" + Date.now().toString() + "." + resourceDescriptor.;
-        resourceDescriptor.path = documentFolder.getUrl(resourceDescriptor.name);
-        query.content =  resourceDescriptor.toJSON();
-
-        return documentFolder.uploadFile(resourceDescriptor.name,localFileName,query);
-    }*/
-
 
     function addThread(thread)
     {
@@ -493,59 +463,25 @@ Zc.AppView
         }
     }
 
-    /*
-    function copyToClipboard()
-    {
-        var result = "";
-        foreachInListModel(listenerChat.messages,
-                           function (x)
-                           {
-                               if (x.isSelected)
-                               {
-                                   result += "From: ";
-                                   result += x.from;
-                                   result += "\n";
 
-                                   if (x.likes > 0)
-                                   {
-                                       result += "Likes: ";
-                                       result += x.likes;
-                                       result += "\n";
-                                   }
+    Rectangle {
+        anchors.fill: parent
+        color : "white"
+        opacity: 0.8
+    }
 
-                                   if (x.dislikes > 0)
-                                   {
-                                       result += "Dislikes: ";
-                                       result += x.dislikes;
-                                       result += "\n";
-                                   }
+    Rectangle {
+        anchors {
+            top: parent.top
+            right: parent.right
+            left : parent.left
+        }
 
-                                   result += "Body: ";
-                                   foreachInListModel(x.groupedMessages,
-                                                      function (y)
-                                                      {
-                                                          result += y.body;
-                                                          result += "\n";
-                                                      });
-                                   //result += x.body;
-                                   result += "\n";
-                                   result += "\n";
-                               }
-                           });
-        clipboard.setText(result);
-    }*/
+        height : Zc.AppStyleSheet.height(0.285)
+        color : "white"
+    }
 
-    /*
-    function selectAll(val)
-    {
-        var subject =  tabView.getTab(tabView.currentIndex).title;
-        mainView.foreachInListModel(listenerChat.messages, function (x)
-        { if (x.subject === subject) x.isSelected = val});
-    }*/
-
-
-    ColumnLayout
-    {
+    ColumnLayout {
         id : chatViewId
 
         anchors.fill        : parent
@@ -594,11 +530,20 @@ Zc.AppView
 
             style: TabViewStyle {
                 tab: Rectangle {
-                    color: styleData.selected ? "steelblue" :"#448"
+
+                    color: "white"
                     implicitWidth: Math.max(text.width + 4, appStyleSheet.width(0.5))
-                    implicitHeight: text.font.pixelSize * 1.5
+                    implicitHeight: Zc.AppStyleSheet.height(0.26)
                     border.width: 1
                     border.color : "transparent"
+
+                    Rectangle {
+                        width : parent.width
+                        anchors.bottom : parent.bottom
+                        height: Zc.AppStyleSheet.height(0.025)
+                        color: styleData.selected ? "#448" : "white"
+                    }
+
 
                     Component.onCompleted:
                     {
@@ -607,18 +552,6 @@ Zc.AppView
                                     {
                                         if (styleData.title === subject)
                                         {
-                                           /* if (Presenter.instance["notify" + subject] === 0)
-                                            {
-                                                nbrItemId.visible = false;
-                                                nbrItemId.opacity = 0;
-                                            }
-                                            elses
-                                            {
-                                                nbrItemId.visible = true;
-                                                nbrItemId.opacity = 1;
-                                            }
-                                            nbrItemTextId.text = Presenter.instance["notify" + subject];
-                                            */
                                             alertCounter.count = Presenter.instance["notify" + subject];
                                         }
 
@@ -631,7 +564,8 @@ Zc.AppView
                         id: text
                         anchors.centerIn: parent
                         text: styleData.title
-                        color: "white"
+                        color: "#448"
+                        font.pixelSize: appStyleSheet.height(0.12)
                     }
 
                     CtComponents.AlertCounter {
@@ -646,87 +580,54 @@ Zc.AppView
             }
         }
 
-        RowLayout {
-
+        Rectangle{
             Layout.fillWidth: true
+            Layout.preferredHeight: Zc.AppStyleSheet.height(0.025)
+            color: "#448"
+        }
 
-            Layout.preferredHeight: inputMessageWidget.autoHeight
+        CtComponents.ActionList {
+            id: addresource
 
-            CtComponents.MessageInput
-            {
-                id : inputMessageWidget
-
-                Layout.fillWidth: true
-                Layout.preferredHeight: inputMessageWidget.autoHeight
-                //fontSize : appStyleSheet.inputChatHeight
-                minLines: appStyleSheet.minLines
-
-
-                onValidated : {
-                    var title = tabView.getTab(tabView.currentIndex).title;
-                    senderChat.subject = title;
-                    var result = "TXT|" + Tools.decodeUrl(Tools.decodeLessMore(text))
-                    senderChat.sendMessage(result);
-                    inputMessageWidget.text = "";
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: inputMessageWidget.forceActiveFocus();
+            Action {
+                text: qsTr("Camera")
+                onTriggered: {
+                    mainView.resourceViewVisible()
+                    resourceViewer2.showCamera()
                 }
             }
 
-            CtComponents.IconButton {
-                Layout.preferredWidth: Layout.preferredHeight
-                Layout.preferredHeight: Math.min(inputMessageWidget.height,inputMessageWidget.fontSize * 3)
-                Layout.alignment: Qt.AlignVCenter
-                imageSource: Qt.resolvedUrl("../Resources/addResource.png")
-                onClicked: addresource.show()
+            Action {
+                text: qsTr("Photo Album")
+                onTriggered: {
+                    fileDialog.isFromPicture = true;
+                    fileDialog.folder = fileDialog.shortcuts.pictures;
+                    fileDialog.open()   ;
+                }
             }
 
-            CtComponents.ActionList {
-                id: addresource
-
-                Action {
-                    text: qsTr("Camera")
-                    onTriggered: {
-                        mainView.resourceViewVisible()
-                        resourceViewer2.showCamera()
-                    }
+            Action {
+                text: qsTr("Files")
+                onTriggered: {
+                    fileDialog.isFromPicture = false;
+                    fileDialog.folder = fileDialog.shortcuts.documents;
+                    fileDialog.open()
                 }
+            }
 
-                Action {
-                    text: qsTr("Photo Album")
-                    onTriggered: {
-                        fileDialog.isFromPicture = true;
-                        fileDialog.folder = fileDialog.shortcuts.pictures;
-                        fileDialog.open()   ;
-                    }
-                }
-
-                Action {
-                    text: qsTr("Files")
-                    onTriggered: {
-                        fileDialog.isFromPicture = false;
-                        fileDialog.folder = fileDialog.shortcuts.documents;
-                        fileDialog.open()
-                    }
-                }
-
-                Action {
-                    text: qsTr("Paste")
-                    onTriggered: {
-                        if (clipboard.isImage() || clipboard.isText())
+            Action {
+                text: qsTr("Paste")
+                onTriggered: {
+                    if (clipboard.isImage() || clipboard.isText())
+                    {
+                        /*
+                                ** First copy clipboard on local file
+                                ** then upload the file
+                                */
+                        var filePath = clipboard.savetoLocalPath(mainView.context.temporaryPath,null);
+                        if (filePath !== "")
                         {
-                            /*
-                                    ** First copy clipboard on local file
-                                    ** then upload the file
-                                    */
-                            var filePath = clipboard.savetoLocalPath(mainView.context.temporaryPath,null);
-                            if (filePath !== "")
-                            {
-                                uploadFile(filePath)
-                            }
+                            uploadFile(filePath)
                         }
                     }
                 }
@@ -734,6 +635,64 @@ Zc.AppView
         }
 
 
+        Rectangle
+        {
+            Layout.fillWidth: true
+            Layout.preferredHeight: inputMessageWidget.autoHeight + Zc.AppStyleSheet.height(0.10)
+            color: "white"
+
+            RowLayout {
+
+                id : rowLayoutInput
+
+                anchors.fill: parent
+                anchors.rightMargin: Zc.AppStyleSheet.height(0.05)
+                anchors.leftMargin: Zc.AppStyleSheet.height(0.05)
+
+                CtComponents.IconButton {
+                    Layout.preferredWidth: Layout.preferredHeight
+                    Layout.preferredHeight: Math.min(inputMessageWidget.height,inputMessageWidget.fontSize * 3)
+                    Layout.alignment: Qt.AlignVCenter
+                    imageSource: Qt.resolvedUrl("../Resources/addResource.png")
+                    onClicked: addresource.show()
+                }
+
+                CtComponents.MessageInput
+                {
+                    id : inputMessageWidget
+
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: inputMessageWidget.autoHeight
+                    //fontSize : appStyleSheet.inputChatHeight
+                    minLines: appStyleSheet.minLines
+
+
+                    onValidated : {
+                        var title = tabView.getTab(tabView.currentIndex).title;
+                        senderChat.subject = title;
+                        var result = "TXT|" + Tools.decodeUrl(Tools.decodeLessMore(text))
+                        senderChat.sendMessage(result);
+                        inputMessageWidget.text = "";
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: inputMessageWidget.forceActiveFocus();
+                    }
+                }
+
+
+                CtComponents.ToolButton {
+                    Layout.preferredWidth: Layout.preferredHeight * 1.25
+                    Layout.preferredHeight: Math.min(inputMessageWidget.height,inputMessageWidget.fontSize * 3)
+                    text : qsTr("Post")
+                    onClicked: {
+                        inputMessageWidget.sendValidated();
+                    }
+                }
+            }
+
+        }
     }
 
     Item
@@ -752,29 +711,7 @@ Zc.AppView
             id : resourceViewer2
 
             anchors.fill : parent
-
-
-        //    width : parent.width - 10
-
-            //onUploadFile:
-            //{
-            //     buttons.uploadFile(fileName)
-            //}
         }
-
-        /*
-            ** Buttons to addFiles to the chat
-            ** Progressbar show the upload or download status
-            */
-
-    }
-
-
-    Rectangle
-    {
-        color : "white"
-        anchors.fill : addNewThreadDialogBox
-        visible: addNewThreadDialogBox.visible
     }
 
     AddNewThreadDialogBox {
@@ -860,28 +797,6 @@ Zc.AppView
     onLoaded :
     {
         activity.start();
-
- /*       var webViewVersion =  download.getQtModuleVersion("QtWebView") !== "";
-        var webKitVersion =  mainView.context.getQtModuleVersion("QtWebKit") !== "";
-        mainView.useWebView = "";
-
-        if (Qt.platform.os === "windows")
-        {
-            // webView pas compatible pour l'instand sux xp et w7
-         /*   if (webViewVersion)
-                mainView.useWebView = "WebView"
-            else*/
-        /*
-                mainView.useWebView = "WebKit"
-        }
-        else
-        {
-            if (webViewVersion)
-                mainView.useWebView = "WebView"
-            else if (webKitVersion)
-                mainView.useWebView = "WebKit"
-        }
-    */
     }
 
     onClosed :

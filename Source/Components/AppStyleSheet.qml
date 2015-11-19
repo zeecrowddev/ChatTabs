@@ -1,6 +1,8 @@
 import QtQuick 2.5
 import QtQuick.Window 2.2
 
+import ZcClient 1.0 as Zc
+
 Item
 {
     property int contactHeight : 0;
@@ -16,19 +18,17 @@ Item
 
     function limitedWidth(inches,reference,maxAsRefFraction)
     {
-        var result = width(inches);
-        var max = maxAsRefFraction * reference;
-        return result > max ? max : result;
+        return Zc.AppStyleSheet.limitedWidth(inches,reference,maxAsRefFraction)
     }
 
     function width(inches)
     {
-        return inches * Screen.logicalPixelDensity * 25.4;
+        return Zc.AppStyleSheet.width(inches)
     }
 
     function height(inches)
     {
-        return inches * Screen.logicalPixelDensity * 25.4;
+        return Zc.AppStyleSheet.height(inches)
     }
 
     Component.onCompleted: {

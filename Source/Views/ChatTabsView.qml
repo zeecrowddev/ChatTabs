@@ -23,6 +23,8 @@ import QtQuick 2.5
 import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.4
 
+import ZcClient 1.0 as Zc
+
 
 ScrollView
 {
@@ -82,6 +84,12 @@ ScrollView
         onHeightChanged :
         {
             goToEnd();
+        }
+
+        Rectangle{
+            width : parent.width
+            height: Zc.AppStyleSheet.height(0.025)
+            color : "#448"
         }
 
         Repeater

@@ -16,23 +16,22 @@ Button {
 
     style: ButtonStyle {
         background: Rectangle {
-            implicitWidth:  appStyleSheet.width(0.2)
-            implicitHeight: footmp.height * 1.2//text.height * 1.2
-            border.width: control.activeFocus ? 2 : 0
-            border.color: "white"
+            //implicitWidth:  appStyleSheet.width(0.3)
+            implicitHeight: appStyleSheet.height(0.13) * 1.2
+            border.width: 2
+            border.color: "#448"
             radius: 6
-            color: control.pressed ? "blue" : "#448"
-            Text {id : footmp }
+            color: control.pressed ? "lightgrey" : "white"
         }
 
         label: Text {
             id : text
             text: button.text
-            //font.pixelSize: appStyleSheet.height(0.13)
+            font.pixelSize: appStyleSheet.height(0.13)
             font.bold: false
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            color: "white"
+            color: "#448"
         }
     }
 }

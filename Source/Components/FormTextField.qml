@@ -11,5 +11,6 @@ TextField {
     }
 
     Layout.fillWidth: true
-//    Layout.preferredHeight: appStyleSheet.height(0.2)
+    Layout.preferredHeight: appStyleSheet.textChatHeight*2
+    font.pixelSize: appStyleSheet.textChatHeight
 }

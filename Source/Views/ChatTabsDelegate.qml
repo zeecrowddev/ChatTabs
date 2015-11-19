@@ -202,7 +202,7 @@ Item
         height : textZone.height
         width : appStyleSheet.width(0.05)
 
-        border.top: appStyleSheet.contactHeight
+        border.top:  40
 
         source : isMe ? "../Resources/ballonme.png" : "../Resources/ballon.png"
     }
@@ -224,32 +224,6 @@ Item
         anchors.right : parent.right
         anchors.rightMargin : appStyleSheet.width(0.05)
 
-        state : parent.state
-
-        /*
-        states :
-            [
-            State
-            {
-                name   : "chat"
-                PropertyChanges
-                {
-          //          target : checkBox
-          //          visible  : false
-                }
-            }
-            ,
-            State
-            {
-                name   : "edit"
-                PropertyChanges
-                {
-            //        target : checkBox
-            //        visible  : true
-                }
-            }
-        ]*/
-
         ListModel
         {
             id : listRessource
@@ -263,43 +237,6 @@ Item
                 id : resourceDescriptor
             }
         }
-
-
-
-
-        /*
-        function likesDislikesChanged()
-        {
-            chatTabsDelegate.updateDelegate()
-        }
-        */
-
-
-
-/*        CheckBox
-        {
-            id : checkBox
-
-            anchors
-            {
-                top             : fromId.bottom
-                topMargin       : 2
-                left            : parent.left
-                leftMargin      : 5
-                right           : parent.right
-                rightMargin     : 5
-            }
-
-            width                   : 5
-
-            pressed                 : model.cast.isSelected
-
-            visible : false
-            onCheckedChanged:
-            {
-                model.cast.isSelected = checked
-            }
-        }*/
 
 
         /*
@@ -373,7 +310,7 @@ Item
 
                 readOnly                : true
                 selectByMouse           : true
-          //      font.pixelSize          : appStyleSheet.textChatHeight
+                font.pixelSize          : appStyleSheet.textChatHeight
                 wrapMode                : TextEdit.WrapAtWordBoundaryOrAnywhere
 
                 onLinkActivated:
