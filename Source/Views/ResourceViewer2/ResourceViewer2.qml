@@ -36,11 +36,12 @@ Item
     height: 100
     width : 100
 
+
     property alias nextButtonVisible : nextButton.visible
     property alias nextButtonText : nextButton.text
 
-    property alias optionButtonVisible : optionButton.visible
-    property alias optionButtonText : optionButton.text
+    //property alias optionButtonVisible : optionButton.visible
+    //property alias optionButtonText : optionButton.text
 
     function setContext(context)
     {
@@ -114,6 +115,7 @@ Item
         anchors.right: parent.right
         anchors.left: parent.left
         anchors.top: parent.top
+        anchors.topMargin : 1
 
         RowLayout {
             anchors.fill: parent
@@ -121,45 +123,14 @@ Item
             CtComponents.ToolButton {
                 text: qsTr("< Back")
                 onClicked: {
-                    if (loader.item !== null && loader.item.back !== undefined)
-                    {
+                    if (loader.item !== null && loader.item.back !== undefined) {
                         loader.item.back();
                     }
-                    if (ressourceType === "Camera")
-                    {
+                    if (ressourceType === "Camera") {
                         loader.source = ""
                     }
 
                     mainView.chatViewVisible();
-                }
-            }
-
-            CtComponents.ToolButton {
-                id : optionButton
-                text: qsTr("Flip Camera")
-                Layout.alignment: Qt.AlignCenter
-
-
-                visible : false
-
-                onClicked: {
-
-                    if (loader.item !== null && loader.item.option !== undefined)
-                    {
-                        loader.item.option();
-                    }
-
-                    /*
-                    if (ressourceType === "Camera") {
-                        resourceViewer.uploadFile(loader.item.path)
-                        loader.source = ""
-                    } else if (ressourceType === "WebView") {
-                        Qt.openUrlExternally(loader.item.getUrl())
-                    } else if (ressourceType === "ImageViewer") {
-                        mainView.downloadFile(loader.item.fileName,"pictures");
-                    } else {
-                        mainView.chatViewVisible()
-                    }*/
                 }
             }
 
@@ -170,14 +141,17 @@ Item
 
                 onClicked: {
 
-                    if (loader.item !== null && loader.item.next !== undefined)
-                    {
-                        loader.item.next();
-                    }
+                    if (loader.item === null)
+                        return;
 
                     if (ressourceType === "Camera") {
-                        resourceViewer.uploadFile(loader.item.path)
-                        loader.source = ""
+
+                        if (loader.item.readyToSave) {
+                            resourceViewer.uploadFile(loader.item.path)
+                            loader.source = ""
+                        } else {
+                            loader.item.flipCamera();
+                        }
                     } else if (ressourceType === "WebView") {
                         Qt.openUrlExternally(loader.item.getUrl())
                     } else if (ressourceType === "ImageViewer") {
@@ -234,9 +208,8 @@ Item
     {
         ressourceType = "Camera"
         loader.source = "CameraView.qml"
-    //    loader.item.localPath = resourceViewer.localPath
-        nextButtonText = "Validate >"
-        nextButtonVisible = false
+        nextButtonText = "Flip Camera >"
+        nextButtonVisible = true
     //    optionButtonText = "Flip Camera >"
     //    optionButtonVisible = true
     }
@@ -264,8 +237,8 @@ Item
     {   
         var res = JSON.parse(resource)
 
-     //   optionButtonText = ""
-     //   optionButtonVisible = false
+       // optionButtonText = ""
+       // optionButtonVisible = false
 
         /*
         ** Show an image

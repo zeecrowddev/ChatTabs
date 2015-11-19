@@ -435,6 +435,8 @@ Item
 
                             sourceSize.width: appStyleSheet.resourceHeight
 
+                            autoTransform : true
+
 
                             onStatusChanged:
                             {

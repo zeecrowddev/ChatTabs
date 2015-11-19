@@ -36,6 +36,8 @@ Item {
 
     id : cameraView
 
+    property bool readyToSave : false
+
     anchors.fill: parent
 
   /*  property string localPath : ""
@@ -48,14 +50,13 @@ Item {
         camera.stop();
     }
 
-    function next()
-    {
+    function flipCamera() {
+        if (camera.position === Camera.BackFace) {
+            camera.position = Camera.FrontFace;
+        } else {
+            camera.position = Camera.BackFace;
+        }
     }
-
-    function option()
-    {
-    }
-
 
     Component.onCompleted: {
 
@@ -102,7 +103,6 @@ Item {
                     cameraViewer.visible = false
                     photoPreview.visible = true
                     resourceViewer.nextButtonText = "Validate >"
-                    resourceViewer.nextButtonVisible = true
 
                     cameraView.path = camera.imageCapture.capturedImagePath ////mainView.context.temporaryPath + "cameraCapture.jpg";
                     var imageSource = path;
@@ -122,17 +122,6 @@ Item {
                         imageSource = "path"
                     }
 
-                    console.log(">> imageSource " + imageSource)
-            //        console.log(">> preview " + preview)
-                    console.log(">> capturedImagePath " + camera.imageCapture.capturedImagePath)
-
-
-                    console.log((">> camera orie,tation " + camera.orientation))
-                    console.log((">> videoOutput orie,tation " + videoOutput.orientation))
-
-                    console.log(">> Screen.orientation " +  Screen.orientation)
-                    console.log(">> Screen.primaryOrientation " +  Screen.primaryOrientation)
-
                     if (camera.orientation != videoOutput.orientation)
                     {
                         photoPreview.rotation = camera.orientation - videoOutput.orientation
@@ -143,6 +132,8 @@ Item {
                     }
 
                     photoPreview.source = imageSource
+
+                    readyToSave = true;
                 }
 
             }
@@ -160,12 +151,9 @@ Item {
             {
                 anchors.fill: parent
 
-                onClicked:
-                {
+                onClicked: {
+                    resourceViewer.nextButtonText = "Validate >"
                     var tmpFileName = mainView.context.temporaryPath + "cameraCapture.jpg";
-                    console.log(">> tmpFileName " + tmpFileName)
-                    console.log(">> videoOutput.orientation " + videoOutput.orientation)
-
                     camera.imageCapture.capture();
                 }
             }

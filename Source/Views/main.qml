@@ -75,13 +75,12 @@ Zc.AppView
 
     anchors.fill: parent
 
-    toolBarActions :
+    menuActions :
         [
         Action {
-            id: closeAction
+            id: close2Action
             shortcut: "Ctrl+X"
-            iconSource: "../Resources/close.png"
-            tooltip : "Close Application"
+            text:  "Close ChatTabs"
             onTriggered:
             {
                 inputMessageWidget.focus = false;

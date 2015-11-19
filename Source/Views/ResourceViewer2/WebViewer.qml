@@ -43,10 +43,6 @@ Item
     {
     }
 
-    function next()
-    {
-  //      webView.source = ""
-    }
 
 
 
