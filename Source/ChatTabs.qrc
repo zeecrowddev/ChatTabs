@@ -32,8 +32,6 @@
         <file>Views/ResourceViewer2/ResourceViewer2.qml</file>
         <file>Views/ResourceViewer2/WebViewer.qml</file>
         <file>Views/AddNewThreadDialogBox.qml</file>
-        <file>Views/ChatAddsButtons.qml</file>
-        <file>Views/ChatTabsButton.qml</file>
         <file>Views/ChatTabsDelegate.qml</file>
         <file>Views/ChatTabsListFilter.qml</file>
         <file>Views/ChatTabsTextFieldStyle.qml</file>

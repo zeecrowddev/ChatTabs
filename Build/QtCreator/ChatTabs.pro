@@ -49,8 +49,6 @@ OTHER_FILES += \
     ../../Source/Views/mainPresenter.js \
     ../../Source/Views/Tools.js \
     ../../Source/Views/AddNewThreadDialogBox.qml \
-    ../../Source/Views/ChatAddsButtons.qml \
-    ../../Source/Views/ChatTabsButton.qml \
     ../../Source/Views/ChatTabsDelegate.qml \
     ../../Source/Views/ChatTabsListFilter.qml \
     ../../Source/Views/ChatTabsTextFieldStyle.qml \
