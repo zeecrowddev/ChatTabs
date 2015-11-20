@@ -34,6 +34,7 @@ Rectangle {
     function sendValidated() {
         validated();
         if (Qt.platform.os === "ios" || Qt.platform.os === "android") {
+            control.focus = false;
             edit2.focus = false;
         }
     }

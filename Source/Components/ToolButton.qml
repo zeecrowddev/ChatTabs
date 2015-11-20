@@ -19,7 +19,7 @@ Button {
             //implicitWidth:  appStyleSheet.width(0.3)
             implicitHeight: appStyleSheet.height(0.13) * 1.2
             border.width: 2
-            border.color: "#448"
+            border.color: control.pressed ? "#448": "white"
             radius: 6
             color: control.pressed ? "lightgrey" : "white"
         }

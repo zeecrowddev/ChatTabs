@@ -19,8 +19,16 @@ ToolBar {
         }
 
         background: Rectangle {
-            implicitHeight: Zc.AppStyleSheet.height(0.26)
-            color: "#448"
+            implicitHeight: Zc.AppStyleSheet.height(0.3)
+            color: "white"
+
+
+            Rectangle{
+                width : parent.width
+                height: Zc.AppStyleSheet.height(0.025)
+                color: "#448"
+                anchors.bottom: parent.bottom
+            }
         }
     }
 }
