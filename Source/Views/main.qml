@@ -114,17 +114,6 @@ Zc.AppView
             StateChangeScript {
                 script:
                 {
-                    //editOrCopyAction.iconSource = "qrc:/ChatTabs/Resources/chatTabsMode.png";
-                    //editOrCopyAction.tooltip = "Chat Mode"
-                    //editOrCopyAction.enabled = true;
-
-                    //addThreadAction.enabled     = true;
-
-                    //addThreadAction.iconSource  = "../Resources/addThread.png"
-
-                    //editModeButtons.visible = true;
-                    //editModeButtons.enabled = true;
-                    //inputMessageWidget.state = 'unvisible'
                     tabView.getTab(tabView.currentIndex).item.state = "edit";
                 }}
         }
@@ -290,6 +279,7 @@ Zc.AppView
         {
             id   : documentFolder
             name : "ChatTabsFolder"
+            remoteSpace : Zc.CrowdSharedResource.ActivitySession
         }
 
         onStarted :
