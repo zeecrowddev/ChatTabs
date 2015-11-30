@@ -53,6 +53,7 @@ Item
     {
         id   : documentFolder
         name : "ChatTabsResourceViewer"
+        remoteSpace : Zc.CrowdSharedResource.ActivitySession
     }
 
     Zc.ResourceDescriptor
