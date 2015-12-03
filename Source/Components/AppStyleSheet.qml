@@ -33,7 +33,7 @@ Item
 
     Component.onCompleted: {
 
-        if (height(3.5) >  mainView.height) {
+        if (height(5) >  mainView.height) {
             contactHeight = height(0.24);
             labelFromHeight = height(0.12)
             labelTimeHeight = height(0.10)
@@ -43,13 +43,13 @@ Item
             inputChatHeight = height(0.14)
             minLines = 1;
         } else {
-            contactHeight = height(0.48);
-            labelFromHeight = height(0.14)
-            labelTimeHeight = height(0.12)
-            textChatHeight = height(0.14)
-            resourceHeight = height(1.2)
+            contactHeight = height(0.36);
+            labelFromHeight = height(0.12)
+            labelTimeHeight = height(0.10)
+            textChatHeight = height(0.12)
+            resourceHeight = height(0.9)
             labelResourceHeight = height(0.12)
-            inputChatHeight = height(0.14)
+            inputChatHeight = height(0.12)
             minLines = 2;
         }
     }

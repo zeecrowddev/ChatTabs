@@ -148,6 +148,7 @@ Item
                     if (ressourceType === "Camera") {
 
                         if (loader.item.readyToSave) {
+                            console.log(">> try to save " + loader.item.path)
                             resourceViewer.uploadFile(loader.item.path)
                             loader.source = ""
                         } else {
